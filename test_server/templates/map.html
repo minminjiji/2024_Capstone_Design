@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>QGIS Map Web Application</title>
+        <!-- CSS 파일 링크. flask의 static 폴더 경로를 사용합니다. -->
+        <link rel="stylesheet" href="/main.css" />
+        <script
+            type="text/javascript"
+            src="https://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=495F784B-2196-3442-9570-1C6842AF1428"
+        ></script>
+        <style>
+            #map-controls button {
+                background: #fff;
+                border: 1px solid #ccc;
+                padding: 10px 15px;
+                cursor: pointer;
+                outline: none;
+            }
+            #map-controls {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                z-index: 1000;
+            }
+            #sidebar {
+                width: 250px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                background: white;
+                padding: 20px;
+                overflow-y: auto;
+                display: none; /* 초기 상태는 숨김 */
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            id="vmap"
+            style="width: 100%; height: 100%; position: absolute"
+        ></div>
+        <div id="map-controls">
+            <button id="zoom-in">+</button>
+            <button id="zoom-out">-</button>
+            <button id="toggle-layer">Toggle Layer</button>
+        </div>
+        <div id="sidebar">
+            <h3>상세 정보</h3>
+            <p id="details">여기에 상세 정보가 표시됩니다.</p>
+        </div>
+        <script type="text/javascript">
+            vw.ol3.MapOptions = {
+                basemapType: vw.ol3.BasemapType.GRAPHIC,
+                controlDensity: vw.ol3.DensityType.EMPTY,
+                interactionDensity: vw.ol3.DensityType.BASIC,
+                controlsAutoArrange: true,
+                homePosition: vw.ol3.CameraPosition,
+                initPosition: vw.ol3.CameraPosition,
+            };
+
+            var vmap = new vw.ol3.Map("vmap", vw.ol3.MapOptions);
+
+            document.getElementById("zoom-in").onclick = function () {
+                vmap.getView().setZoom(vmap.getView().getZoom() + 1);
+            };
+            document.getElementById("zoom-out").onclick = function () {
+                vmap.getView().setZoom(vmap.getView().getZoom() - 1);
+            };
+            document.getElementById("toggle-layer").onclick = function () {
+                // 예제: 레이어 토글 로직
+                var layer = vmap.getLayers().getArray()[1];
+                layer.setVisible(!layer.getVisible());
+            };
+
+            vmap.on("singleclick", function (evt) {
+                var coordinate = evt.coordinate;
+                var viewProjection = vmap.getView().getProjection();
+                var viewResolution = vmap.getView().getResolution();
+                var url = layer
+                    .getSource()
+                    .getGetFeatureInfoUrl(
+                        coordinate,
+                        viewResolution,
+                        viewProjection,
+                        { INFO_FORMAT: "application/json", FEATURE_COUNT: 50 }
+                    );
+
+                if (url) {
+                    fetch(url)
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (json) {
+                            var details = json.features
+                                .map(function (feature) {
+                                    return feature.properties.name;
+                                })
+                                .join(", ");
+                            document.getElementById("details").textContent =
+                                details;
+                            document.getElementById("sidebar").style.display =
+                                "block";
+                        });
+                }
+            });
+        </script>
+    </body>
+</html>

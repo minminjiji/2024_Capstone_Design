@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.header a {
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    margin-left: 15px;
+    font-size: 24px;
+    text-decoration: none;
+    color: black;
+    
+}
+
+.main {
+    text-align: center;
+    background: url('{{ url_for('static', filename='image/mainImg.jpg') }}') no-repeat center center;
+    background-size: cover;
+    color: white;
+    position: relative;
+    width: 100%;
+    opacity: 0.5;
+}
+
+.main div {
+    position: relative;
+    z-index: 1;
+}
+
+.statistics {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.statistics div {
+    margin: 0 50px;
+    text-align: center;
+}
+
+.statistics div img {
+    width: 100px;
+    height: 100px;
+}
+
+.statistics div p {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.statistics div p a{
+    color: black;
+    text-decoration: none;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    border-top: 1px solid #ccc;
+}
