@@ -1,40 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" type="text/css" href="/static/main.css" />
-    <head>
-        <meta charset="UTF-8" />
-        <title>Data Introduction</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/static/common.css" />
+    <title>Data Introduction</title>
+</head>
+<body>
+    <header>
         <div class="header-container">
-            <div class="header">
-                <a href="/">나랑 데이터 할래</a>
+            <div class="logo">
+                <a href="/"><img src="static/image/logo.png" alt="로고"></a>
             </div>
-            <div class="navbar">
+            <nav class="navbar">
                 <a href="/">홈</a>
-                <a href="/introduce">소개</a>
-                <a href="/map">지도</a>
-                <a href="/data">자료실</a>
+                <a href="introduce">소개</a>
+                <a href="map">지도</a>
+                <a href="statistics">통계</a>
+                <a href="data">자료실</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="team-intro">
+        <h2>나랑 데이터 할래?</h2>
+        <h3>팀장: 이민지</h3>
+        <h3>팀원: 이상민, 김동현, 김재엽</h3> <br>
+        <div class="team-section">
+            <div class="team-row">
+                <div class="team-member">
+                    <img src="static/image/user.png" alt="팀장 이민지" />
+                    <div class="member-info">
+                        <h3>팀장: 이민지</h3>
+                        <p>역할: 시각화 팀</p>
+                        <p>기술 스택: Python, HTML, Flask </p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="static/image/user.png" alt="팀원 김재엽" />
+                    <div class="member-info">
+                        <h3>팀원: 김재엽</h3>
+                        <p>역할: 시각화 팀</p>
+                        <p>기술 스택: Python, HTML, Flask</p>
+                    </div>
+                </div>
+            </div>
+            <div class="team-row">
+                <div class="team-member">
+                    <img src="static/image/user.png" alt="팀원 김동현" />
+                    <div class="member-info">
+                        <h3>팀원: 김동현</h3>
+                        <p>역할: 데이터 정제팀</p>
+                        <p>기술 스택: Python, SQL</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <img src="static/image/user.png" alt="팀원 이상민" />
+                    <div class="member-info">
+                        <h3>팀원: 이상민</h3>
+                        <p>역할: 데이터 정제팀</p>
+                        <p>기술 스택: Python, SQL</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="introduce">
-            <h2>사용한 데이터 소개</h2>
-            <div class="data-section">
-                <div>
-                    <img src="placeholder.png" alt="Electricity Data" />
-                    <h3>전기 데이터</h3>
-                    <p>전기 데이터 소개글</p>
-                </div>
-                <div>
-                    <img src="placeholder.png" alt="Gas Data" />
-                    <h3>가스 데이터</h3>
-                    <p>가스 데이터 소개글</p>
-                </div>
+    </div>
+
+    <div class="introduce">
+        <h2>▶️프로젝트 제안 배경</h2>
+        <div class="data-section centered-text">
+            <div class="text-section">
+                <h3>제안 배경에 대한 소제목</h3>
+                <p><strong>제안 배경이란?</strong></p>
+                <p>중간발표 PPT 제안 배경 넣기</p>
             </div>
         </div>
-        <div class="footer">
-            군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트<br />나랑 데이터
-            할래?
+        <h2>▶️제안 사항</h2>
+        <div class="data-section centered-text">
+            <div class="text-section">
+                <h3>군산시 건물별 에너지 사용량 시각화 시스템 </h3>
+                <p><strong>건물별 에너지 사용량 시각화 시스템이란?</strong></p>
+                <p>대충 아키텍처 돌돌딱</p>
+            </div>
         </div>
-    </body>
+
+        <h2>▶️기대 효과</h2>
+        <div class="data-section centered-text">
+            <div class="text-section">
+                <h3>기대 효과에 대한 소제목 </h3>
+                <p><strong>기대 효과란?!</strong></p>
+                <p>PPT 참고</p>
+            </div>
+        </div>
+    </div> 
+    <footer class="footer">
+        군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트<br />나랑 데이터 할래?
+    </footer>
+</body>
 </html>

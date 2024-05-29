@@ -52,13 +52,9 @@ def introduce():
 def map():
     return render_template('map.html')
 
-@app.route('/gas')
-def gas():
-    return render_template('gas.html')
-
-@app.route('/elec')
-def elec():
-    return render_template('elec.html')
+@app.route('/statistics')
+def statistics():
+    return render_template('statistics.html')
 
 @app.route('/data')
 def data():

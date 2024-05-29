@@ -2,38 +2,98 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>탄소 배출 관련 사진</title>
-    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <title>탄소배출량 포털</title>
+    <link rel="stylesheet" type="text/css" href="static/common.css">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 </head>
 <body>
-    <div class="header-container">
-        <div class="header">
-            <a href="/">나랑 데이터 할래</a>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="static/image/logo.png" alt="로고"></a>
+            </div>
+            <nav class="navbar">
+                <a href="/">홈</a>
+                <a href="introduce">소개</a>
+                <a href="map">지도</a>
+                <a href="statistics">통계</a>
+                <a href="data">자료실</a>
+            </nav>
         </div>
-        <div class="navbar">
-            <a href="/">홈</a>
-            <a href="/introduce">소개</a>
-            <a href="/map">지도</a>
-            <a href="/data">자료실</a>
+    </header>
+    <main>
+        <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image: url('static/image/ksnu.jpg')">
+                    <div class="overlay">
+                        <div class="content">
+                            <h1>프로젝트 소개</h1>
+                            <p>군산대학교 소프트웨어학전공 <br>캡스톤디자인 프로젝트를 소개합니다!</p>
+                            <a href="introduce"><button>바로가기</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide" style="background-image: url('static/image/ee.jpg')">
+                    <div class="overlay">
+                        <div class="content">
+                            <h1>군산시 건물별 탄소배출량 지도</h1>
+                            <p>지도에서 건물별 탄소배출량이 어느정도인지 확인해보세요!</p>
+                            <a href="map"><button>바로가기</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide" style="background-image: url('static/image/gunsansae.jpg')">
+                    <div class="overlay">
+                        <div class="content">
+                            <h1>한눈에 보는 군산시 건물별 탄소배출량 통계</h1>
+                            <p>군산시 건물별 탄소배출량의 통계를 한눈에 확인해보세요!</p>
+                            <a href="statistics"><button>바로가기</button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide" style="background-image: url('static/image/data.jpg')">
+                    <div class="overlay">
+                        <div class="content">
+                            <h1>데이터 자료실</h1>
+                            <p>프로젝트에 사용된 데이터들을 확인해보세요!</p>
+                            <a href="statistics"><button>바로가기</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
-    </div>
-    <div class="main">
-        <div>
-            <img src="{{ url_for('static', filename='image/mainImg.jpg') }}" alt="탄소 배출 관련 사진">
-        </div>
-    </div>
-    <div class="statistics">
-        <div>
-            <a href="/gas"><img src="{{ url_for('static', filename='image/graph.png') }}" alt="전기 통계표"></a>
-        <p><a href="/elec">전기 통계</a></p>
-        </div>
-        <div>
-            <a href="/gas"><img src="{{ url_for('static', filename='image/graph.png') }}" alt="가스 통계표"></a>
-            <p><a href="/gas">가스 통계</a></p>
-        </div>
-    </div>
-    <div class="footer">
-        군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트<br>나랑 데이터 할래?
-    </div>
+    </main>
+    <footer class="footer">
+        <p>© 나랑 데이터 할래?<br>군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트 <br>All rights reserved.</p>
+    </footer>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 0,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            loop: true,
+            autoplay: {
+            delay: 5555, // 5000ms = 5 seconds
+            disableOnInteraction: false,
+        },
+        });
+    </script>
 </body>
 </html>
