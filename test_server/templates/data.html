@@ -2,29 +2,121 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>탄소 배출 관련 사진</title>
-    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <title>자료실 - 탄소배출량 포털</title>
+    <link rel="stylesheet" type="text/css" href="static/common.css">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
+    <style>
+        body {
+            color: black;
+        }
+        .content-container h1,
+        .content-container h2,
+        .content-container p {
+            color: black;
+        }
+        .content-container {
+            padding: 20px;
+        }
+        .data-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .data-item {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 1200px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .data-item img {
+            display: block;
+            margin: 0 auto 10px;
+            max-width: 100%;
+            height: auto;
+        }
+        .data-item h2 {
+            margin: 10px 0;
+            font-size: 1.5em;
+        }
+        .data-item .source, .data-item .summary {
+            margin-top: 10px;
+            font-size: 1em;
+        }
+    </style>
 </head>
 <body>
-    <div class="header-container">
-        <div class="header">
-            <a href="/">나랑 데이터 할래</a>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="/"><img src="static/image/logo.png" alt="로고"></a>
+            </div>
+            <nav class="navbar">
+                <a href="/">홈</a>
+                <a href="introduce">소개</a>
+                <a href="map">지도</a>
+                <a href="statistics">통계</a>
+                <a href="data">자료실</a>
+            </nav>
         </div>
-        <div class="navbar">
-            <a href="/">홈</a>
-            <a href="/introduce">소개</a>
-            <a href="/map">지도</a>
-            <a href="/data">자료실</a>
+    </header>
+    <main>
+        <div class="content-container">
+            <h1>사용한 데이터 소개</h1>
+            <div class="data-section">
+                <div class="data-item">
+                    <img src="static/image/data_icon.png" alt="전기 에너지 데이터 아이콘">
+                    <h2>전기 에너지 데이터</h2>
+                    <p>전기 에너지 데이터에 대한 설명</p>
+                    <div class="source">
+                        <strong>출처:</strong> 한국전력공사
+                    </div>
+                    <div class="summary">
+                        <strong>요약:</strong> 한국전력공사에서 제공한 전기 에너지 소비 데이터. 각 건물의 전기 사용량을 포함합니다.
+                    </div>
+                </div>
+                <div class="data-item">
+                    <img src="static/image/data_icon.png" alt="가스 에너지 데이터 아이콘">
+                    <h2>가스 에너지 데이터</h2>
+                    <p>가스 에너지 데이터에 대한 설명</p>
+                    <div class="source">
+                        <strong>출처:</strong> 한국가스공사
+                    </div>
+                    <div class="summary">
+                        <strong>요약:</strong> 한국가스공사에서 제공한 가스 에너지 소비 데이터. 각 건물의 가스 사용량을 포함합니다.
+                    </div>
+                </div>
+                <div class="data-item">
+                    <img src="static/image/data_icon.png" alt="건축물 정보 데이터 아이콘">
+                    <h2>건축물 정보 데이터</h2>
+                    <p>건축물 정보 데이터에 대한 설명</p>
+                    <div class="source">
+                        <strong>출처:</strong> 국토교통부
+                    </div>
+                    <div class="summary">
+                        <strong>요약:</strong> 국토교통부에서 제공한 건축물 정보 데이터. 건축물의 구조, 용도, 층수 등을 포함합니다.
+                    </div>
+                </div>
+                <div class="data-item">
+                    <img src="static/image/data_icon.png" alt="건축물 공간 정보 데이터 아이콘">
+                    <h2>건축물 공간 정보 데이터</h2>
+                    <p>건축물 공간 정보 데이터에 대한 설명</p>
+                    <div class="source">
+                        <strong>출처:</strong> 공간정보연구원
+                    </div>
+                    <div class="summary">
+                        <strong>요약:</strong> 공간정보연구원에서 제공한 건축물 공간 정보 데이터. 각 건물의 공간 배치와 관련된 정보입니다.
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="main">
-        
-    </div>
-    <div class="statistics">
-      
-    </div>
-    <div class="footer">
-        군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트<br>나랑 데이터 할래?
-    </div>
+    </main>
+    <footer class="footer">
+        <p>© 나랑 데이터 할래?<br>군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트 <br>All rights reserved.</p>
+    </footer>
 </body>
 </html>
