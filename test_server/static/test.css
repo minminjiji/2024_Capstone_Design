@@ -1,40 +1,47 @@
 @font-face {
     font-family: 'Jalnan2';
-    src: url('static/font/yugi/Jalnan2.woff2') format('woff2'),
-         url('static/font/yugi/Jalnan2.woff') format('woff'),
-         url('static/font/yugi/Jalnan2TTF.ttf') format('truetype');
+    src: url('/static/font/yugi/Jalnan2.woff2') format('woff2'),
+         url('/static/font/yugi/Jalnan2.woff') format('woff'),
+         url('/static/font/yugi/Jalnan2TTF.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
-* {
+body {
+    font-family: 'Jalnan2', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+    padding-top: 80px; /* header 높이에 맞게 조정 */
+}
+
+header {
+    width: 100%; /* ensure header spans the full width */
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    font-family: 'Jalnan2', Arial, sans-serif;
-    background: url('static/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-    overflow: hidden;
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: #fff;
     padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box; /* include padding and border in the element's total width and height */
 }
 
-.logo img {
-    height: 40px;
+.header a {
+    color: #333;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .navbar {
@@ -53,77 +60,142 @@ body {
 
 .navbar a:hover,
 .navbar a.active {
-    background-color: #e0e0e0;
+    background-color: #ffffff;
 }
 
-main {
-    margin-top: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: calc(100vh - 60px);
+.logo img {
+    height: 60px;
 }
 
-.dashboard {
-    display: flex;
-    width: 90%;
-    height: 80%;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.left-panel, .right-panel, .center-panel {
+.footer {
+    text-align: center;
     padding: 20px;
+    background-color: #fff;
+    color: black;
+    font-size: 14px;
+    border-top: 1px solid #ddd;
 }
 
-.left-panel, .right-panel {
-    width: 25%;
+.statistics-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
 }
 
-.center-panel {
-    width: 50%;
+.stats-main {
+    display: flex;
+    gap: 20px;
 }
 
-.map-info, .stats-info, .graph-info {
-    background-color: rgba(255, 255, 255, 0.9);
+.map-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    background-color: #f5f5f5  ;
+    border: 2px solid;
     border-radius: 10px;
     padding: 20px;
-    text-align: center;
+    color: black;
 }
 
-.map-info img, .stats-info img, .graph-info img, .center-panel img {
-    width: 100%;
-    height: auto;
+.map-info {
+    text-align: center;
+    
+}
+
+.map-container {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.map-container img {
+    max-width: 100%;
     border-radius: 10px;
 }
 
-.stats-info table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.chart-section {
+    flex: 1;
+    background-color: #f5f5f5 ;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid;
+    border: 2px solid;
+
 }
 
-.stats-info th, .stats-info td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: center;
+.chart-section p {
+    color: black;
 }
 
-.stats-info th {
-    background-color: #f4f4f4;
+.chart-container img {
+    max-width: 100%;
+    border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-    .dashboard {
-        flex-direction: column;
-        height: auto;
-    }
+.stats-timeline {
+    background-color: #f5f5f5 ;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+}
 
-    .left-panel, .right-panel, .center-panel {
-        width: 100%;
-    }
+.stats-timeline p {
+    color: black;
+    
+}
+
+.timeline-container img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+
+.hovered {
+    fill: #808080  !important; /* Hover 시 색상 변경 */
+}
+
+text {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    fill: black;
+    pointer-events: none;
+    
+}
+
+
+.map-container svg {
+    background-color: #f5f5f5 ; /* SVG의 배경색도 동일하게 설정 */
+}
+
+.map-info-container {
+    display: flex;
+    justify-content: space-around;
+}
+.map-info-container div {
+    margin: 0 10px;
+}
+
+.hovered {
+    fill-opacity: 0.6;
+}
+#신사동, #논현1동, #논현2동, #삼성1동, #삼성2동, #대치1동, #대치4동, 
+#역삼1동, #역삼2동, #도곡1동, #도곡2동, #개포1동, #개포2동, #일원본동, 
+#일원1동, #개포3동, #수서동, #세곡동, #압구정동, #청담동, #대치2동, #개포4동 {
+    stroke-width: 2.2px;  /* 경계선 두께를 2px로 설정 */
+    stroke: #ffffff;    /* 경계선 색상 */
 }
