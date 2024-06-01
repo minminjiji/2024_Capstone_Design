@@ -76,25 +76,20 @@ header {
     border-top: 1px solid #ddd;
 }
 
-.statistics-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-
 .stats-main {
     display: flex;
     gap: 20px;
+    flex: 1;
+    margin: 10px;
+    flex-wrap: wrap; /* Allow sections to wrap if they exceed the container width */
 }
 
 .map-section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 2px;
     flex: 1;
+    height: 535px;
     background-color: #f5f5f5  ;
     border: 2px solid;
     border-radius: 10px;
@@ -104,7 +99,8 @@ header {
 
 .map-info {
     text-align: center;
-    
+    margin-right: 20px;
+    display: flex;
 }
 
 .map-container {
@@ -114,25 +110,17 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-}
-
-.map-container img {
-    max-width: 100%;
-    border-radius: 10px;
+    height: 300px;
 }
 
 
-.table-section{
-    flex: 1;
-    background-color: #f5f5f5 ;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid;
+.map-container svg {
+    background-color: #f5f5f5;
+    width: 100%;
+    height: 100%; /* 높이를 100%로 설정 */
 }
+
+
 
 .stats-timeline {
     background-color: #f5f5f5 ;
@@ -142,6 +130,8 @@ header {
     justify-content: center;
     align-items: center;
     border: 2px solid;
+    flex: 1;
+    margin: 10px;
 }
 
 .stats-timeline p {
@@ -168,16 +158,15 @@ text {
 }
 
 
-.map-container svg {
-    background-color: #f5f5f5 ; /* SVG의 배경색도 동일하게 설정 */
-}
 
 .map-info-container {
     display: flex;
+    align-items: center;
     justify-content: space-around;
+    width: 100%;
 }
-.map-info-container div {
-    margin: 0 10px;
+.map-info-container div{
+    text-align: center;
 }
 
 .hovered {
@@ -198,6 +187,12 @@ text {
     display: none;
     pointer-events: none;
     z-index: 10;
+}
+
+.table-info{
+    text-align: center;
+    display: flex;
+    margin-top: -25px;
 }
 
 table {
@@ -223,17 +218,20 @@ tr:hover {
     background-color: #f1f1f1;
 }
 
-.options {
-    margin-bottom: 10px;
-}
+
 
 #rankTable th, #rankTable td {
-    min-width: 100px;
+    min-width: 70px; /* 열의 최소 너비를 70px로 설정 */
+    min-height: 40px; /* 셀의 최소 높이를 40px로 설정 */
+    padding: 10px; /* 셀 안의 패딩을 추가하여 내용과 경계 사이에 공간을 줍니다 */
 }
 
 #rankTable th:first-child, #rankTable td:first-child {
-    min-width: 50px;
+    min-width: 50px; /* 첫 번째 열의 최소 너비를 50px로 설정 */
+    min-height: 40px; /* 첫 번째 셀의 최소 높이를 40px로 설정 */
+    padding: 10px; /* 셀 안의 패딩을 추가하여 내용과 경계 사이에 공간을 줍니다 */
 }
+
 
 .pagination {
     display: flex;
@@ -258,12 +256,14 @@ tr:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
 .rank-section {
-    margin-top: 20px;
     position: relative;
     z-index: 2;
+    height: 300px;
 }
 .stats-timeline {
     position: relative;
@@ -289,7 +289,7 @@ tr:hover {
     display: flex;
     align-items: center;
     gap: 20px;
-    margin-bottom: 20px;
+    margin-left: 50px;
 }
 
 .options label {
@@ -345,27 +345,56 @@ tr:hover {
     cursor: not-allowed;
 }
 
-.options {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
+
 
 .options select {
     margin: 0 10px;
     padding: 5px;
 }
 
-.building-type-section {
-    margin-top: 20px;
+.table-section{
+    flex-direction: column;
+    flex: 1;
+    background-color: #f5f5f5 ;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    height: 535px;
+    display: inline-block;
+    gap: 2px;
+    vertical-align: top;
 }
-.building-type-section .map-info {
-    margin-bottom: 10px;
+
+
+.statistics-container {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1400px; /* Increased to accommodate more content */
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    
 }
-#buildingTypeTable {
-    width: 100%;
-    border-collapse: collapse;
+.building-section{
+    flex-direction: column;
+    flex: 1;
+    background-color: #f5f5f5 ;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    height: 300px;
+    display: inline-block;
+    gap: 2px;
+    vertical-align: top;
 }
+
 #buildingTypeTable th, #buildingTypeTable td {
     border: 1px solid #ccc;
     padding: 8px;
@@ -373,4 +402,10 @@ tr:hover {
 }
 #buildingTypeTable th {
     background-color: #f9f9f9;
+}
+
+.building-section canvas {
+    width: 50% !important;
+    height: 50% !important; /* 캔버스가 컨테이너의 크기에 맞도록 설정 */
+    max-width: none; /* 최대 너비 제한을 없애기 위해 설정 */
 }
