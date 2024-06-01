@@ -28,7 +28,7 @@
                 <a href="introduce">소개</a>
                 <a href="#">지도</a>
                 <a href="statistics">통계</a>
-                <a href="#">자료실</a>
+                <a href="data">자료실</a>
             </nav>
         </div>
     </header>
@@ -38,6 +38,51 @@
             <div class="map-section">
                 <div class="map-info">
                     <h3>동별 탄소 배출량</h3>
+                </div>
+
+                <div class="options">
+                    <label for="region-select">동:</label>
+                    <select id="region-select">
+                        <option value="all">모든 동</option>
+                        <option value="신사동">신사동</option>
+                        <option value="논현1동">논현1동</option>
+                        <option value="논현2동">논현2동</option>
+                        <option value="삼성1동">삼성1동</option>
+                        <option value="삼성2동">삼성2동</option>
+                        <option value="대치1동">대치1동</option>
+                        <option value="대치4동">대치4동</option>
+                        <option value="역삼1동">역삼1동</option>
+                        <option value="역삼2동">역삼2동</option>
+                        <option value="도곡1동">도곡1동</option>
+                        <option value="도곡2동">도곡2동</option>
+                        <option value="개포1동">개포1동</option>
+                        <option value="개포2동">개포2동</option>
+                        <option value="일원본동">일원본동</option>
+                        <option value="일원1동">일원1동</option>
+                        <option value="개포3동">개포3동</option>
+                        <option value="수서동">수서동</option>
+                        <option value="세곡동">세곡동</option>
+                        <option value="압구정동">압구정동</option>
+                        <option value="청담동">청담동</option>
+                        <option value="대치2동">대치2동</option>
+                        <option value="개포4동">개포4동</option>
+                    </select>
+                    <label for="month-select">월:</label>
+                    <select id="month-select">
+                        <option value="all">모든 월</option>
+                        <option value="1">1월</option>
+                        <option value="2">2월</option>
+                        <option value="3">3월</option>
+                        <option value="4">4월</option>
+                        <option value="5">5월</option>
+                        <option value="6">6월</option>
+                        <option value="7">7월</option>
+                        <option value="8">8월</option>
+                        <option value="9">9월</option>
+                        <option value="10">10월</option>
+                        <option value="11">11월</option>
+                        <option value="12">12월</option>
+                    </select>
                 </div>
                 <div class="map-info-container">
                     <div>
@@ -93,22 +138,146 @@
             </div>
             
             <div class="chart-section">
-                <div class="chart-container">
+                <div class="table">
                     <div class="map-info">
-                        <h3>군산시 동별 탄소배출량 순위 보여주기</h3>
+                        <h3>강남구 행정동별 탄소배출량 순위</h3>
                     </div>
-                    <div class="treemap" id="treemap">
-                        <!-- 동별 div가 여기에 추가됩니다 -->
+                    
+                    <div class="options">
+                        <label for="rank-month-select">월:</label>
+                        <select id="rank-month-select">
+                            <option value="all">모든 월</option>
+                            <option value="1">1월</option>
+                            <option value="2">2월</option>
+                            <option value="3">3월</option>
+                            <option value="4">4월</option>
+                            <option value="5">5월</option>
+                            <option value="6">6월</option>
+                            <option value="7">7월</option>
+                            <option value="8">8월</option>
+                            <option value="9">9월</option>
+                            <option value="10">10월</option>
+                            <option value="11">11월</option>
+                            <option value="12">12월</option>
+                        </select>
                     </div>
-                    <div class="tooltip" id="tooltip"></div>
+
+                    <table id="rankTable">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>행정동</th>
+                                <th>탄소 배출량 (tons)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 순위 데이터가 여기 추가됩니다 -->
+                        </tbody>
+                    </table>
+                    <div id="pagination" class="pagination">
+                        <!-- 페이지네이션 버튼들이 여기 추가됩니다 -->
+                    </div>
                 </div>
             </div>
+            
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    const regions = {
+                        '신사동': 50,
+                        '논현1동': 60,
+                        '논현2동': 15,
+                        '삼성1동': 20,
+                        '삼성2동': 134,
+                        '대치1동': 143,
+                        '대치4동': 155,
+                        '역삼1동': 102,
+                        '역삼2동': 99,
+                        '도곡1동': 57,
+                        '도곡2동': 150,
+                        '개포1동': 200,
+                        '개포2동': 130,
+                        '일원본동': 160,
+                        '일원1동': 178,
+                        '개포3동': 188,
+                        '수서동': 144,
+                        '세곡동': 123,
+                        '압구정동': 145,
+                        '청담동': 105,
+                        '대치2동': 100,
+                        '개포4동': 100
+                    };
+            
+                    const sortedRegions = Object.entries(regions).sort((a, b) => b[1] - a[1]);
+                    const labels = sortedRegions.map(region => region[0]);
+                    const data = sortedRegions.map(region => region[1]);
+                    
+                    const itemsPerPage = 10;
+                    let currentPage = 1;
+                    const totalPages = Math.ceil(sortedRegions.length / itemsPerPage);
+
+                    function renderTablePage(page) {
+                        const rankTableBody = document.querySelector("#rankTable tbody");
+                        rankTableBody.innerHTML = '';
+                        const start = (page - 1) * itemsPerPage;
+                        const end = start + itemsPerPage;
+                        sortedRegions.slice(start, end).forEach((region, index) => {
+                            const row = document.createElement("tr");
+                            row.innerHTML = `<td>${start + index + 1}</td><td>${region[0]}</td><td>${region[1]}</td>`;
+                            rankTableBody.appendChild(row);
+                        });
+                    }
+
+                    function renderPagination() {
+                        const pagination = document.getElementById("pagination");
+                        pagination.innerHTML = '';
+
+                        for (let i = 1; i <= totalPages; i++) {
+                            const button = document.createElement("button");
+                            button.innerText = i;
+                            button.disabled = i === currentPage;
+                            button.addEventListener("click", () => {
+                                currentPage = i;
+                                renderTablePage(currentPage);
+                                renderPagination();
+                            });
+                            pagination.appendChild(button);
+                        }
+                    }
+
+                    renderTablePage(currentPage);
+                    renderPagination();
+
+                    const ctx = document.getElementById('barChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: '탄소 배출량 (tons)',
+                                data: data,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+            
         </div>
         
         <div class="stats-timeline">
-            <div class="timeline-container">
-                <p>군산시 동별 차트 보여주기</p>
-                <img src="/static/image/main1.jpg" alt="Timeline Chart">
+            
+            <div class="chart-container" style="width: 100%; height: 400px;">
+                <canvas id="barChart"></canvas>
             </div>
         </div>
     </div>
@@ -117,14 +286,195 @@
         군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트<br />나랑 데이터 할래?
     </footer>
     <script>
+       const regionsData = {
+        '신사동': { emissions: 50, electricity: 1000, gas: 500, monthly: [100, 120, 130, 110, 115, 140, 150, 160, 170, 180, 190, 200] },
+        '논현1동': { emissions: 60, electricity: 1100, gas: 550, monthly: [110, 130, 140, 120, 125, 150, 160, 170, 180, 190, 200, 210] },
+        '논현2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '삼성1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '삼성2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '대치1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '대치4동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '역삼1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '역삼2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '도곡1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '도곡2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '개포1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '개포2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '일원본동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '일원1동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '개포3동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '수서동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '세곡동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '압구정동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '청담동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '대치2동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] },
+        '개포4동': { emissions: 15, electricity: 1200, gas: 600, monthly: [120, 140, 150, 130, 135, 160, 170, 180, 190, 200, 210, 220] }
+        // 나머지 데이터 추가
+    };
         document.addEventListener("DOMContentLoaded", function() {
-          const scaleFactor = 1.05;
-          document.querySelectorAll("path").forEach(path => {
-            const originalD = path.getAttribute("d");
-            const scaledD = originalD.replace(/([0-9.]+)/g, (match) => parseFloat(match) * scaleFactor);
-            path.setAttribute("d", scaledD);
-          });
+            const regionSelect = document.getElementById('region-select');
+            const monthSelect = document.getElementById('month-select');
+            const totalElectricity = document.getElementById('total-electricity');
+            const totalGas = document.getElementById('total-gas');
+            const totalEmissions = document.getElementById('total-emissions');
+
+            const rankMonthSelect = document.getElementById('rank-month-select');
+
+            const scaleFactor = 1.05;
+            document.querySelectorAll("path").forEach(path => {
+                const originalD = path.getAttribute("d");
+                const scaledD = originalD.replace(/([0-9.]+)/g, (match) => parseFloat(match) * scaleFactor);
+                path.setAttribute("d", scaledD);
+
+                path.addEventListener('click', () => {
+                    const regionId = path.id;
+                    regionSelect.value = regionId;
+                    monthSelect.value = 'all'; // 월 선택을 모든 월로 변경
+                    updateData();
+                });
+            });
+
+            regionSelect.addEventListener('change', updateData);
+            monthSelect.addEventListener('change', updateData); 
+            rankMonthSelect.addEventListener('change', () => {
+                updateRanking();
+                updateData(); // 월을 변경할 때 데이터도 업데이트
+            });
+            let chartInstance =1; // Chart instance
+
+    function updateData() {
+        const selectedRegion = regionSelect.value;
+        const selectedMonth = monthSelect.value !== 'all' ? monthSelect.value : rankMonthSelect.value;
+
+        let totalElectricityValue = 0;
+        let totalGasValue = 0;
+        let totalEmissionsValue = 0;
+
+        if (selectedRegion === 'all') {
+            Object.values(regionsData).forEach(data => {
+                if (selectedMonth === 'all') {
+                    totalElectricityValue += data.electricity;
+                    totalGasValue += data.gas;
+                    totalEmissionsValue += data.emissions;
+                } else {
+                    const monthIndex = parseInt(selectedMonth, 10) - 1;
+                    totalElectricityValue += data.monthly[monthIndex];
+                    totalGasValue += data.monthly[monthIndex];
+                    totalEmissionsValue += data.monthly[monthIndex];
+                }
+            });
+        } else {
+            const data = regionsData[selectedRegion];
+            if (selectedMonth === 'all') {
+                totalElectricityValue = data.electricity;
+                totalGasValue = data.gas;
+                totalEmissionsValue = data.emissions;
+            } else {
+                const monthIndex = parseInt(selectedMonth, 10) - 1;
+                totalElectricityValue = data.monthly[monthIndex];
+                totalGasValue = data.monthly[monthIndex];
+                totalEmissionsValue = data.monthly[monthIndex];
+            }
+        }
+
+        totalElectricity.textContent = `${totalElectricityValue} kWh`;
+        totalGas.textContent = `${totalGasValue} m³`;
+        totalEmissions.textContent = `${totalEmissionsValue} tons`;
+    }
+
+    function updateRanking() {
+        const selectedMonth = rankMonthSelect.value;
+        const sortedRegions = Object.entries(regionsData).map(([region, data]) => {
+            const emissions = selectedMonth === 'all' ? data.emissions : data.monthly[parseInt(selectedMonth, 10) - 1];
+            return { region, emissions };
+        }).sort((a, b) => b.emissions - a.emissions);
+
+        const itemsPerPage = 10;
+        let currentPage = 1;
+        const totalPages = Math.ceil(sortedRegions.length / itemsPerPage);
+
+        function renderTablePage(page) {
+            const rankTableBody = document.querySelector("#rankTable tbody");
+            rankTableBody.innerHTML = '';
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            sortedRegions.slice(start, end).forEach((data, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.emissions}</td>`;
+                rankTableBody.appendChild(row);
+            });
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById("pagination");
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.innerText = i;
+                button.disabled = i === currentPage;
+                button.addEventListener("click", () => {
+                    currentPage = i;
+                    renderTablePage(currentPage);
+                    renderPagination();
+                });
+                pagination.appendChild(button);
+            }
+        }
+
+        renderTablePage(currentPage);
+        renderPagination();
+        updateChart(sortedRegions);
+    }
+
+    function updateChart(sortedRegions) {
+        const labels = sortedRegions.map(data => data.region);
+        const emissions = sortedRegions.map(data => data.emissions);
+
+        if (chartInstance) {
+            chartInstance.data.labels = labels;
+            chartInstance.data.datasets[0].data = emissions;
+            chartInstance.update();
+        } else {
+            const ctx = document.getElementById('barChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '탄소 배출량 (tons)',
+                        data: emissions,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+                updateData(); // Initialize with default values
+                updateRanking(); // Initialize ranking with default values
+
+            Object.keys(regionsData).forEach(regionId => {
+                const regionElement = document.getElementById(regionId);
+            if (regionElement) {
+                    regionElement.addEventListener('click', () => {
+                    const data = regionsData[regionId];
+                    document.getElementById('total-electricity').textContent = `${data.electricity} kWh`;
+                    document.getElementById('total-gas').textContent = `${data.gas} m³`;
+                    document.getElementById('total-emissions').textContent = `${data.emissions} tons`;
+                });
+            }
         });
+    });
       </script>
     <script>
        const regions = {
