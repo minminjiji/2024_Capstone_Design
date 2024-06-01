@@ -4,18 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="/static/test.css" />
     <title>Building Carbon Emissions</title>
-    <style>
-        .popup {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.75);
-            color: white;
-            padding: 5px;
-            border-radius: 3px;
-            display: none;
-            pointer-events: none;
-            z-index: 10;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -26,7 +14,7 @@
             <nav class="navbar">
                 <a href="/">홈</a>
                 <a href="introduce">소개</a>
-                <a href="#">지도</a>
+                <a href="map">지도</a>
                 <a href="statistics">통계</a>
                 <a href="data">자료실</a>
             </nav>
@@ -137,7 +125,7 @@
                 </div>
             </div>
             
-            <div class="chart-section">
+            <div class="table-section">
                 <div class="table">
                     <div class="map-info">
                         <h3>강남구 행정동별 탄소배출량 순위</h3>
@@ -167,6 +155,8 @@
                             <tr>
                                 <th>순위</th>
                                 <th>행정동</th>
+                                <th>전기 사용량 (kWh)</th>
+                                <th>가스 사용량 (m³)</th>
                                 <th>탄소 배출량 (tons)</th>
                             </tr>
                         </thead>
@@ -174,6 +164,7 @@
                             <!-- 순위 데이터가 여기 추가됩니다 -->
                         </tbody>
                     </table>
+                    
                     <div id="pagination" class="pagination">
                         <!-- 페이지네이션 버튼들이 여기 추가됩니다 -->
                     </div>
@@ -247,37 +238,35 @@
 
                     renderTablePage(currentPage);
                     renderPagination();
-
-                    const ctx = document.getElementById('barChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: '탄소 배출량 (tons)',
-                                data: data,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
                 });
             </script>
             
         </div>
         
         <div class="stats-timeline">
-            
-            <div class="chart-container" style="width: 100%; height: 400px;">
-                <canvas id="barChart"></canvas>
+            <div class="chart-section">
+                <div class="options">
+                    <label for="chart-type-select">차트 타입:</label>
+                    <select id="chart-type-select">
+                        <option value="region">동별 비교</option>
+                        <option value="month">월별 비교</option>
+                    </select>
+                    <label for="region-filter-select" style="display: none;">기준:</label>
+                    <select id="region-filter-select" style="display: none;">
+                        <option value="emissions">탄소 배출량</option>
+                        <option value="electricity">전기 사용량</option>
+                        <option value="gas">가스 사용량</option>
+                    </select>
+                    <div id="region-checkboxes" style="display: none;">
+                        <label>동 선택:</label>
+                        <div>
+                            <!-- 체크박스들이 여기에 추가됩니다 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -340,7 +329,6 @@
                 updateRanking();
                 updateData(); // 월을 변경할 때 데이터도 업데이트
             });
-            let chartInstance =1; // Chart instance
 
     function updateData() {
         const selectedRegion = regionSelect.value;
@@ -383,82 +371,163 @@
     }
 
     function updateRanking() {
-        const selectedMonth = rankMonthSelect.value;
-        const sortedRegions = Object.entries(regionsData).map(([region, data]) => {
-            const emissions = selectedMonth === 'all' ? data.emissions : data.monthly[parseInt(selectedMonth, 10) - 1];
-            return { region, emissions };
-        }).sort((a, b) => b.emissions - a.emissions);
+    const selectedMonth = rankMonthSelect.value;
+    const sortedRegions = Object.entries(regionsData).map(([region, data]) => {
+        const emissions = selectedMonth === 'all' ? data.emissions : data.monthly[parseInt(selectedMonth, 10) - 1];
+        const electricity = selectedMonth === 'all' ? data.electricity : data.monthly[parseInt(selectedMonth, 10) - 1];
+        const gas = selectedMonth === 'all' ? data.gas : data.monthly[parseInt(selectedMonth, 10) - 1];
+        return { region, emissions, electricity, gas };
+    }).sort((a, b) => b.emissions - a.emissions);
 
-        const itemsPerPage = 10;
-        let currentPage = 1;
-        const totalPages = Math.ceil(sortedRegions.length / itemsPerPage);
+    const itemsPerPage = 10;
+    let currentPage = 1;
+    const totalPages = Math.ceil(sortedRegions.length / itemsPerPage);
 
-        function renderTablePage(page) {
-            const rankTableBody = document.querySelector("#rankTable tbody");
-            rankTableBody.innerHTML = '';
-            const start = (page - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            sortedRegions.slice(start, end).forEach((data, index) => {
-                const row = document.createElement("tr");
-                row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.emissions}</td>`;
-                rankTableBody.appendChild(row);
-            });
-        }
-
-        function renderPagination() {
-            const pagination = document.getElementById("pagination");
-            pagination.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement("button");
-                button.innerText = i;
-                button.disabled = i === currentPage;
-                button.addEventListener("click", () => {
-                    currentPage = i;
-                    renderTablePage(currentPage);
-                    renderPagination();
-                });
-                pagination.appendChild(button);
-            }
-        }
-
-        renderTablePage(currentPage);
-        renderPagination();
-        updateChart(sortedRegions);
+    function renderTablePage(page) {
+        const rankTableBody = document.querySelector("#rankTable tbody");
+        rankTableBody.innerHTML = '';
+        const start = (page - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        sortedRegions.slice(start, end).forEach((data, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity}</td><td>${data.gas}</td><td>${data.emissions}</td>`;
+            rankTableBody.appendChild(row);
+        });
     }
 
-    function updateChart(sortedRegions) {
-        const labels = sortedRegions.map(data => data.region);
-        const emissions = sortedRegions.map(data => data.emissions);
+    function renderPagination() {
+        const pagination = document.getElementById("pagination");
+        pagination.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement("button");
+            button.innerText = i;
+            button.disabled = i === currentPage;
+            button.addEventListener("click", () => {
+                currentPage = i;
+                renderTablePage(currentPage);
+                renderPagination();
+            });
+            pagination.appendChild(button);
+        }
+    }
+
+    renderTablePage(currentPage);
+    renderPagination();
+    updateChart(sortedRegions);
+}
+
+
+const chartTypeSelect = document.getElementById('chart-type-select');
+    const regionFilterSelect = document.getElementById('region-filter-select');
+    const regionCheckboxesContainer = document.getElementById('region-checkboxes');
+    let chartInstance;
+
+    chartTypeSelect.addEventListener('change', updateChart);
+    regionFilterSelect.addEventListener('change', updateChart);
+
+    function updateChart() {
+        const chartType = chartTypeSelect.value;
+        let labels, datasets, chartTitle;
+
+        if (chartType === 'region') {
+            regionFilterSelect.style.display = 'inline';
+            regionCheckboxesContainer.style.display = 'none';
+
+            const filterType = regionFilterSelect.value;
+            const sortedRegions = Object.entries(regionsData).map(([region, data]) => {
+                const totalUsage = data.electricity + data.gas;
+                return { 
+                    region, 
+                    value: filterType === 'emissions' ? data.emissions : filterType === 'electricity' ? data.electricity : filterType === 'gas' ? data.gas : totalUsage 
+                };
+            }).sort((a, b) => b.value - a.value);
+
+            labels = sortedRegions.map(data => data.region);
+            const data = sortedRegions.map(data => data.value);
+            chartTitle = `동별 ${filterType === 'emissions' ? '탄소 배출량' : filterType === 'electricity' ? '전기 사용량' : filterType === 'gas' ? '가스 사용량' : '전체 사용량'} (tons)`;
+
+            datasets = [{
+                label: chartTitle,
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }];
+        } else if (chartType === 'month') {
+            regionFilterSelect.style.display = 'none';
+            regionCheckboxesContainer.style.display = 'block';
+
+            const selectedRegions = Array.from(regionCheckboxesContainer.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+            labels = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
+
+            datasets = selectedRegions.map(region => {
+                const regionData = regionsData[region].monthly;
+                const color = `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`;
+                const borderColor = color.replace('0.2', '1');
+                return {
+                    label: region,
+                    data: regionData,
+                    backgroundColor: color,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                };
+            });
+            chartTitle = '월별 탄소 배출량 (tons)';
+        }
 
         if (chartInstance) {
             chartInstance.data.labels = labels;
-            chartInstance.data.datasets[0].data = emissions;
+            chartInstance.data.datasets = datasets;
+            chartInstance.options.plugins.title.text = chartTitle;
             chartInstance.update();
         } else {
-            const ctx = document.getElementById('barChart').getContext('2d');
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
             chartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: '탄소 배출량 (tons)',
-                        data: emissions,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+                    datasets: datasets
                 },
                 options: {
                     scales: {
                         y: {
                             beginAtZero: true
                         }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: chartTitle
+                        }
                     }
                 }
             });
         }
     }
+
+    function createRegionCheckboxes() {
+        const checkboxContainer = regionCheckboxesContainer.querySelector('div');
+        checkboxContainer.innerHTML = '';
+
+        Object.keys(regionsData).forEach(region => {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = region;
+            checkbox.id = `checkbox-${region}`;
+            checkbox.addEventListener('change', updateChart);
+
+            const label = document.createElement('label');
+            label.htmlFor = `checkbox-${region}`;
+            label.textContent = region;
+
+            checkboxContainer.appendChild(checkbox);
+            checkboxContainer.appendChild(label);
+        });
+    }
+
+    createRegionCheckboxes();
+    updateChart(); // Initialize chart with default values
 
                 updateData(); // Initialize with default values
                 updateRanking(); // Initialize ranking with default values
