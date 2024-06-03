@@ -24,6 +24,9 @@ def statistics():
 def statistics2():
     return render_template('statistics2.html')
 
+@app.route('/calculator')
+def calculator():
+    return render_template('calculator.html')
 
 @app.route('/data')
 def data():
