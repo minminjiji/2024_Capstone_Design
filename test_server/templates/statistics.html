@@ -155,8 +155,8 @@
                                 <th>순위</th>
                                 <th>행정동</th>
                                 <th>전기 사용량 (kWh)</th>
-                                <th>가스 사용량 (m³)</th>
-                                <th>탄소 배출량 (tons)</th>
+                                <th>가스 사용량 (kWh)</th>
+                                <th>탄소 배출량 (tCO2eq.)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -301,436 +301,1185 @@
     <script>
     const regionsData = {
     '신사동': {
-        emissions: 50,
+        emissions: 400057292,
         electricity: 95809977,
         gas: 52738672,
         monthly: [
-            { month: 'Jan', electricity: 28877855, gas: 14448183, emissions: 150 },
-            { month: 'Feb', electricity: 26547298, gas: 15400360, emissions: 180 },
-            { month: 'Mar', electricity: 18831023, gas: 10774329, emissions: 195 },
-            { month: 'Apr', electricity: 16372396, gas: 8003471, emissions: 165 },
-            { month: 'May', electricity: 16162274, gas: 6767076, emissions: 173 },
-            { month: 'Jun', electricity: 19763968, gas: 6195340, emissions: 210 },
-            { month: 'Jul', electricity: 23595087, gas: 5926551, emissions: 225 },
-            { month: 'Aug', electricity: 27005293, gas: 6753439, emissions: 240 },
-            { month: 'Sep', electricity: 24162055, gas: 6304792, emissions: 255 },
-            { month: 'Oct', electricity: 16754037, gas: 5255627, emissions: 270 },
-            { month: 'Nov', electricity: 17764229, gas: 6737127, emissions: 285 },
-            { month: 'Dec', electricity: 23465908, gas: 9999437, emissions: 300 }
+            { month: 'Jan', electricity: 28877855, gas: 14448183, emissions: 52701019 },
+            { month: 'Feb', electricity: 26547298, gas: 15400360, emissions: 54151734 },
+            { month: 'Mar', electricity: 18831023, gas: 10774329, emissions: 38008693 },
+            { month: 'Apr', electricity: 16372396, gas: 8003471, emissions: 29372840 },
+            { month: 'May', electricity: 16162274, gas: 6767076, emissions: 25943101 },
+            { month: 'Jun', electricity: 19763968, gas: 6195340, emissions: 26124059 },
+            { month: 'Jul', electricity: 23595087, gas: 5926551, emissions: 27230390 },
+            { month: 'Aug', electricity: 27005293, gas: 6753439, emissions: 31086089 },
+            { month: 'Sep', electricity: 24162055, gas: 6304792, emissions: 28519758 },
+            { month: 'Oct', electricity: 16754037, gas: 5255627, emissions: 22155756 },
+            { month: 'Nov', electricity: 17764229, gas: 6737127, emissions: 26627708 },
+            { month: 'Dec', electricity: 23465908, gas: 9999437, emissions: 38136148 }
         ]
     },
     '논현1동': {
-        emissions: 60,
+        emissions: 777606635,
         electricity: 482458404,
         gas: 203184884,
         monthly: [
-            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 165 },
-            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 195 },
-            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 210 },
-            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 180 },
-            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 188 },
-            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 225 },
-            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 240 },
-            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 255 },
-            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 270 },
-            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 285 },
-            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 300 },
-            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 315 }
+            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 108665028 },
+            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 114946541 },
+            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 76755478 },
+            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 58912220 },
+            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 44999335 },
+            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 44982374 },
+            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 47365124 },
+            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 53626637 },
+            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 51528815 },
+            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 43344312 },
+            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 50792643 },
+            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 81688129 }
         ]
     },
     '논현2동': {
-        emissions: 60,
+        emissions: 777606635,
         electricity: 482458404,
         gas: 203184884,
         monthly: [
-            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 165 },
-            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 195 },
-            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 210 },
-            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 180 },
-            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 188 },
-            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 225 },
-            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 240 },
-            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 255 },
-            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 270 },
-            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 285 },
-            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 300 },
-            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 315 }
+            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 108665028 },
+            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 114946541 },
+            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 76755478 },
+            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 58912220 },
+            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 44999335 },
+            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 44982374 },
+            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 47365124 },
+            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 53626637 },
+            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 51528815 },
+            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 43344312 },
+            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 50792643 },
+            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 81688129 }
         ]
     },
     '삼성1동': {
-        emissions: 60,
+        emissions: 873296022,
         electricity: 475258980,
         gas: 239997329,
         monthly: [
-            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 165 },
-            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions: 195 },
-            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 210 },
-            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 180 },
-            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 188 },
-            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 225 },
-            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 240 },
-            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 255 },
-            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 270 },
-            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 285 },
-            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 300 },
-            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 315 }
+            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 123812863 },
+            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions:  118199226},
+            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 94416419 },
+            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 63829003 },
+            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 53488084 },
+            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 49961842 },
+            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 61475524 },
+            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 66042212 },
+            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 66886751 },
+            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 48617194 },
+            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 51535428 },
+            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 75031476 }
         ]
     },
     '삼성2동': {
-        emissions: 60,
+        emissions: 873296022,
         electricity: 475258980,
         gas: 239997329,
         monthly: [
-            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 165 },
-            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions: 195 },
-            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 210 },
-            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 180 },
-            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 188 },
-            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 225 },
-            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 240 },
-            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 255 },
-            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 270 },
-            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 285 },
-            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 300 },
-            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 315 }
+            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 123812863 },
+            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions:  118199226},
+            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 94416419 },
+            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 63829003 },
+            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 53488084 },
+            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 49961842 },
+            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 61475524 },
+            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 66042212 },
+            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 66886751 },
+            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 48617194 },
+            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 51535428 },
+            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 75031476 }
         ]
     },
     '대치1동': {
-        emissions: 60,
+        emissions: 665662439,
         electricity: 465833733,
         gas: 164562413,
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 165 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 195 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 210 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 180 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 188 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 225 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 240 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 255 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 270 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 285 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 300 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 315 }
+            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
+            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
+            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
+            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
+            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
+            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
+            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
+            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
+            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
+            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
+            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
+            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
         ]
     },
     '대치4동': {
-        emissions: 60,
+        emissions: 665662439,
         electricity: 465833733,
         gas: 164562413,
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 165 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 195 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 210 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 180 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 188 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 225 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 240 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 255 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 270 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 285 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 300 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 315 }
+            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
+            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
+            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
+            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
+            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
+            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
+            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
+            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
+            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
+            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
+            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
+            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
         ]
     },
     '역삼1동': {
-        emissions: 60,
+        emissions: 1543151654,
         electricity: 873625861,
         gas: 418085480,
         monthly: [
-            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 165 },
-            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 195 },
-            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 210 },
-            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 180 },
-            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 188 },
-            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 225 },
-            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 240 },
-            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 255 },
-            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 270 },
-            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 285 },
-            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 300 },
-            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 315 }
+            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 224859303 },
+            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 217346566 },
+            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 161387615 },
+            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 112567636 },
+            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 85496064 },
+            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 85541840 },
+            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 102757633 },
+            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 118452604 },
+            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 116739253 },
+            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 84344948 },
+            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 89301936 },
+            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 144356256 }
         ]
     },
     '역삼2동': {
-        emissions: 60,
+        emissions: 1543151654,
         electricity: 873625861,
         gas: 418085480,
         monthly: [
-            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 165 },
-            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 195 },
-            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 210 },
-            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 180 },
-            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 188 },
-            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 225 },
-            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 240 },
-            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 255 },
-            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 270 },
-            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 285 },
-            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 300 },
-            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 315 }
+            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 224859303 },
+            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 217346566 },
+            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 161387615 },
+            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 112567636 },
+            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 85496064 },
+            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 85541840 },
+            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 102757633 },
+            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 118452604 },
+            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 116739253 },
+            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 84344948 },
+            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 89301936 },
+            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 144356256 }
         ]
     },
     '도곡1동': {
-        emissions: 60,
+        emissions: 717213166,
         electricity: 373658919,
         gas: 200058044,
         monthly: [
-            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: 165 },
-            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: 195 },
-            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: 210 },
-            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: 180 },
-            { month: 'May', electricity: 27214409, gas: 8859607, emissions: 188 },
-            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: 225 },
-            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: 240 },
-            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: 255 },
-            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: 270 },
-            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: 285 },
-            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: 300 },
-            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: 315 }
+            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: Math.round((32749553 * 0.4777) + (27637016 * 2.6928)) },
+            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: Math.round((29499611 * 0.4777) + (29261682 * 2.6928)) },
+            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: Math.round((27421358 * 0.4777) + (22391131 * 2.6928)) },
+            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: Math.round((25783510 * 0.4777) + (14568139 * 2.6928)) },
+            { month: 'May', electricity: 27214409, gas: 8859607, emissions: Math.round((27214409 * 0.4777) + (8859607 * 2.6928)) },
+            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: Math.round((31178483 * 0.4777) + (10519061 * 2.6928)) },
+            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: Math.round((38810839 * 0.4777) + (11285969 * 2.6928)) },
+            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: Math.round((42017758 * 0.4777) + (19027817 * 2.6928)) },
+            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: Math.round((33731942 * 0.4777) + (20695123 * 2.6928)) },
+            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: Math.round((26912583 * 0.4777) + (11434192 * 2.6928)) },
+            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: Math.round((27352054 * 0.4777) + (7480824 * 2.6928)) },
+            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: Math.round((30986819 * 0.4777) + (16897483 * 2.6928)) }
         ]
     },
     '도곡2동': {
-        emissions: 60,
+        emissions: 717213166,
         electricity: 373658919,
         gas: 200058044,
         monthly: [
-            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: 165 },
-            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: 195 },
-            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: 210 },
-            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: 180 },
-            { month: 'May', electricity: 27214409, gas: 8859607, emissions: 188 },
-            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: 225 },
-            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: 240 },
-            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: 255 },
-            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: 270 },
-            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: 285 },
-            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: 300 },
-            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: 315 }
+            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: Math.round((32749553 * 0.4777) + (27637016 * 2.6928)) },
+            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: Math.round((29499611 * 0.4777) + (29261682 * 2.6928)) },
+            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: Math.round((27421358 * 0.4777) + (22391131 * 2.6928)) },
+            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: Math.round((25783510 * 0.4777) + (14568139 * 2.6928)) },
+            { month: 'May', electricity: 27214409, gas: 8859607, emissions: Math.round((27214409 * 0.4777) + (8859607 * 2.6928)) },
+            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: Math.round((31178483 * 0.4777) + (10519061 * 2.6928)) },
+            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: Math.round((38810839 * 0.4777) + (11285969 * 2.6928)) },
+            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: Math.round((42017758 * 0.4777) + (19027817 * 2.6928)) },
+            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: Math.round((33731942 * 0.4777) + (20695123 * 2.6928)) },
+            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: Math.round((26912583 * 0.4777) + (11434192 * 2.6928)) },
+            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: Math.round((27352054 * 0.4777) + (7480824 * 2.6928)) },
+            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: Math.round((30986819 * 0.4777) + (16897483 * 2.6928)) }
         ]
     },
     '개포1동': {
-        emissions: 60,
+        emissions: 187783121,
         electricity: 95809977,
         gas: 52738672,
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: 165 },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: 195 },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: 210 },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: 180 },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: 188 },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: 225 },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: 240 },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: 255 },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: 270 },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: 285 },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: 300 },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: 315 }
+            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
+            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
+            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
+            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
+            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
+            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
+            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
+            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
+            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
+            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
+            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
+            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
         ]
     },
     '개포2동': {
-        emissions: 60,
+        emissions: 187783121,
         electricity: 95809977,
         gas: 52738672,
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: 165 },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: 195 },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: 210 },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: 180 },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: 188 },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: 225 },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: 240 },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: 255 },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: 270 },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: 285 },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: 300 },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: 315 }
+            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
+            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
+            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
+            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
+            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
+            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
+            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
+            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
+            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
+            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
+            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
+            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
         ]
     },
     '일원본동': {
-        emissions: 60,
+        emissions: 55006689,
         electricity: 39556329,
         gas: 13410068,
         monthly: [
-            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: 165 },
-            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: 195 },
-            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: 210 },
-            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: 180 },
-            { month: 'May', electricity: 2849238, gas: 964818, emissions: 188 },
-            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: 225 },
-            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: 240 },
-            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: 255 },
-            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: 270 },
-            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: 285 },
-            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: 300 },
-            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: 315 }
+            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: Math.round((3647780 * 0.4777) + (1996214 * 2.6928)) },
+            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: Math.round((3231426 * 0.4777) + (2001654 * 2.6928)) },
+            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: Math.round((2935919 * 0.4777) + (1519279 * 2.6928)) },
+            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: Math.round((2741247 * 0.4777) + (1072470 * 2.6928)) },
+            { month: 'May', electricity: 2849238, gas: 964818, emissions: Math.round((2849238 * 0.4777) + (964818 * 2.6928)) },
+            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: Math.round((3166833 * 0.4777) + (691875 * 2.6928)) },
+            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: Math.round((4007495 * 0.4777) + (738475 * 2.6928)) },
+            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: Math.round((4417703 * 0.4777) + (604668 * 2.6928)) },
+            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: Math.round((3509845 * 0.4777) + (727755 * 2.6928)) },
+            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: Math.round((2820048 * 0.4777) + (532381 * 2.6928)) },
+            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: Math.round((2909346 * 0.4777) + (1092925 * 2.6928)) },
+            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: Math.round((3319449 * 0.4777) + (1467554 * 2.6928)) }
         ]
     },
     '일원1동': {
-        emissions: 60,
+        emissions: 55006689,
         electricity: 39556329,
         gas: 13410068,
         monthly: [
-            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: 165 },
-            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: 195 },
-            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: 210 },
-            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: 180 },
-            { month: 'May', electricity: 2849238, gas: 964818, emissions: 188 },
-            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: 225 },
-            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: 240 },
-            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: 255 },
-            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: 270 },
-            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: 285 },
-            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: 300 },
-            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: 315 }
+            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: Math.round((3647780 * 0.4777) + (1996214 * 2.6928)) },
+            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: Math.round((3231426 * 0.4777) + (2001654 * 2.6928)) },
+            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: Math.round((2935919 * 0.4777) + (1519279 * 2.6928)) },
+            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: Math.round((2741247 * 0.4777) + (1072470 * 2.6928)) },
+            { month: 'May', electricity: 2849238, gas: 964818, emissions: Math.round((2849238 * 0.4777) + (964818 * 2.6928)) },
+            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: Math.round((3166833 * 0.4777) + (691875 * 2.6928)) },
+            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: Math.round((4007495 * 0.4777) + (738475 * 2.6928)) },
+            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: Math.round((4417703 * 0.4777) + (604668 * 2.6928)) },
+            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: Math.round((3509845 * 0.4777) + (727755 * 2.6928)) },
+            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: Math.round((2820048 * 0.4777) + (532381 * 2.6928)) },
+            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: Math.round((2909346 * 0.4777) + (1092925 * 2.6928)) },
+            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: Math.round((3319449 * 0.4777) + (1467554 * 2.6928)) }
         ]
     },
     '개포3동': {
-        emissions: 60,
+        emissions: 187783121,
         electricity: 95809977,
         gas: 52738672,
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: 165 },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: 195 },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: 210 },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: 180 },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: 188 },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: 225 },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: 240 },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: 255 },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: 270 },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: 285 },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: 300 },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: 315 }
+            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
+            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
+            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
+            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
+            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
+            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
+            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
+            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
+            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
+            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
+            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
+            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
         ]
     },
     '수서동': {
-        emissions: 60,
+        emissions: 15542404,
         electricity: 7212728,
         gas: 4492307,
         monthly: [
-            { month: 'Jan', electricity: 909658, gas: 635784, emissions: 165 },
-            { month: 'Feb', electricity: 827757, gas: 669363, emissions: 195 },
-            { month: 'Mar', electricity: 608959, gas: 485655, emissions: 210 },
-            { month: 'Apr', electricity: 448310, gas: 379680, emissions: 180 },
-            { month: 'May', electricity: 418840, gas: 317544, emissions: 188 },
-            { month: 'Jun', electricity: 493491, gas: 265776, emissions: 225 },
-            { month: 'Jul', electricity: 617857, gas: 231645, emissions: 240 },
-            { month: 'Aug', electricity: 730586, gas: 230160, emissions: 255 },
-            { month: 'Sep', electricity: 664888, gas: 240165, emissions: 270 },
-            { month: 'Oct', electricity: 466729, gas: 195799, emissions: 285 },
-            { month: 'Nov', electricity: 453110, gas: 348816, emissions: 300 },
-            { month: 'Dec', electricity: 572543, gas: 491920, emissions: 315 }
+            { month: 'Jan', electricity: 909658, gas: 635784, emissions: Math.round((909658 * 0.4777) + (635784 * 2.6928)) }, // 1935183
+            { month: 'Feb', electricity: 827757, gas: 669363, emissions: Math.round((827757 * 0.4777) + (669363 * 2.6928)) }, // 1966112
+            { month: 'Mar', electricity: 608959, gas: 485655, emissions: Math.round((608959 * 0.4777) + (485655 * 2.6928)) }, // 1433008
+            { month: 'Apr', electricity: 448310, gas: 379680, emissions: Math.round((448310 * 0.4777) + (379680 * 2.6928)) }, // 1113606
+            { month: 'May', electricity: 418840, gas: 317544, emissions: Math.round((418840 * 0.4777) + (317544 * 2.6928)) }, // 934569
+            { month: 'Jun', electricity: 493491, gas: 265776, emissions: Math.round((493491 * 0.4777) + (265776 * 2.6928)) }, // 853448
+            { month: 'Jul', electricity: 617857, gas: 231645, emissions: Math.round((617857 * 0.4777) + (231645 * 2.6928)) }, // 965128
+            { month: 'Aug', electricity: 730586, gas: 230160, emissions: Math.round((730586 * 0.4777) + (230160 * 2.6928)) }, // 1095171
+            { month: 'Sep', electricity: 664888, gas: 240165, emissions: Math.round((664888 * 0.4777) + (240165 * 2.6928)) }, // 1045934
+            { month: 'Oct', electricity: 466729, gas: 195799, emissions: Math.round((466729 * 0.4777) + (195799 * 2.6928)) }, // 803319
+            { month: 'Nov', electricity: 453110, gas: 348816, emissions: Math.round((453110 * 0.4777) + (348816 * 2.6928)) }, // 1252602
+            { month: 'Dec', electricity: 572543, gas: 491920, emissions: Math.round((572543 * 0.4777) + (491920 * 2.6928)) }  // 1842525
         ]
     },
     '세곡동': {
-        emissions: 60,
+        emissions: 5552657,
         electricity: 2956064,
         gas: 1537636,
         monthly: [
-            { month: 'Jan', electricity: 334914, gas: 223663, emissions: 165 },
-            { month: 'Feb', electricity: 314776, gas: 242728, emissions: 195 },
-            { month: 'Mar', electricity: 248784, gas: 162528, emissions: 210 },
-            { month: 'Apr', electricity: 213961, gas: 116783, emissions: 180 },
-            { month: 'May', electricity: 184057, gas: 101689, emissions: 188 },
-            { month: 'Jun', electricity: 198301, gas: 81471, emissions: 225 },
-            { month: 'Jul', electricity: 229214, gas: 87264, emissions: 240 },
-            { month: 'Aug', electricity: 282107, gas: 87892, emissions: 255 },
-            { month: 'Sep', electricity: 274685, gas: 91648, emissions: 270 },
-            { month: 'Oct', electricity: 218207, gas: 64714, emissions: 285 },
-            { month: 'Nov', electricity: 196816, gas: 110736, emissions: 300 },
-            { month: 'Dec', electricity: 260242, gas: 166520, emissions: 315 }
+            { month: 'Jan', electricity: 334914, gas: 223663, emissions: Math.round((334914 * 0.4777) + (223663 * 2.6928)) }, // 690720
+            { month: 'Feb', electricity: 314776, gas: 242728, emissions: Math.round((314776 * 0.4777) + (242728 * 2.6928)) }, // 733256
+            { month: 'Mar', electricity: 248784, gas: 162528, emissions: Math.round((248784 * 0.4777) + (162528 * 2.6928)) }, // 498237
+            { month: 'Apr', electricity: 213961, gas: 116783, emissions: Math.round((213961 * 0.4777) + (116783 * 2.6928)) }, // 354683
+            { month: 'May', electricity: 184057, gas: 101689, emissions: Math.round((184057 * 0.4777) + (101689 * 2.6928)) }, // 308051
+            { month: 'Jun', electricity: 198301, gas: 81471, emissions: Math.round((198301 * 0.4777) + (81471 * 2.6928)) }, // 287717
+            { month: 'Jul', electricity: 229214, gas: 87264, emissions: Math.round((229214 * 0.4777) + (87264 * 2.6928)) }, // 331998
+            { month: 'Aug', electricity: 282107, gas: 87892, emissions: Math.round((282107 * 0.4777) + (87892 * 2.6928)) }, // 386237
+            { month: 'Sep', electricity: 274685, gas: 91648, emissions: Math.round((274685 * 0.4777) + (91648 * 2.6928)) }, // 385241
+            { month: 'Oct', electricity: 218207, gas: 64714, emissions: Math.round((218207 * 0.4777) + (64714 * 2.6928)) }, // 263519
+            { month: 'Nov', electricity: 196816, gas: 110736, emissions: Math.round((196816 * 0.4777) + (110736 * 2.6928)) }, // 364078
+            { month: 'Dec', electricity: 260242, gas: 166520, emissions: Math.round((260242 * 0.4777) + (166520 * 2.6928)) }  // 550918
         ]
     },
     '압구정동': {
-        emissions: 60,
+        emissions: 211426077,
         electricity: 380636506,
         gas: 10990797,
         monthly: [
-            { month: 'Jan', electricity: 35552534, gas: 1706542, emissions: 165 },
-            { month: 'Feb', electricity: 29712151, gas: 854696, emissions: 195 },
-            { month: 'Mar', electricity: 30180365, gas: 1850828, emissions: 210 },
-            { month: 'Apr', electricity: 26933248, gas: 506502, emissions: 180 },
-            { month: 'May', electricity: 26454100, gas: 1409135, emissions: 188 },
-            { month: 'Jun', electricity: 29222236, gas: 461700, emissions: 225 },
-            { month: 'Jul', electricity: 39305395, gas: 1120829, emissions: 240 },
-            { month: 'Aug', electricity: 42527129, gas: 155686, emissions: 255 },
-            { month: 'Sep', electricity: 31336297, gas: 1067762, emissions: 270 },
-            { month: 'Oct', electricity: 27264234, gas: 137161, emissions: 285 },
-            { month: 'Nov', electricity: 29460376, gas: 1272468, emissions: 300 },
-            { month: 'Dec', electricity: 32688441, gas: 447488, emissions: 315 }
+            { month: 'Jan', electricity: 35552534, gas: 1706542, emissions: Math.round((35552534 * 0.4777) + (1706542 * 2.6928)) }, // 21591399
+            { month: 'Feb', electricity: 29712151, gas: 854696, emissions: Math.round((29712151 * 0.4777) + (854696 * 2.6928)) }, // 18115616
+            { month: 'Mar', electricity: 30180365, gas: 1850828, emissions: Math.round((30180365 * 0.4777) + (1850828 * 2.6928)) }, // 20827285
+            { month: 'Apr', electricity: 26933248, gas: 506502, emissions: Math.round((26933248 * 0.4777) + (506502 * 2.6928)) }, // 13163905
+            { month: 'May', electricity: 26454100, gas: 1409135, emissions: Math.round((26454100 * 0.4777) + (1409135 * 2.6928)) }, // 14868448
+            { month: 'Jun', electricity: 29222236, gas: 461700, emissions: Math.round((29222236 * 0.4777) + (461700 * 2.6928)) }, // 14359571
+            { month: 'Jul', electricity: 39305395, gas: 1120829, emissions: Math.round((39305395 * 0.4777) + (1120829 * 2.6928)) }, // 19960021
+            { month: 'Aug', electricity: 42527129, gas: 155686, emissions: Math.round((42527129 * 0.4777) + (155686 * 2.6928)) }, // 20408263
+            { month: 'Sep', electricity: 31336297, gas: 1067762, emissions: Math.round((31336297 * 0.4777) + (1067762 * 2.6928)) }, // 16237314
+            { month: 'Oct', electricity: 27264234, gas: 137161, emissions: Math.round((27264234 * 0.4777) + (137161 * 2.6928)) }, // 13145760
+            { month: 'Nov', electricity: 29460376, gas: 1272468, emissions: Math.round((29460376 * 0.4777) + (1272468 * 2.6928)) }, // 16834623
+            { month: 'Dec', electricity: 32688441, gas: 447488, emissions: Math.round((32688441 * 0.4777) + (447488 * 2.6928)) }  // 16095972
         ]
     },
     '청담동': {
-        emissions: 60,
+        emissions: 429157857.63,
         electricity: 209482752,
         gas: 122210319,
         monthly: [
-            { month: 'Jan', electricity: 23021771, gas: 19243204, emissions: 165 },
-            { month: 'Feb', electricity: 21152247, gas: 20793474, emissions: 195 },
-            { month: 'Mar', electricity: 15895206, gas: 12998056, emissions: 210 },
-            { month: 'Apr', electricity: 13880555, gas: 9722876, emissions: 180 },
-            { month: 'May', electricity: 13438030, gas: 6582857, emissions: 188 },
-            { month: 'Jun', electricity: 15874921, gas: 6316995, emissions: 225 },
-            { month: 'Jul', electricity: 18703310, gas: 5794831, emissions: 240 },
-            { month: 'Aug', electricity: 21534028, gas: 7035772, emissions: 255 },
-            { month: 'Sep', electricity: 19480918, gas: 6324412, emissions: 270 },
-            { month: 'Oct', electricity: 14259442, gas: 6057306, emissions: 285 },
-            { month: 'Nov', electricity: 14246323, gas: 7767703, emissions: 300 },
-            { month: 'Dec', electricity: 17996001, gas: 13572833, emissions: 315 }
+            { month: 'Jan', electricity: 23021771, gas: 19243204, emissions: Math.round((23021771 * 0.4777) + (19243204 * 2.6928)) }, // 63170726
+            { month: 'Feb', electricity: 21152247, gas: 20793474, emissions: Math.round((21152247 * 0.4777) + (20793474 * 2.6928)) }, // 66479365
+            { month: 'Mar', electricity: 15895206, gas: 12998056, emissions: Math.round((15895206 * 0.4777) + (12998056 * 2.6928)) }, // 41947356
+            { month: 'Apr', electricity: 13880555, gas: 9722876, emissions: Math.round((13880555 * 0.4777) + (9722876 * 2.6928)) }, // 32288896
+            { month: 'May', electricity: 13438030, gas: 6582857, emissions: Math.round((13438030 * 0.4777) + (6582857 * 2.6928)) }, // 24647809
+            { month: 'Jun', electricity: 15874921, gas: 6316995, emissions: Math.round((15874921 * 0.4777) + (6316995 * 2.6928)) }, // 26110688
+            { month: 'Jul', electricity: 18703310, gas: 5794831, emissions: Math.round((18703310 * 0.4777) + (5794831 * 2.6928)) }, // 28724069
+            { month: 'Aug', electricity: 21534028, gas: 7035772, emissions: Math.round((21534028 * 0.4777) + (7035772 * 2.6928)) }, // 34502161
+            { month: 'Sep', electricity: 19480918, gas: 6324412, emissions: Math.round((19480918 * 0.4777) + (6324412 * 2.6928)) }, // 28518368
+            { month: 'Oct', electricity: 14259442, gas: 6057306, emissions: Math.round((14259442 * 0.4777) + (6057306 * 2.6928)) }, // 23142300
+            { month: 'Nov', electricity: 14246323, gas: 7767703, emissions: Math.round((14246323 * 0.4777) + (7767703 * 2.6928)) }, // 25826892
+            { month: 'Dec', electricity: 17996001, gas: 13572833, emissions: Math.round((17996001 * 0.4777) + (13572833 * 2.6928)) }  // 47894477
         ]
     },
     '대치2동': {
-        emissions: 60,
+        emissions: 665662439,
         electricity: 465833733,
         gas: 164562413,
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 165 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 195 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 210 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 180 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 188 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 225 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 240 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 255 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 270 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 285 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 300 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 315 }
+            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
+            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
+            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
+            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
+            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
+            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
+            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
+            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
+            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
+            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
+            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
+            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
         ]
     },
     '개포4동': {
-        emissions: 60,
+        emissions: 187783121,
         electricity: 95809977,
         gas: 52738672,
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: 165 },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: 195 },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: 210 },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: 180 },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: 188 },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: 225 },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: 240 },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: 255 },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: 270 },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: 285 },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: 300 },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: 315 }
+            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
+            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
+            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
+            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
+            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
+            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
+            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
+            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
+            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
+            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
+            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
+            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
         ]
     }
     // 다른 동들도 같은 형식으로 추가
 };
     const buildingTypesData = {
         '신사동': {
-            '주거용': { emissions: 500, electricity: 10000, gas: 5000, monthly: [1000, 1200, 1300, 1100, 1150, 1400, 1500, 1600, 1700, 1800, 1900, 2000] },
-            '상업용': { emissions: 600, electricity: 11000, gas: 5500, monthly: [1100, 1300, 1400, 1200, 1250, 1500, 1600, 1700, 1800, 1900, 2000, 2100] },
-            // ... 신사동의 다른 건물용도
+            '공동주택': {"emissions": 780907, "monthly": [88341, 86827, 73268, 70042, 66213, 63275, 52979, 50317, 48857, 48990, 59698, 72100]},
+
+            '교육연구시설': {"emissions": 11805233, "monthly": [1642616, 1634404, 1348606, 946502, 760626, 701062, 614626, 673171, 634575, 490884, 818743, 1539418]},
+
+            '노유자시설': {"emissions": 1997284, "monthly": [327498, 344156, 306012, 201303, 170203, 83718, 55969, 60578, 51155, 41046, 82374, 273272]},
+
+            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 11040594, "monthly": [1530431, 1650471, 1112780, 384302, 275182, 545768, 864813, 1351395, 1328840, 840022, 408950, 747640]},
+
+            '숙박시설': {"emissions": 18453422, "monthly": [2180669, 1965987, 1644271, 1339834, 1191900, 1338749, 1460722, 1788151, 1460472, 990673, 1371079, 1720915]},
+
+            '업무시설': {"emissions": 58152920, "monthly": [8119495, 8948642, 6061393, 4268983, 3196996, 3369515, 3815785, 4751662, 4313528, 3121460, 3081002, 5104459]},
+
+            '운동시설': {"emissions": 174337, "monthly": [26726, 23550, 15765, 11994, 10271, 11075, 11342, 14688, 10546, 7625, 10350, 20405]},
+
+            '위락시설': {"emissions": 261842, "monthly": [27462, 23022, 12839, 14664, 19151, 22972, 26485, 26191, 24399, 17759, 20553, 26345]},
+
+            '위험물저장및처리시설': {"emissions": 51410, "monthly": [7600, 7619, 5374, 4298, 3127, 2832, 2986, 3553, 3408, 2620, 3256, 4737]},
+
+            '의료시설': {"emissions": 5650725, "monthly": [787692, 963407, 629641, 542155, 412129, 355158, 265842, 298704, 264742, 215120, 376854, 539281]},
+
+            '자동차관련시설': {"emissions": 2271451, "monthly": [322024, 325278, 256076, 155224, 175578, 164963, 136910, 138823, 125345, 106147, 131275, 233808]},
+
+            '제1종근린생활시설': {"emissions": 95118799, "monthly": [12117046, 12422374, 8719381, 6995982, 6360821, 6490444, 6668856, 7564830, 6907812, 5432920, 6508076, 8930257]},
+
+            '제2종근린생활시설': {"emissions": 186778821, "monthly": [23963619, 24334243, 17075000, 13984884, 13037226, 12671196, 12847707, 13849248, 12847114, 10470176, 13453805, 18244603]},
+
+            '종교시설': {"emissions": 3812723, "monthly": [1071359, 926478, 387623, 242089, 90329, 69290, 115809, 154088, 171962, 136737, 102043, 344916]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 3706726, "monthly": [488430, 495268, 360655, 210576, 173340, 234035, 289550, 360682, 326995, 233569, 199642, 333984]},
+
         },
+
         '논현1동': {
-            '주거용': { emissions: 450, electricity: 9000, gas: 4500, monthly: [900, 1100, 1200, 1000, 1050, 1300, 1400, 1500, 1600, 1700, 1800, 1900] },
-            '상업용': { emissions: 550, electricity: 10500, gas: 5200, monthly: [1000, 1200, 1300, 1100, 1150, 1400, 1500, 1600, 1700, 1800, 1900, 2000] },
-            // ... 논현1동의 다른 건물용도
+            '공동주택': {"emissions": 112806377, "monthly": [14933050, 16847987, 10621615, 8904466, 6931078, 6917482, 5626352, 6469531, 5424407, 6655657, 8600892, 14873860]},
+            '교육연구시설': {"emissions": 14666952, "monthly": [2097916, 2174277, 1461322, 1030200, 616597, 746070, 987309, 1364839, 1325257, 920863, 703417, 1238885]},
+            '근린생활시설': {"emissions": 64352, "monthly": [13453, 16034, 9394, 9751, 3336, 848, 747, 1290, 1895, 481, 442, 6681]},
+            '노유자시설': {"emissions": 8444349, "monthly": [1392552, 1369558, 1006394, 754421, 563211, 451334, 380830, 358696, 342160, 335735, 529896, 959562]},
+            '단독주택': {"emissions": 2102, "monthly": [731, 669, 117, 117, 117, 117, 117, 117, 0, 0, 0, 0]},
+            '문화및집회시설': {"emissions": 3575176, "monthly": [572115, 569219, 411764, 338624, 220337, 190310, 192751, 227286, 205968, 144810, 162000, 339992]},
+            '방송통신시설': {"emissions": 38117071, "monthly": [3197430, 2956720, 3203094, 3062617, 3206657, 3182066, 3362947, 3378540, 3205438, 3209061, 3017987, 3134514]},
+            '숙박시설': {"emissions": 32395462, "monthly": [4279341, 4305870, 3242475, 2589748, 2028414, 2311924, 2553790, 2985152, 2865469, 1759066, 1348685, 2125528]},
+            '업무시설': {"emissions": 185906273, "monthly": [29563593, 29940079, 20331915, 13314662, 8427116, 9057308, 10857527, 13360438, 13338165, 9844747, 9556344, 18314379]},
+            '운동시설': {"emissions": 5737710, "monthly": [766052, 743093, 446251, 442512, 366136, 378526, 444902, 511098, 416283, 344328, 387705, 490824]},
+            '위락시설': {"emissions": 1084784, "monthly": [281760, 254786, 247733, 176391, 76741, 24301, 4165, 3893, 3411, 3635, 3738, 4230]},
+            '위험물저장및처리시설': {"emissions": 243547, "monthly": [36598, 41463, 33143, 18689, 17895, 8843, 8011, 8265, 8384, 7736, 21884, 32636]},
+            '의료시설': {"emissions": 21375731, "monthly": [2311478, 2482264, 1706741, 1593428, 1292677, 1500693, 1776062, 2002952, 2029470, 1534433, 1443985, 1701548]},
+            '자동차관련시설': {"emissions": 13333420, "monthly": [2126152, 2153659, 1411452, 1091652, 813399, 738874, 728627, 768808, 723902, 631092, 811849, 1333954]},
+            '제1종근린생활시설': {"emissions": 99652241, "monthly": [13785751, 14804391, 9614510, 7307460, 5802809, 5704613, 5877561, 6494940, 6567602, 5433222, 7225857, 11033525]},
+            '제2종근린생활시설': {"emissions": 232930361, "monthly": [32265653, 35241869, 22287842, 17736356, 14304196, 13413568, 14076255, 15125801, 14460074, 12101254, 16564758, 25352735]},
+            '종교시설': {"emissions": 2001232, "monthly": [352070, 398316, 219794, 173348, 85848, 58130, 65735, 77041, 92755, 73600, 115770, 288825]},
+            '창고시설': {"emissions": 427924, "monthly": [40418, 40492, 32446, 32621, 30479, 29204, 32795, 39811, 37008, 25736, 41237, 45677]},
+            '판매시설': {"emissions": 4841461, "monthly": [648903, 605784, 467469, 335149, 212281, 268153, 388633, 448129, 481158, 318849, 256188, 410765]},
         },
+        '논현2동': {
+            '공동주택': {"emissions": 112806377, "monthly": [14933050, 16847987, 10621615, 8904466, 6931078, 6917482, 5626352, 6469531, 5424407, 6655657, 8600892, 14873860]},
+            '교육연구시설': {"emissions": 14666952, "monthly": [2097916, 2174277, 1461322, 1030200, 616597, 746070, 987309, 1364839, 1325257, 920863, 703417, 1238885]},
+            '근린생활시설': {"emissions": 64352, "monthly": [13453, 16034, 9394, 9751, 3336, 848, 747, 1290, 1895, 481, 442, 6681]},
+            '노유자시설': {"emissions": 8444349, "monthly": [1392552, 1369558, 1006394, 754421, 563211, 451334, 380830, 358696, 342160, 335735, 529896, 959562]},
+            '단독주택': {"emissions": 2102, "monthly": [731, 669, 117, 117, 117, 117, 117, 117, 0, 0, 0, 0]},
+            '문화및집회시설': {"emissions": 3575176, "monthly": [572115, 569219, 411764, 338624, 220337, 190310, 192751, 227286, 205968, 144810, 162000, 339992]},
+            '방송통신시설': {"emissions": 38117071, "monthly": [3197430, 2956720, 3203094, 3062617, 3206657, 3182066, 3362947, 3378540, 3205438, 3209061, 3017987, 3134514]},
+            '숙박시설': {"emissions": 32395462, "monthly": [4279341, 4305870, 3242475, 2589748, 2028414, 2311924, 2553790, 2985152, 2865469, 1759066, 1348685, 2125528]},
+            '업무시설': {"emissions": 185906273, "monthly": [29563593, 29940079, 20331915, 13314662, 8427116, 9057308, 10857527, 13360438, 13338165, 9844747, 9556344, 18314379]},
+            '운동시설': {"emissions": 5737710, "monthly": [766052, 743093, 446251, 442512, 366136, 378526, 444902, 511098, 416283, 344328, 387705, 490824]},
+            '위락시설': {"emissions": 1084784, "monthly": [281760, 254786, 247733, 176391, 76741, 24301, 4165, 3893, 3411, 3635, 3738, 4230]},
+            '위험물저장및처리시설': {"emissions": 243547, "monthly": [36598, 41463, 33143, 18689, 17895, 8843, 8011, 8265, 8384, 7736, 21884, 32636]},
+            '의료시설': {"emissions": 21375731, "monthly": [2311478, 2482264, 1706741, 1593428, 1292677, 1500693, 1776062, 2002952, 2029470, 1534433, 1443985, 1701548]},
+            '자동차관련시설': {"emissions": 13333420, "monthly": [2126152, 2153659, 1411452, 1091652, 813399, 738874, 728627, 768808, 723902, 631092, 811849, 1333954]},
+            '제1종근린생활시설': {"emissions": 99652241, "monthly": [13785751, 14804391, 9614510, 7307460, 5802809, 5704613, 5877561, 6494940, 6567602, 5433222, 7225857, 11033525]},
+            '제2종근린생활시설': {"emissions": 232930361, "monthly": [32265653, 35241869, 22287842, 17736356, 14304196, 13413568, 14076255, 15125801, 14460074, 12101254, 16564758, 25352735]},
+            '종교시설': {"emissions": 2001232, "monthly": [352070, 398316, 219794, 173348, 85848, 58130, 65735, 77041, 92755, 73600, 115770, 288825]},
+            '창고시설': {"emissions": 427924, "monthly": [40418, 40492, 32446, 32621, 30479, 29204, 32795, 39811, 37008, 25736, 41237, 45677]},
+            '판매시설': {"emissions": 4841461, "monthly": [648903, 605784, 467469, 335149, 212281, 268153, 388633, 448129, 481158, 318849, 256188, 410765]},
+        },
+        '삼성1동': {
+            '공동주택': {"emissions": 183754371, "monthly": [27665996, 22761522, 21289109, 13774411, 14274018, 9355331, 13109954, 10565351, 11577748, 8117616, 13735523, 17527792]},
+
+            '교육연구시설': {"emissions": 8136334, "monthly": [839519, 745167, 590667, 632919, 651016, 651141, 623935, 661464, 563432, 634361, 741322, 801391]},
+
+            '노유자시설': {"emissions": 1639518, "monthly": [315031, 346316, 228847, 149417, 78651, 45215, 40571, 36163, 33507, 29334, 95217, 241249]},
+
+            '단독주택': {"emissions": 219517, "monthly": [61318, 76898, 38735, 32970, 6470, 2938, 92, 96, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 2038688, "monthly": [351623, 329015, 236579, 103308, 62359, 87365, 126728, 189871, 178939, 125965, 85305, 161631]},
+
+            '방송통신시설': {"emissions": 546014, "monthly": [114459, 90991, 73188, 45452, 26374, 23977, 22654, 26067, 24188, 18798, 23936, 55930]},
+
+            '숙박시설': {"emissions": 124335059, "monthly": [14867806, 15352887, 14093279, 9791447, 8564109, 8691906, 9534897, 9626436, 10137595, 7309244, 7469433, 8896020]},
+
+            '업무시설': {"emissions": 379869132, "monthly": [55367623, 54429872, 40314889, 25555438, 18221880, 20427378, 27287829, 33800777, 33847851, 23334704, 17305835, 29975056]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위락시설': {"emissions": 1612228, "monthly": [174019, 171485, 128430, 115253, 113043, 126049, 139529, 146542, 125029, 86752, 128932, 157165]},
+
+            '위험물저장및처리시설': {"emissions": 244049, "monthly": [31773, 30436, 19731, 20286, 19464, 15787, 14315, 14223, 15263, 14497, 20300, 27974]},
+
+            '의료시설': {"emissions": 3020376, "monthly": [388423, 418023, 299026, 228724, 179877, 172181, 159599, 183254, 184453, 188263, 268799, 349754]},
+
+            '자동차관련시설': {"emissions": 321100, "monthly": [53456, 50225, 23887, 16280, 18715, 18664, 20243, 21360, 20036, 15218, 19469, 43547]},
+
+            '제1종근린생활시설': {"emissions": 49483886, "monthly": [7955522, 7774987, 5501027, 4024854, 3093371, 2496167, 2514436, 2665281, 2584766, 2187971, 3202081, 5483423]},
+
+            '제2종근린생활시설': {"emissions": 79954781, "monthly": [10625082, 11088784, 7751734, 6344611, 5396148, 5025903, 5042634, 5220596, 4962708, 4178209, 5902416, 8415956]},
+
+            '종교시설': {"emissions": 501223, "monthly": [95784, 100638, 58410, 44283, 28159, 13972, 16810, 18716, 15544, 12766, 33870, 62271]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 37619659, "monthly": [4905422, 4431972, 3768873, 2949344, 2754423, 2807858, 2821290, 2866007, 2615687, 2363491, 2502981, 2832311]},
+        },
+        '삼성2동': {
+            '공동주택': {"emissions": 183754371, "monthly": [27665996, 22761522, 21289109, 13774411, 14274018, 9355331, 13109954, 10565351, 11577748, 8117616, 13735523, 17527792]},
+
+            '교육연구시설': {"emissions": 8136334, "monthly": [839519, 745167, 590667, 632919, 651016, 651141, 623935, 661464, 563432, 634361, 741322, 801391]},
+
+            '노유자시설': {"emissions": 1639518, "monthly": [315031, 346316, 228847, 149417, 78651, 45215, 40571, 36163, 33507, 29334, 95217, 241249]},
+
+            '단독주택': {"emissions": 219517, "monthly": [61318, 76898, 38735, 32970, 6470, 2938, 92, 96, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 2038688, "monthly": [351623, 329015, 236579, 103308, 62359, 87365, 126728, 189871, 178939, 125965, 85305, 161631]},
+
+            '방송통신시설': {"emissions": 546014, "monthly": [114459, 90991, 73188, 45452, 26374, 23977, 22654, 26067, 24188, 18798, 23936, 55930]},
+
+            '숙박시설': {"emissions": 124335059, "monthly": [14867806, 15352887, 14093279, 9791447, 8564109, 8691906, 9534897, 9626436, 10137595, 7309244, 7469433, 8896020]},
+
+            '업무시설': {"emissions": 379869132, "monthly": [55367623, 54429872, 40314889, 25555438, 18221880, 20427378, 27287829, 33800777, 33847851, 23334704, 17305835, 29975056]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위락시설': {"emissions": 1612228, "monthly": [174019, 171485, 128430, 115253, 113043, 126049, 139529, 146542, 125029, 86752, 128932, 157165]},
+
+            '위험물저장및처리시설': {"emissions": 244049, "monthly": [31773, 30436, 19731, 20286, 19464, 15787, 14315, 14223, 15263, 14497, 20300, 27974]},
+
+            '의료시설': {"emissions": 3020376, "monthly": [388423, 418023, 299026, 228724, 179877, 172181, 159599, 183254, 184453, 188263, 268799, 349754]},
+
+            '자동차관련시설': {"emissions": 321100, "monthly": [53456, 50225, 23887, 16280, 18715, 18664, 20243, 21360, 20036, 15218, 19469, 43547]},
+
+            '제1종근린생활시설': {"emissions": 49483886, "monthly": [7955522, 7774987, 5501027, 4024854, 3093371, 2496167, 2514436, 2665281, 2584766, 2187971, 3202081, 5483423]},
+
+            '제2종근린생활시설': {"emissions": 79954781, "monthly": [10625082, 11088784, 7751734, 6344611, 5396148, 5025903, 5042634, 5220596, 4962708, 4178209, 5902416, 8415956]},
+
+            '종교시설': {"emissions": 501223, "monthly": [95784, 100638, 58410, 44283, 28159, 13972, 16810, 18716, 15544, 12766, 33870, 62271]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 37619659, "monthly": [4905422, 4431972, 3768873, 2949344, 2754423, 2807858, 2821290, 2866007, 2615687, 2363491, 2502981, 2832311]},
+        },
+        '대치1동': {
+            '공동주택': {"emissions": 131337683, "monthly": [10793054, 14680280, 9124510, 11837745, 7719466, 11948629, 9830885, 14349252, 7881301, 11245639, 8175210, 13751712]},
+
+            '관광휴게시설': {"emissions": 62809, "monthly": [7920, 6812, 4542, 3982, 3343, 3604, 4819, 5309, 4350, 3679, 5606, 8843]},
+
+            '교육연구시설': {"emissions": 64623895, "monthly": [9019961, 7506833, 5772362, 6077884, 4667784, 4522080, 4383609, 4654630, 4441470, 3796188, 4088161, 5692933]},
+
+            '노유자시설': {"emissions": 2769404, "monthly": [425113, 451648, 275971, 184751, 106061, 84141, 129139, 253665, 257652, 142890, 150940, 307433]},
+
+            '단독주택': {"emissions": 160653, "monthly": [46459, 44310, 29366, 22127, 15750, 2641, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 360, "monthly": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]},
+
+            '문화및집회시설': {"emissions": 1333260, "monthly": [297549, 281701, 147567, 117626, 84565, 60411, 37489, 38406, 35638, 27305, 71370, 133633]},
+
+            '숙박시설': {"emissions": 36411723, "monthly": [4997522, 4919696, 3964615, 3092475, 2467098, 2614424, 2323989, 2335517, 2231274, 2041678, 2192449, 3230986]},
+
+            '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
+
+            '위험물저장및처리시설': {"emissions": 905600, "monthly": [115021, 111073, 74163, 64210, 56496, 60147, 63421, 76445, 73510, 58055, 67419, 85640]},
+
+            '의료시설': {"emissions": 11072812, "monthly": [1160531, 1346784, 1115700, 957875, 704694, 625886, 729177, 1115067, 1079367, 797592, 480917, 959222]},
+
+            '자동차관련시설': {"emissions": 633425, "monthly": [88394, 74599, 47810, 44710, 47171, 38399, 38101, 31696, 35788, 40273, 68911, 77573]},
+
+            '제1종근린생활시설': {"emissions": 38189126, "monthly": [4911600, 4918403, 3704114, 3076807, 2591499, 2500996, 2499787, 2665634, 2514422, 2120367, 2826888, 3858609]},
+
+            '제2종근린생활시설': {"emissions": 122968263, "monthly": [15185095, 15847349, 11295003, 9796420, 8210778, 7962644, 8115348, 8773213, 8251378, 7390813, 9681327, 12458895]},
+
+            '종교시설': {"emissions": 2862470, "monthly": [517739, 508519, 349743, 190380, 108390, 115778, 156764, 170586, 166928, 103141, 139798, 334704]},
+
+            '판매시설': {"emissions": 1633656, "monthly": [208881, 210486, 150313, 127559, 107519, 115007, 114852, 129429, 112014, 85155, 121179, 151262]},
+
+        },
+        '대치4동': {
+            '공동주택': {"emissions": 131337683, "monthly": [10793054, 14680280, 9124510, 11837745, 7719466, 11948629, 9830885, 14349252, 7881301, 11245639, 8175210, 13751712]},
+
+            '관광휴게시설': {"emissions": 62809, "monthly": [7920, 6812, 4542, 3982, 3343, 3604, 4819, 5309, 4350, 3679, 5606, 8843]},
+
+            '교육연구시설': {"emissions": 64623895, "monthly": [9019961, 7506833, 5772362, 6077884, 4667784, 4522080, 4383609, 4654630, 4441470, 3796188, 4088161, 5692933]},
+
+            '노유자시설': {"emissions": 2769404, "monthly": [425113, 451648, 275971, 184751, 106061, 84141, 129139, 253665, 257652, 142890, 150940, 307433]},
+
+            '단독주택': {"emissions": 160653, "monthly": [46459, 44310, 29366, 22127, 15750, 2641, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 360, "monthly": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]},
+
+            '문화및집회시설': {"emissions": 1333260, "monthly": [297549, 281701, 147567, 117626, 84565, 60411, 37489, 38406, 35638, 27305, 71370, 133633]},
+
+            '숙박시설': {"emissions": 36411723, "monthly": [4997522, 4919696, 3964615, 3092475, 2467098, 2614424, 2323989, 2335517, 2231274, 2041678, 2192449, 3230986]},
+
+            '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
+
+            '위험물저장및처리시설': {"emissions": 905600, "monthly": [115021, 111073, 74163, 64210, 56496, 60147, 63421, 76445, 73510, 58055, 67419, 85640]},
+
+            '의료시설': {"emissions": 11072812, "monthly": [1160531, 1346784, 1115700, 957875, 704694, 625886, 729177, 1115067, 1079367, 797592, 480917, 959222]},
+
+            '자동차관련시설': {"emissions": 633425, "monthly": [88394, 74599, 47810, 44710, 47171, 38399, 38101, 31696, 35788, 40273, 68911, 77573]},
+
+            '제1종근린생활시설': {"emissions": 38189126, "monthly": [4911600, 4918403, 3704114, 3076807, 2591499, 2500996, 2499787, 2665634, 2514422, 2120367, 2826888, 3858609]},
+
+            '제2종근린생활시설': {"emissions": 122968263, "monthly": [15185095, 15847349, 11295003, 9796420, 8210778, 7962644, 8115348, 8773213, 8251378, 7390813, 9681327, 12458895]},
+
+            '종교시설': {"emissions": 2862470, "monthly": [517739, 508519, 349743, 190380, 108390, 115778, 156764, 170586, 166928, 103141, 139798, 334704]},
+
+            '판매시설': {"emissions": 1633656, "monthly": [208881, 210486, 150313, 127559, 107519, 115007, 114852, 129429, 112014, 85155, 121179, 151262]},
+
+        },
+        '대치2동': {
+            '공동주택': {"emissions": 131337683, "monthly": [10793054, 14680280, 9124510, 11837745, 7719466, 11948629, 9830885, 14349252, 7881301, 11245639, 8175210, 13751712]},
+
+            '관광휴게시설': {"emissions": 62809, "monthly": [7920, 6812, 4542, 3982, 3343, 3604, 4819, 5309, 4350, 3679, 5606, 8843]},
+
+            '교육연구시설': {"emissions": 64623895, "monthly": [9019961, 7506833, 5772362, 6077884, 4667784, 4522080, 4383609, 4654630, 4441470, 3796188, 4088161, 5692933]},
+
+            '노유자시설': {"emissions": 2769404, "monthly": [425113, 451648, 275971, 184751, 106061, 84141, 129139, 253665, 257652, 142890, 150940, 307433]},
+
+            '단독주택': {"emissions": 160653, "monthly": [46459, 44310, 29366, 22127, 15750, 2641, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 360, "monthly": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]},
+
+            '문화및집회시설': {"emissions": 1333260, "monthly": [297549, 281701, 147567, 117626, 84565, 60411, 37489, 38406, 35638, 27305, 71370, 133633]},
+
+            '숙박시설': {"emissions": 36411723, "monthly": [4997522, 4919696, 3964615, 3092475, 2467098, 2614424, 2323989, 2335517, 2231274, 2041678, 2192449, 3230986]},
+
+            '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
+
+            '위험물저장및처리시설': {"emissions": 905600, "monthly": [115021, 111073, 74163, 64210, 56496, 60147, 63421, 76445, 73510, 58055, 67419, 85640]},
+
+            '의료시설': {"emissions": 11072812, "monthly": [1160531, 1346784, 1115700, 957875, 704694, 625886, 729177, 1115067, 1079367, 797592, 480917, 959222]},
+
+            '자동차관련시설': {"emissions": 633425, "monthly": [88394, 74599, 47810, 44710, 47171, 38399, 38101, 31696, 35788, 40273, 68911, 77573]},
+
+            '제1종근린생활시설': {"emissions": 38189126, "monthly": [4911600, 4918403, 3704114, 3076807, 2591499, 2500996, 2499787, 2665634, 2514422, 2120367, 2826888, 3858609]},
+
+            '제2종근린생활시설': {"emissions": 122968263, "monthly": [15185095, 15847349, 11295003, 9796420, 8210778, 7962644, 8115348, 8773213, 8251378, 7390813, 9681327, 12458895]},
+
+            '종교시설': {"emissions": 2862470, "monthly": [517739, 508519, 349743, 190380, 108390, 115778, 156764, 170586, 166928, 103141, 139798, 334704]},
+
+            '판매시설': {"emissions": 1633656, "monthly": [208881, 210486, 150313, 127559, 107519, 115007, 114852, 129429, 112014, 85155, 121179, 151262]},
+
+        },
+
+        '역삼1동': {
+            '공동주택': {"emissions": 242128679, "monthly": [35821113, 31845373, 26226966, 17869309, 17109698, 12431385, 16263835, 14568111, 15060278, 11181937, 19007132, 24743542]},
+
+            '교육연구시설': {"emissions": 29493335, "monthly": [3455548, 3436699, 2899953, 2163307, 1752166, 1942496, 2234263, 2517045, 2434372, 2133527, 1986332, 2537627]},
+
+            '노유자시설': {"emissions": 9547949, "monthly": [1290013, 1068500, 1075296, 686151, 786260, 526518, 797149, 633772, 756081, 430701, 764410, 733098]},
+
+            '단독주택': {"emissions": 29295, "monthly": [5668, 4491, 3485, 3018, 1867, 1563, 2037, 3111, 4055, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 7416987, "monthly": [992167, 995446, 594826, 431680, 329811, 459772, 628314, 800297, 831519, 472266, 300665, 580224]},
+
+            '방송통신시설': {"emissions": 13491448, "monthly": [1669008, 1651204, 1266926, 797928, 606353, 796777, 1089802, 1449751, 1486185, 993896, 718287, 965331]},
+
+            '수련시설': {"emissions": 4824037, "monthly": [653421, 664798, 718535, 445022, 303510, 280713, 219815, 379937, 299895, 233779, 211542, 413070]},
+
+            '숙박시설': {"emissions": 65547583, "monthly": [9326359, 9770043, 7610691, 5617760, 4355274, 3900673, 3559286, 4038814, 3753838, 3079857, 4059079, 6475909]},
+
+            '업무시설': {"emissions": 698800252, "monthly": [109989415, 104137777, 74379868, 46917309, 29803591, 35248339, 47335356, 59601955, 59497876, 39714873, 30130045, 62043848]},
+
+            '운동시설': {"emissions": 635242, "monthly": [27120, 23661, 15689, 12621, 11835, 14501, 15559, 19280, 96603, 112578, 103335, 182460]},
+
+            '위락시설': {"emissions": 5999821, "monthly": [893406, 979119, 676478, 501817, 297749, 302610, 352083, 428363, 405119, 305138, 295778, 562161]},
+
+            '위험물저장및처리시설': {"emissions": 380841, "monthly": [71349, 66495, 52265, 37220, 33406, 13370, 16472, 18187, 17514, 15012, 16587, 22964]},
+
+            '의료시설': {"emissions": 34771558, "monthly": [4357824, 4783923, 3255836, 2509711, 1739875, 2084789, 2581393, 3637946, 3205390, 2206752, 1885140, 2522979]},
+
+            '자동차관련시설': {"emissions": 1534536, "monthly": [175170, 342763, 236925, 135643, 82418, 59080, 64651, 69584, 74414, 60052, 98587, 135249]},
+
+            '제1종근린생활시설': {"emissions": 112971005, "monthly": [15300695, 15810109, 11255853, 8614933, 7194718, 7044605, 7291934, 8281819, 7703114, 6140272, 7358743, 10974210]},
+
+            '제2종근린생활시설': {"emissions": 300387826, "monthly": [38362571, 39384852, 29294157, 24699090, 20527529, 19855373, 19368298, 20720529, 19837797, 16278632, 21859106, 30199892]},
+
+            '종교시설': {"emissions": 14812867, "monthly": [2437030, 2308800, 1811439, 1078035, 554431, 536707, 930467, 1239769, 1267481, 947884, 499362, 1201462]},
+
+            '창고시설': {"emissions": 6679, "monthly": [680, 585, 564, 562, 364, 438, 465, 724, 709, 523, 381, 684]},
+
+            '판매시설': {"emissions": 371604, "monthly": [30736, 71919, 11854, 46512, 5199, 42122, 6445, 43600, 7002, 37260, 7416, 61539]},
+
+        },
+        '역삼2동': {
+            '공동주택': {"emissions": 242128679, "monthly": [35821113, 31845373, 26226966, 17869309, 17109698, 12431385, 16263835, 14568111, 15060278, 11181937, 19007132, 24743542]},
+
+            '교육연구시설': {"emissions": 29493335, "monthly": [3455548, 3436699, 2899953, 2163307, 1752166, 1942496, 2234263, 2517045, 2434372, 2133527, 1986332, 2537627]},
+
+            '노유자시설': {"emissions": 9547949, "monthly": [1290013, 1068500, 1075296, 686151, 786260, 526518, 797149, 633772, 756081, 430701, 764410, 733098]},
+
+            '단독주택': {"emissions": 29295, "monthly": [5668, 4491, 3485, 3018, 1867, 1563, 2037, 3111, 4055, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 7416987, "monthly": [992167, 995446, 594826, 431680, 329811, 459772, 628314, 800297, 831519, 472266, 300665, 580224]},
+
+            '방송통신시설': {"emissions": 13491448, "monthly": [1669008, 1651204, 1266926, 797928, 606353, 796777, 1089802, 1449751, 1486185, 993896, 718287, 965331]},
+
+            '수련시설': {"emissions": 4824037, "monthly": [653421, 664798, 718535, 445022, 303510, 280713, 219815, 379937, 299895, 233779, 211542, 413070]},
+
+            '숙박시설': {"emissions": 65547583, "monthly": [9326359, 9770043, 7610691, 5617760, 4355274, 3900673, 3559286, 4038814, 3753838, 3079857, 4059079, 6475909]},
+
+            '업무시설': {"emissions": 698800252, "monthly": [109989415, 104137777, 74379868, 46917309, 29803591, 35248339, 47335356, 59601955, 59497876, 39714873, 30130045, 62043848]},
+
+            '운동시설': {"emissions": 635242, "monthly": [27120, 23661, 15689, 12621, 11835, 14501, 15559, 19280, 96603, 112578, 103335, 182460]},
+
+            '위락시설': {"emissions": 5999821, "monthly": [893406, 979119, 676478, 501817, 297749, 302610, 352083, 428363, 405119, 305138, 295778, 562161]},
+
+            '위험물저장및처리시설': {"emissions": 380841, "monthly": [71349, 66495, 52265, 37220, 33406, 13370, 16472, 18187, 17514, 15012, 16587, 22964]},
+
+            '의료시설': {"emissions": 34771558, "monthly": [4357824, 4783923, 3255836, 2509711, 1739875, 2084789, 2581393, 3637946, 3205390, 2206752, 1885140, 2522979]},
+
+            '자동차관련시설': {"emissions": 1534536, "monthly": [175170, 342763, 236925, 135643, 82418, 59080, 64651, 69584, 74414, 60052, 98587, 135249]},
+
+            '제1종근린생활시설': {"emissions": 112971005, "monthly": [15300695, 15810109, 11255853, 8614933, 7194718, 7044605, 7291934, 8281819, 7703114, 6140272, 7358743, 10974210]},
+
+            '제2종근린생활시설': {"emissions": 300387826, "monthly": [38362571, 39384852, 29294157, 24699090, 20527529, 19855373, 19368298, 20720529, 19837797, 16278632, 21859106, 30199892]},
+
+            '종교시설': {"emissions": 14812867, "monthly": [2437030, 2308800, 1811439, 1078035, 554431, 536707, 930467, 1239769, 1267481, 947884, 499362, 1201462]},
+
+            '창고시설': {"emissions": 6679, "monthly": [680, 585, 564, 562, 364, 438, 465, 724, 709, 523, 381, 684]},
+
+            '판매시설': {"emissions": 371604, "monthly": [30736, 71919, 11854, 46512, 5199, 42122, 6445, 43600, 7002, 37260, 7416, 61539]},
+
+        },
+        '도곡1동': {
+            '공동주택': {"emissions": 252303389, "monthly": [29243765, 31009047, 23131416, 19363025, 13618121, 15932009, 17111279, 27855817, 25761594, 15439471, 12015066, 21822779]},
+
+            '교육연구시설': {"emissions": 5179030, "monthly": [708533, 621831, 531679, 298655, 231264, 258940, 407262, 490104, 502478, 420325, 272371, 435588]},
+
+            '노유자시설': {"emissions": 3577706, "monthly": [364658, 433446, 305934, 335181, 218883, 296398, 236425, 343580, 188958, 266863, 197272, 390108]},
+
+            '단독주택': {"emissions": 124693, "monthly": [42926, 46987, 34780, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 4298444, "monthly": [412851, 319562, 351511, 167504, 134552, 270612, 488308, 550180, 668732, 530840, 296596, 107196]},
+
+            '방송통신시설': {"emissions": 5966418, "monthly": [481790, 482605, 444668, 505253, 494264, 528005, 517102, 542846, 532012, 492957, 494935, 449981]},
+
+            '숙박시설': {"emissions": 621282, "monthly": [130591, 131949, 86569, 60038, 35198, 26102, 17792, 17216, 16324, 16794, 28784, 53925]},
+
+            '업무시설': {"emissions": 150503365, "monthly": [21866790, 22021497, 17701090, 10896720, 6563591, 6879754, 8902695, 14294295, 15280914, 7823686, 5763714, 12508619]},
+
+            '운동시설': {"emissions": 85532371, "monthly": [11134311, 10996352, 8604441, 6115034, 4387670, 4418437, 5434536, 9421279, 10138697, 4359835, 3634358, 6887421]},
+
+            '위험물저장및처리시설': {"emissions": 157614, "monthly": [18421, 17768, 14048, 11759, 10413, 10521, 11994, 12993, 12371, 11001, 12078, 14247]},
+
+            '의료시설': {"emissions": 117418963, "monthly": [13782533, 15372919, 13650130, 6987261, 5448277, 8979067, 9526227, 10140997, 11601196, 8595059, 4576623, 8758674]},
+
+            '자동차관련시설': {"emissions": 207269, "monthly": [15300, 15518, 13944, 15755, 15786, 17968, 19399, 22181, 21480, 18374, 16143, 15421]},
+
+            '제1종근린생활시설': {"emissions": 31683589, "monthly": [3518844, 3557356, 2684924, 2206058, 1826553, 1929829, 2222692, 3316026, 3276744, 2369629, 1959667, 2815267]},
+
+            '제2종근린생활시설': {"emissions": 47622582, "monthly": [7147792, 6722292, 4809114, 3679574, 3036537, 2685409, 2872871, 3019590, 2837505, 2428759, 3246044, 5137095]},
+
+            '종교시설': {"emissions": 1212565, "monthly": [295917, 254515, 198718, 113325, 40969, 34515, 31241, 32232, 30944, 24985, 40756, 114448]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 10803794, "monthly": [900389, 884170, 831047, 790718, 795388, 952115, 1130963, 1250644, 971620, 847547, 656024, 793169]},
+
+        },
+        '도곡2동': {
+            '공동주택': {"emissions": 252303389, "monthly": [29243765, 31009047, 23131416, 19363025, 13618121, 15932009, 17111279, 27855817, 25761594, 15439471, 12015066, 21822779]},
+
+            '교육연구시설': {"emissions": 5179030, "monthly": [708533, 621831, 531679, 298655, 231264, 258940, 407262, 490104, 502478, 420325, 272371, 435588]},
+
+            '노유자시설': {"emissions": 3577706, "monthly": [364658, 433446, 305934, 335181, 218883, 296398, 236425, 343580, 188958, 266863, 197272, 390108]},
+
+            '단독주택': {"emissions": 124693, "monthly": [42926, 46987, 34780, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 4298444, "monthly": [412851, 319562, 351511, 167504, 134552, 270612, 488308, 550180, 668732, 530840, 296596, 107196]},
+
+            '방송통신시설': {"emissions": 5966418, "monthly": [481790, 482605, 444668, 505253, 494264, 528005, 517102, 542846, 532012, 492957, 494935, 449981]},
+
+            '숙박시설': {"emissions": 621282, "monthly": [130591, 131949, 86569, 60038, 35198, 26102, 17792, 17216, 16324, 16794, 28784, 53925]},
+
+            '업무시설': {"emissions": 150503365, "monthly": [21866790, 22021497, 17701090, 10896720, 6563591, 6879754, 8902695, 14294295, 15280914, 7823686, 5763714, 12508619]},
+
+            '운동시설': {"emissions": 85532371, "monthly": [11134311, 10996352, 8604441, 6115034, 4387670, 4418437, 5434536, 9421279, 10138697, 4359835, 3634358, 6887421]},
+
+            '위험물저장및처리시설': {"emissions": 157614, "monthly": [18421, 17768, 14048, 11759, 10413, 10521, 11994, 12993, 12371, 11001, 12078, 14247]},
+
+            '의료시설': {"emissions": 117418963, "monthly": [13782533, 15372919, 13650130, 6987261, 5448277, 8979067, 9526227, 10140997, 11601196, 8595059, 4576623, 8758674]},
+
+            '자동차관련시설': {"emissions": 207269, "monthly": [15300, 15518, 13944, 15755, 15786, 17968, 19399, 22181, 21480, 18374, 16143, 15421]},
+
+            '제1종근린생활시설': {"emissions": 31683589, "monthly": [3518844, 3557356, 2684924, 2206058, 1826553, 1929829, 2222692, 3316026, 3276744, 2369629, 1959667, 2815267]},
+
+            '제2종근린생활시설': {"emissions": 47622582, "monthly": [7147792, 6722292, 4809114, 3679574, 3036537, 2685409, 2872871, 3019590, 2837505, 2428759, 3246044, 5137095]},
+
+            '종교시설': {"emissions": 1212565, "monthly": [295917, 254515, 198718, 113325, 40969, 34515, 31241, 32232, 30944, 24985, 40756, 114448]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 10803794, "monthly": [900389, 884170, 831047, 790718, 795388, 952115, 1130963, 1250644, 971620, 847547, 656024, 793169]},
+
+        },
+        '개포1동': {
+            '공동주택': {"emissions": 83282356, "monthly": [14772237, 14537505, 9011914, 6874703, 5575800, 3605587, 2956671, 3554261, 2613707, 3459230, 5165364, 11155377]},
+
+            '교육연구시설': {"emissions": 2005773, "monthly": [248620, 242292, 167975, 134911, 123778, 130999, 135710, 143546, 135756, 104849, 177803, 259534]},
+
+            '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
+
+            '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
+
+            '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
+
+            '업무시설': {"emissions": 13599873, "monthly": [1535898, 1757610, 1251579, 1057603, 845313, 872539, 910977, 1053099, 982787, 825479, 1009916, 1497073]},
+
+            '운동시설': {"emissions": 66501, "monthly": [11212, 10400, 4851, 3461, 3125, 3366, 4407, 5489, 4118, 2728, 4781, 8563]},
+
+            '위험물저장및처리시설': {"emissions": 5478, "monthly": [864, 772, 599, 374, 298, 262, 306, 425, 369, 244, 304, 661]},
+
+            '의료시설': {"emissions": 614990, "monthly": [153594, 139506, 36565, 33511, 26112, 23717, 19843, 18586, 21219, 27071, 36025, 79241]},
+
+            '자동차관련시설': {"emissions": 1033050, "monthly": [145329, 137331, 108858, 98562, 73828, 56131, 62777, 39149, 58293, 61136, 84274, 107382]},
+
+            '제1종근린생활시설': {"emissions": 34905117, "monthly": [5480725, 5665179, 3690781, 2809126, 2191297, 1731189, 1559585, 1679351, 1549245, 1623511, 2561743, 4363385]},
+
+            '제2종근린생활시설': {"emissions": 39712666, "monthly": [5686609, 6066197, 3818912, 2881499, 2271257, 2104464, 2231296, 2563408, 2536909, 1998517, 3044387, 4509211]},
+
+            '종교시설': {"emissions": 2548013, "monthly": [465364, 468981, 306855, 195377, 101930, 87075, 131772, 160203, 142571, 112796, 120913, 254176]},
+
+            '창고시설': {"emissions": 73162, "monthly": [22872, 20338, 7863, 2029, 524, 429, 471, 709, 583, 460, 2761, 14123]},
+
+            '판매시설': {"emissions": 1739616, "monthly": [260476, 193079, 140498, 139908, 130300, 134057, 134155, 144579, 127063, 93575, 109486, 132440]},
+
+        },
+        '개포2동': {
+            '공동주택': {"emissions": 83282356, "monthly": [14772237, 14537505, 9011914, 6874703, 5575800, 3605587, 2956671, 3554261, 2613707, 3459230, 5165364, 11155377]},
+
+            '교육연구시설': {"emissions": 2005773, "monthly": [248620, 242292, 167975, 134911, 123778, 130999, 135710, 143546, 135756, 104849, 177803, 259534]},
+
+            '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
+
+            '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
+
+            '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
+
+            '업무시설': {"emissions": 13599873, "monthly": [1535898, 1757610, 1251579, 1057603, 845313, 872539, 910977, 1053099, 982787, 825479, 1009916, 1497073]},
+
+            '운동시설': {"emissions": 66501, "monthly": [11212, 10400, 4851, 3461, 3125, 3366, 4407, 5489, 4118, 2728, 4781, 8563]},
+
+            '위험물저장및처리시설': {"emissions": 5478, "monthly": [864, 772, 599, 374, 298, 262, 306, 425, 369, 244, 304, 661]},
+
+            '의료시설': {"emissions": 614990, "monthly": [153594, 139506, 36565, 33511, 26112, 23717, 19843, 18586, 21219, 27071, 36025, 79241]},
+
+            '자동차관련시설': {"emissions": 1033050, "monthly": [145329, 137331, 108858, 98562, 73828, 56131, 62777, 39149, 58293, 61136, 84274, 107382]},
+
+            '제1종근린생활시설': {"emissions": 34905117, "monthly": [5480725, 5665179, 3690781, 2809126, 2191297, 1731189, 1559585, 1679351, 1549245, 1623511, 2561743, 4363385]},
+
+            '제2종근린생활시설': {"emissions": 39712666, "monthly": [5686609, 6066197, 3818912, 2881499, 2271257, 2104464, 2231296, 2563408, 2536909, 1998517, 3044387, 4509211]},
+
+            '종교시설': {"emissions": 2548013, "monthly": [465364, 468981, 306855, 195377, 101930, 87075, 131772, 160203, 142571, 112796, 120913, 254176]},
+
+            '창고시설': {"emissions": 73162, "monthly": [22872, 20338, 7863, 2029, 524, 429, 471, 709, 583, 460, 2761, 14123]},
+
+            '판매시설': {"emissions": 1739616, "monthly": [260476, 193079, 140498, 139908, 130300, 134057, 134155, 144579, 127063, 93575, 109486, 132440]},
+
+        },
+        '개포3동': {
+            '공동주택': {"emissions": 83282356, "monthly": [14772237, 14537505, 9011914, 6874703, 5575800, 3605587, 2956671, 3554261, 2613707, 3459230, 5165364, 11155377]},
+
+            '교육연구시설': {"emissions": 2005773, "monthly": [248620, 242292, 167975, 134911, 123778, 130999, 135710, 143546, 135756, 104849, 177803, 259534]},
+
+            '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
+
+            '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
+
+            '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
+
+            '업무시설': {"emissions": 13599873, "monthly": [1535898, 1757610, 1251579, 1057603, 845313, 872539, 910977, 1053099, 982787, 825479, 1009916, 1497073]},
+
+            '운동시설': {"emissions": 66501, "monthly": [11212, 10400, 4851, 3461, 3125, 3366, 4407, 5489, 4118, 2728, 4781, 8563]},
+
+            '위험물저장및처리시설': {"emissions": 5478, "monthly": [864, 772, 599, 374, 298, 262, 306, 425, 369, 244, 304, 661]},
+
+            '의료시설': {"emissions": 614990, "monthly": [153594, 139506, 36565, 33511, 26112, 23717, 19843, 18586, 21219, 27071, 36025, 79241]},
+
+            '자동차관련시설': {"emissions": 1033050, "monthly": [145329, 137331, 108858, 98562, 73828, 56131, 62777, 39149, 58293, 61136, 84274, 107382]},
+
+            '제1종근린생활시설': {"emissions": 34905117, "monthly": [5480725, 5665179, 3690781, 2809126, 2191297, 1731189, 1559585, 1679351, 1549245, 1623511, 2561743, 4363385]},
+
+            '제2종근린생활시설': {"emissions": 39712666, "monthly": [5686609, 6066197, 3818912, 2881499, 2271257, 2104464, 2231296, 2563408, 2536909, 1998517, 3044387, 4509211]},
+
+            '종교시설': {"emissions": 2548013, "monthly": [465364, 468981, 306855, 195377, 101930, 87075, 131772, 160203, 142571, 112796, 120913, 254176]},
+
+            '창고시설': {"emissions": 73162, "monthly": [22872, 20338, 7863, 2029, 524, 429, 471, 709, 583, 460, 2761, 14123]},
+
+            '판매시설': {"emissions": 1739616, "monthly": [260476, 193079, 140498, 139908, 130300, 134057, 134155, 144579, 127063, 93575, 109486, 132440]},
+
+        },
+        '개포4동': {
+            '공동주택': {"emissions": 83282356, "monthly": [14772237, 14537505, 9011914, 6874703, 5575800, 3605587, 2956671, 3554261, 2613707, 3459230, 5165364, 11155377]},
+
+            '교육연구시설': {"emissions": 2005773, "monthly": [248620, 242292, 167975, 134911, 123778, 130999, 135710, 143546, 135756, 104849, 177803, 259534]},
+
+            '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
+
+            '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
+
+            '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
+
+            '업무시설': {"emissions": 13599873, "monthly": [1535898, 1757610, 1251579, 1057603, 845313, 872539, 910977, 1053099, 982787, 825479, 1009916, 1497073]},
+
+            '운동시설': {"emissions": 66501, "monthly": [11212, 10400, 4851, 3461, 3125, 3366, 4407, 5489, 4118, 2728, 4781, 8563]},
+
+            '위험물저장및처리시설': {"emissions": 5478, "monthly": [864, 772, 599, 374, 298, 262, 306, 425, 369, 244, 304, 661]},
+
+            '의료시설': {"emissions": 614990, "monthly": [153594, 139506, 36565, 33511, 26112, 23717, 19843, 18586, 21219, 27071, 36025, 79241]},
+
+            '자동차관련시설': {"emissions": 1033050, "monthly": [145329, 137331, 108858, 98562, 73828, 56131, 62777, 39149, 58293, 61136, 84274, 107382]},
+
+            '제1종근린생활시설': {"emissions": 34905117, "monthly": [5480725, 5665179, 3690781, 2809126, 2191297, 1731189, 1559585, 1679351, 1549245, 1623511, 2561743, 4363385]},
+
+            '제2종근린생활시설': {"emissions": 39712666, "monthly": [5686609, 6066197, 3818912, 2881499, 2271257, 2104464, 2231296, 2563408, 2536909, 1998517, 3044387, 4509211]},
+
+            '종교시설': {"emissions": 2548013, "monthly": [465364, 468981, 306855, 195377, 101930, 87075, 131772, 160203, 142571, 112796, 120913, 254176]},
+
+            '창고시설': {"emissions": 73162, "monthly": [22872, 20338, 7863, 2029, 524, 429, 471, 709, 583, 460, 2761, 14123]},
+
+            '판매시설': {"emissions": 1739616, "monthly": [260476, 193079, 140498, 139908, 130300, 134057, 134155, 144579, 127063, 93575, 109486, 132440]},
+
+        },
+        '일원본동': {
+            '공동주택': {"emissions": 16639770, "monthly": [1606839, 1248456, 1497444, 1137961, 1410369, 1216604, 1703857, 1516829, 1512853, 1023450, 1507885, 1257223]},
+
+            '교육연구시설': {"emissions": 709815, "monthly": [29734, 70915, 70842, 34405, 7526, 39701, 81790, 114517, 106482, 55860, 13189, 84854]},
+
+            '노유자시설': {"emissions": 526590, "monthly": [106783, 113325, 67628, 43013, 25905, 10253, 9072, 11292, 12178, 11221, 37784, 78136]},
+
+            '단독주택': {"emissions": 331, "monthly": [331, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '분뇨.쓰레기처리시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '업무시설': {"emissions": 762568, "monthly": [102916, 110290, 77615, 67942, 51792, 43439, 40119, 38730, 39209, 33710, 64465, 92341]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위험물저장및처리시설': {"emissions": 8701, "monthly": [1086, 1004, 664, 589, 566, 594, 687, 794, 757, 494, 552, 914]},
+
+            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '자동차관련시설': {"emissions": 15987, "monthly": [1814, 1882, 1458, 1311, 1113, 1156, 1209, 1212, 1106, 1024, 1142, 1560]},
+
+            '자원순환관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '제1종근린생활시설': {"emissions": 12167500, "monthly": [1909107, 1987843, 1341808, 1016023, 787201, 622625, 584305, 602773, 544547, 483309, 853336, 1434623]},
+
+            '제2종근린생활시설': {"emissions": 19535136, "monthly": [2915033, 3045930, 2030786, 1576957, 1283387, 1098213, 1014802, 1026130, 994539, 879199, 1437600, 2232560]},
+
+            '종교시설': {"emissions": 55157, "monthly": [3337, 2970, 1661, 1059, 3419, 4463, 4934, 6693, 7047, 5220, 6932, 7422]},
+
+            '판매시설': {"emissions": 4585072, "monthly": [440963, 351086, 403692, 318175, 387860, 338823, 462167, 419612, 417628, 287242, 409932, 347892]},
+
+        },
+        '일원1동': {
+            '공동주택': {"emissions": 16639770, "monthly": [1606839, 1248456, 1497444, 1137961, 1410369, 1216604, 1703857, 1516829, 1512853, 1023450, 1507885, 1257223]},
+
+            '교육연구시설': {"emissions": 709815, "monthly": [29734, 70915, 70842, 34405, 7526, 39701, 81790, 114517, 106482, 55860, 13189, 84854]},
+
+            '노유자시설': {"emissions": 526590, "monthly": [106783, 113325, 67628, 43013, 25905, 10253, 9072, 11292, 12178, 11221, 37784, 78136]},
+
+            '단독주택': {"emissions": 331, "monthly": [331, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '분뇨.쓰레기처리시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '업무시설': {"emissions": 762568, "monthly": [102916, 110290, 77615, 67942, 51792, 43439, 40119, 38730, 39209, 33710, 64465, 92341]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '위험물저장및처리시설': {"emissions": 8701, "monthly": [1086, 1004, 664, 589, 566, 594, 687, 794, 757, 494, 552, 914]},
+
+            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '자동차관련시설': {"emissions": 15987, "monthly": [1814, 1882, 1458, 1311, 1113, 1156, 1209, 1212, 1106, 1024, 1142, 1560]},
+
+            '자원순환관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '제1종근린생활시설': {"emissions": 12167500, "monthly": [1909107, 1987843, 1341808, 1016023, 787201, 622625, 584305, 602773, 544547, 483309, 853336, 1434623]},
+
+            '제2종근린생활시설': {"emissions": 19535136, "monthly": [2915033, 3045930, 2030786, 1576957, 1283387, 1098213, 1014802, 1026130, 994539, 879199, 1437600, 2232560]},
+
+            '종교시설': {"emissions": 55157, "monthly": [3337, 2970, 1661, 1059, 3419, 4463, 4934, 6693, 7047, 5220, 6932, 7422]},
+
+            '판매시설': {"emissions": 4585072, "monthly": [440963, 351086, 403692, 318175, 387860, 338823, 462167, 419612, 417628, 287242, 409932, 347892]},
+
+        },
+        '수서동': {
+            '공동주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '교육연구시설': {"emissions": 370336, "monthly": [32304, 31109, 26514, 27163, 26629, 29960, 34087, 39357, 37276, 28733, 27762, 29442]},
+
+            '노유자시설': {"emissions": 390320, "monthly": [117507, 109943, 72086, 21540, 11938, 2689, 2747, 3227, 2944, 2761, 12620, 30318]},
+
+            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '업무시설': {"emissions": 2857642, "monthly": [413879, 449368, 286486, 217479, 169848, 148533, 163042, 171200, 158034, 125402, 221018, 333353]},
+
+            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '운수시설': {"emissions": 12955, "monthly": [503, 459, 399, 289, 552, 661, 1512, 1672, 1662, 1344, 1721, 2181]},
+
+            '위험물저장및처리시설': {"emissions": 37624, "monthly": [5158, 5251, 4263, 3199, 3193, 2631, 2074, 2134, 2193, 2116, 2235, 3177]},
+
+            '의료시설': {"emissions": 1202482, "monthly": [142017, 159626, 109363, 83726, 76813, 80063, 84234, 87175, 87941, 62799, 98180, 130545]},
+
+            '자동차관련시설': {"emissions": 223883, "monthly": [57236, 52249, 35785, 16960, 12062, 4460, 3532, 2327, 1620, 2053, 3565, 32034]},
+
+            '제1종근린생활시설': {"emissions": 427487, "monthly": [76915, 65140, 45918, 32148, 24005, 20957, 23445, 26461, 22861, 18356, 26874, 44407]},
+
+            '제2종근린생활시설': {"emissions": 9397567, "monthly": [1144827, 1171818, 933544, 791116, 708142, 649626, 590537, 617891, 634260, 494839, 735060, 925907]},
+
+            '종교시설': {"emissions": 622045, "monthly": [156231, 152912, 84308, 42935, 21974, 11838, 13708, 17328, 15538, 11794, 26701, 66778]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+        },
+
+        '세곡동': {
+            '공동주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '공장': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '관광휴게시설': {"emissions": 16224, "monthly": [2521, 2522, 1339, 1274, 1257, 931, 787, 904, 862, 910, 1306, 1611]},
+
+            '교육연구시설': {"emissions": 59902, "monthly": [5854, 5321, 4576, 4655, 4455, 4633, 5015, 5749, 5455, 4454, 4787, 4948]},
+
+            '교정및군사시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '노유자시설': {"emissions": 1543437, "monthly": [231032, 256564, 161599, 95559, 75685, 82127, 109532, 121938, 128276, 67422, 65446, 148257]},
+
+            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 2717, "monthly": [1412, 896, 51, 29, 29, 42, 41, 47, 48, 41, 34, 47]},
+
+            '업무시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '자동차관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '제1종근린생활시설': {"emissions": 3461790, "monthly": [447981, 465021, 338911, 279994, 254393, 203007, 203820, 211714, 214043, 182017, 293106, 367783]},
+
+            '제2종근린생활시설': {"emissions": 468549, "monthly": [73466, 73659, 50021, 35169, 25929, 23370, 25281, 31082, 29320, 23652, 27527, 50073]},
+
+            '종교시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+        },
+
+        '압구정동': {
+            '공동주택': {"emissions": 144655616, "monthly": [14764146, 11285740, 13274147, 9735936, 11242410, 10401596, 14911660, 14186424, 12208849, 9163484, 11973065, 11508159]},
+
+            '교육연구시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '업무시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '운동시설': {"emissions": 11127350, "monthly": [1135703, 868133, 1021088, 748918, 864800, 800122, 1147050, 1091263, 939142, 704883, 921005, 885243]},
+
+            '제1종근린생활시설': {"emissions": 11127350, "monthly": [1135703, 868133, 1021088, 748918, 864800, 800122, 1147050, 1091263, 939142, 704883, 921005, 885243]},
+
+            '제2종근린생활시설': {"emissions": 6314, "monthly": [453, 475, 392, 475, 427, 394, 390, 435, 914, 686, 627, 646]},
+
+            '종교시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 44509418, "monthly": [4542814, 3472535, 4084353, 2995672, 3459203, 3200491, 4588203, 4365053, 3756569, 2819533, 3684020, 3540972]},
+
+        },
+        '청담동': {
+            '공동주택': {"emissions": 96921560, "monthly": [17525900, 18916404, 10533466, 7923392, 3970054, 4068141, 2468825, 3513957, 2266725, 3879093, 7081780, 14773823]},
+
+            '교육연구시설': {"emissions": 9152190, "monthly": [1329854, 887906, 728437, 821259, 781660, 624167, 685475, 604230, 538731, 663359, 607573, 879539]},
+
+            '노유자시설': {"emissions": 1269199, "monthly": [161368, 201551, 105294, 115187, 63014, 81879, 63154, 113013, 72831, 80283, 69498, 142127]},
+
+            '단독주택': {"emissions": 97256, "monthly": [34181, 37413, 25662, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '문화및집회시설': {"emissions": 639735, "monthly": [78992, 76931, 53721, 41617, 41135, 43757, 50193, 57728, 54074, 43667, 41591, 56329]},
+
+            '방송통신시설': {"emissions": 149720, "monthly": [17292, 17384, 12486, 11722, 10685, 10936, 11225, 11561, 10568, 9956, 11658, 14247]},
+
+            '숙박시설': {"emissions": 37252106, "monthly": [5075748, 4679781, 3746717, 2871452, 2453163, 2695065, 2623685, 2993550, 2748903, 2298146, 1948319, 3117577]},
+
+            '업무시설': {"emissions": 92684327, "monthly": [13161661, 14350514, 9134938, 6217637, 4293814, 4889132, 6528045, 8458457, 8056474, 5831286, 4503403, 7258966]},
+
+            '운동시설': {"emissions": 1337553, "monthly": [179477, 147795, 135952, 132907, 114941, 97155, 94448, 77169, 67970, 88535, 94584, 106620]},
+
+            '위험물저장및처리시설': {"emissions": 1301, "monthly": [100, 98, 88, 98, 98, 108, 116, 141, 130, 117, 107, 100]},
+
+            '의료시설': {"emissions": 14053135, "monthly": [1702734, 1956805, 1396186, 1127449, 959466, 985362, 948026, 1099483, 993016, 750761, 987653, 1146194]},
+
+            '자동차관련시설': {"emissions": 72573, "monthly": [9700, 7837, 4557, 5298, 4597, 5448, 5624, 6834, 5645, 4122, 5456, 7455]},
+
+            '제1종근린생활시설': {"emissions": 54854254, "monthly": [7980362, 8506515, 5573138, 4099292, 3340411, 3195702, 3242821, 3704723, 3472179, 2742562, 3513222, 5483327]},
+
+            '제2종근린생활시설': {"emissions": 117468809, "monthly": [15185912, 15949123, 10887137, 9230868, 7915803, 7667601, 7568688, 8278130, 7767642, 6516587, 8598061, 11903257]},
+
+            '종교시설': {"emissions": 440764, "monthly": [74132, 76579, 49819, 35622, 26050, 14297, 16270, 20573, 19777, 16303, 39169, 52173]},
+
+            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+
+            '판매시설': {"emissions": 2763288, "monthly": [298180, 284450, 206698, 178695, 170766, 215096, 232290, 293176, 261738, 198067, 220259, 203873]},
+
+        },
+
         // ... 다른 동의 데이터
     };
     const initialBuildingTypeData = {};
@@ -901,8 +1650,8 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
         }
 
         totalElectricity.textContent = `${totalElectricityValue} kWh`;
-        totalGas.textContent = `${totalGasValue} m³`;
-        totalEmissions.textContent = `${totalEmissionsValue} tons`;
+        totalGas.textContent = `${totalGasValue} kWh`;
+        totalEmissions.textContent = `${totalEmissionsValue} tCO2eq.`;
     }
             function renderTablePage(sortedRegions, page) {
                 const rankTableBody = document.querySelector("#rankTable tbody");
@@ -911,7 +1660,7 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
                 const end = start + itemsPerPage;
                 sortedRegions.slice(start, end).forEach((data, index) => {
                     const row = document.createElement("tr");
-                    row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity} kWh</td><td>${data.gas} m³</td><td>${data.emissions} tons</td>`;
+                    row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity} kWh</td><td>${data.gas} kWh</td><td>${data.emissions} tCO2eq.</td>`;
                     rankTableBody.appendChild(row);
                 });
             }
@@ -994,7 +1743,7 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
         const end = start + itemsPerPage;
         sortedRegions.slice(start, end).forEach((data, index) => {
             const row = document.createElement("tr");
-            row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity} kWh</td><td>${data.gas} m³</td><td>${data.emissions} tons</td>`;
+            row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity}</td><td>${data.gas} </td><td>${data.emissions}</td>`;
             rankTableBody.appendChild(row);
         });
     }
@@ -1173,8 +1922,8 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
                     regionElement.addEventListener('click', () => {
                     const data = regionsData[regionId];
                     document.getElementById('total-electricity').textContent = `${data.electricity} kWh`;
-                    document.getElementById('total-gas').textContent = `${data.gas} m³`;
-                    document.getElementById('total-emissions').textContent = `${data.emissions} tons`;
+                    document.getElementById('total-gas').textContent = `${data.gas} kWh`;
+                    document.getElementById('total-emissions').textContent = `${data.emissions} tCO2eq.`;
                 });
             }
         });
