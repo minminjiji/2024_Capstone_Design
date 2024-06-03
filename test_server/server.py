@@ -36,5 +36,8 @@ def data():
 def gangnam_districts():
     return render_template('gangnam_districts.html')
 
+@app.route('/projectIntroduce')
+def projectIntroduce():
+    return render_template('projectIntroduce.html')
 if __name__ == '__main__':
     app.run(debug=True)

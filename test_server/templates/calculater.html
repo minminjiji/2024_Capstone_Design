@@ -1,30 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/static/common.css" />
-    <title>Data Introduction</title>
+    <title>탄소배출량 계산기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header, footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo img {
+            height: 50px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .section {
+            width: 60%;
+            margin: 20px 0;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label, input {
+            margin: 10px 0;
+        }
+        .result-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            color: #e74c3c;
+        }
+        .result-box {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            width: 30%;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            color: black;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="header-container">
             <div class="logo">
-                <a href="/"><img src="static/image/logo.png" alt="로고"></a>
+                <a href="/"><img src="/static/image/leftlogo.png" alt="로고"></a>
             </div>
             <nav class="navbar">
                 <a href="/">홈</a>
-                <a href="introduce">소개</a>
-                <a href="map">지도</a>
-                <a href="statistics">통계</a>
-                <a href="calculater">탄소배출량 계산기</a>
-                <a href="data">자료실</a>
+                <a href="/projectIntroduce">소개</a>
+                <a href="/map">지도</a>
+                <a href="/statistics">통계</a>
+                <a href="/calculator">탄소배출량 계산기</a>
+                <a href="/data">자료실</a>
             </nav>
         </div>
     </header>
 
+    <div class="container">
+        <div class="section">
+            <h2>탄소배출량 계산기</h2>
+            <form id="calculator-form">
+                <label for="electricity">전기 사용량 (kWh):</label>
+                <input type="number" id="electricity" name="electricity" required oninput="calculateAndShowResults()"><br><br>
+                
+                <label for="gas">가스 사용량 (m³):</label>
+                <input type="number" id="gas" name="gas" required oninput="calculateAndShowResults()"><br><br>
+            </form>
+        </div>
+
+        <div class="result-section">
+            <div class="result-box">
+                <h3>배출량 결과</h3>
+                <p id="emission-output">0 kg CO2</p>
+            </div>
+            <div class="result-box">
+                <h3>아메리카노</h3>
+                <p id="coffee-output">0 잔</p>
+            </div>
+        </div>
+    </div>
+
    
-    <footer class="footer">
-        <p>© 나랑 데이터 할래?<br>군산대학교 소프트웨어학전공 캡스톤디자인 프로젝트 <br>All rights reserved.</p>
-    </footer>
+
+    <script>
+        let totalEmissions = 0;
+
+        function calculateAndShowResults() {
+            var electricity = document.getElementById('electricity').value;
+            var gas = document.getElementById('gas').value;
+            totalEmissions = (electricity * 0.4777) + (gas * 2.6928);
+
+            // 배출량 결과 표시
+            document.getElementById('emission-output').innerText = totalEmissions.toFixed(2).toLocaleString() + ' kg CO2';
+
+            // 커피 한 잔과 비교
+            var coffeeEquivalent = Math.round(totalEmissions / 0.021); // 배출량을 kg 단위로 나누어 21g으로 나눔 (0.021kg)
+            document.getElementById('coffee-output').innerText = coffeeEquivalent.toLocaleString() + ' 잔의 커피';
+        }
+    </script>
 </body>
 </html>
