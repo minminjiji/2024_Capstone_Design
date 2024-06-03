@@ -207,14 +207,14 @@
                     let currentPage = 1;
                     const totalPages = Math.ceil(sortedRegions.length / itemsPerPage);
 
-                    function renderTablePage(page) {
+                    function renderTablePage(sortedRegions, page) {
                         const rankTableBody = document.querySelector("#rankTable tbody");
                         rankTableBody.innerHTML = '';
                         const start = (page - 1) * itemsPerPage;
                         const end = start + itemsPerPage;
-                        sortedRegions.slice(start, end).forEach((region, index) => {
+                        sortedRegions.slice(start, end).forEach((data, index) => {
                             const row = document.createElement("tr");
-                            row.innerHTML = `<td>${start + index + 1}</td><td>${region[0]}</td><td>${region[1]}</td>`;
+                            row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity}</td><td>${data.gas} </td><td>${data.emissions}</td>`;
                             rankTableBody.appendChild(row);
                         });
                     }
@@ -267,33 +267,6 @@
                 <canvas id="buildingTypeChart"></canvas>
             </div>
         </div>
-        <!-- 맨 밑 차트 추가-->
-        <div class="stats-timeline">
-            <div class="chart-section">
-                <div class="options">
-                    <label for="chart-type-select">차트 타입:</label>
-                    <select id="chart-type-select">
-                        <option value="region">동별 비교</option>
-                        <option value="month">월별 비교</option>
-                    </select>
-                    <label for="region-filter-select" style="display: none;">기준:</label>
-                    <select id="region-filter-select" style="display: none;">
-                        <option value="emissions">탄소 배출량</option>
-                        <option value="electricity">전기 사용량</option>
-                        <option value="gas">가스 사용량</option>
-                    </select>
-                    <div id="region-checkboxes" style="display: none;">
-                        <label>동 선택:</label>
-                        <div>
-                            <!-- 체크박스들이 여기에 추가됩니다 -->
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-container">
-                    <canvas id="comparisonChart"></canvas>
-                </div>
-            </div>
-        </div>
     </div>
     
     <footer class="footer">
@@ -301,422 +274,422 @@
     </footer>
     <script>
     const regionsData = {
-    '신사동': {
-        emissions: 400057292,
-        electricity: 95809977,
-        gas: 52738672,
+        '신사동': {
+        emissions: 400.06, // tCO2eq
+        electricity: 95809.98, // kWh
+        gas: 52738.67, // kWh
         monthly: [
-            { month: 'Jan', electricity: 28877855, gas: 14448183, emissions: 52701019 },
-            { month: 'Feb', electricity: 26547298, gas: 15400360, emissions: 54151734 },
-            { month: 'Mar', electricity: 18831023, gas: 10774329, emissions: 38008693 },
-            { month: 'Apr', electricity: 16372396, gas: 8003471, emissions: 29372840 },
-            { month: 'May', electricity: 16162274, gas: 6767076, emissions: 25943101 },
-            { month: 'Jun', electricity: 19763968, gas: 6195340, emissions: 26124059 },
-            { month: 'Jul', electricity: 23595087, gas: 5926551, emissions: 27230390 },
-            { month: 'Aug', electricity: 27005293, gas: 6753439, emissions: 31086089 },
-            { month: 'Sep', electricity: 24162055, gas: 6304792, emissions: 28519758 },
-            { month: 'Oct', electricity: 16754037, gas: 5255627, emissions: 22155756 },
-            { month: 'Nov', electricity: 17764229, gas: 6737127, emissions: 26627708 },
-            { month: 'Dec', electricity: 23465908, gas: 9999437, emissions: 38136148 }
+            { month: 'Jan', electricity: 28877.86, gas: 14448.18, emissions: 52.70 },
+            { month: 'Feb', electricity: 26547.30, gas: 15400.36, emissions: 54.15 },
+            { month: 'Mar', electricity: 18831.02, gas: 10774.33, emissions: 38.01 },
+            { month: 'Apr', electricity: 16372.40, gas: 8003.47, emissions: 29.37 },
+            { month: 'May', electricity: 16162.27, gas: 6767.08, emissions: 25.94 },
+            { month: 'Jun', electricity: 19763.97, gas: 6195.34, emissions: 26.12 },
+            { month: 'Jul', electricity: 23595.09, gas: 5926.55, emissions: 27.23 },
+            { month: 'Aug', electricity: 27005.29, gas: 6753.44, emissions: 31.09 },
+            { month: 'Sep', electricity: 24162.05, gas: 6304.79, emissions: 28.52 },
+            { month: 'Oct', electricity: 16754.04, gas: 5255.63, emissions: 22.16 },
+            { month: 'Nov', electricity: 17764.23, gas: 6737.13, emissions: 26.63 },
+            { month: 'Dec', electricity: 23465.91, gas: 9999.44, emissions: 38.14 }
         ]
     },
     '논현1동': {
-        emissions: 777606635,
-        electricity: 482458404,
-        gas: 203184884,
+        emissions: 777.61, // tCO2eq
+        electricity: 482458.40, // kWh
+        gas: 203184.88, // kWh
         monthly: [
-            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 108665028 },
-            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 114946541 },
-            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 76755478 },
-            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 58912220 },
-            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 44999335 },
-            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 44982374 },
-            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 47365124 },
-            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 53626637 },
-            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 51528815 },
-            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 43344312 },
-            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 50792643 },
-            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 81688129 }
+            { month: 'Jan', electricity: 49756.73, gas: 31527.12, emissions: 108.67 },
+            { month: 'Feb', electricity: 46147.65, gas: 34500.08, emissions: 114.95 },
+            { month: 'Mar', electricity: 37056.64, gas: 21930.15, emissions: 76.76 },
+            { month: 'Apr', electricity: 32966.43, gas: 16029.47, emissions: 58.91 },
+            { month: 'May', electricity: 31995.72, gas: 11034.97, emissions: 45.00 },
+            { month: 'Jun', electricity: 36763.96, gas: 10182.80, emissions: 44.98 },
+            { month: 'Jul', electricity: 42371.10, gas: 10072.95, emissions: 47.37 },
+            { month: 'Aug', electricity: 47201.70, gas: 11541.29, emissions: 53.63 },
+            { month: 'Sep', electricity: 43977.82, gas: 11334.15, emissions: 51.53 },
+            { month: 'Oct', electricity: 35567.29, gas: 9786.77, emissions: 43.34 },
+            { month: 'Nov', electricity: 35654.18, gas: 12537.38, emissions: 50.79 },
+            { month: 'Dec', electricity: 42999.18, gas: 22707.75, emissions: 81.69 }
         ]
     },
     '논현2동': {
-        emissions: 777606635,
-        electricity: 482458404,
-        gas: 203184884,
+        emissions: 777.61, // tCO2eq
+        electricity: 482458.40, // kWh
+        gas: 203184.88, // kWh
         monthly: [
-            { month: 'Jan', electricity: 49756728, gas: 31527124, emissions: 108665028 },
-            { month: 'Feb', electricity: 46147652, gas: 34500077, emissions: 114946541 },
-            { month: 'Mar', electricity: 37056644, gas: 21930154, emissions: 76755478 },
-            { month: 'Apr', electricity: 32966430, gas: 16029470, emissions: 58912220 },
-            { month: 'May', electricity: 31995723, gas: 11034974, emissions: 44999335 },
-            { month: 'Jun', electricity: 36763959, gas: 10182795, emissions: 44982374 },
-            { month: 'Jul', electricity: 42371098, gas: 10072954, emissions: 47365124 },
-            { month: 'Aug', electricity: 47201704, gas: 11541289, emissions: 53626637 },
-            { month: 'Sep', electricity: 43977821, gas: 11334154, emissions: 51528815 },
-            { month: 'Oct', electricity: 35567286, gas: 9786772, emissions: 43344312 },
-            { month: 'Nov', electricity: 35654175, gas: 12537375, emissions: 50792643 },
-            { month: 'Dec', electricity: 42999184, gas: 22707746, emissions: 81688129 }
+            { month: 'Jan', electricity: 49756.73, gas: 31527.12, emissions: 108.67 },
+            { month: 'Feb', electricity: 46147.65, gas: 34500.08, emissions: 114.95 },
+            { month: 'Mar', electricity: 37056.64, gas: 21930.15, emissions: 76.76 },
+            { month: 'Apr', electricity: 32966.43, gas: 16029.47, emissions: 58.91 },
+            { month: 'May', electricity: 31995.72, gas: 11034.97, emissions: 45.00 },
+            { month: 'Jun', electricity: 36763.96, gas: 10182.80, emissions: 44.98 },
+            { month: 'Jul', electricity: 42371.10, gas: 10072.95, emissions: 47.37 },
+            { month: 'Aug', electricity: 47201.70, gas: 11541.29, emissions: 53.63 },
+            { month: 'Sep', electricity: 43977.82, gas: 11334.15, emissions: 51.53 },
+            { month: 'Oct', electricity: 35567.29, gas: 9786.77, emissions: 43.34 },
+            { month: 'Nov', electricity: 35654.18, gas: 12537.38, emissions: 50.79 },
+            { month: 'Dec', electricity: 42999.18, gas: 22707.75, emissions: 81.69 }
         ]
     },
     '삼성1동': {
-        emissions: 873296022,
-        electricity: 475258980,
-        gas: 239997329,
+        emissions: 873.30, // tCO2eq
+        electricity: 475258.98, // kWh
+        gas: 239997.33, // kWh
         monthly: [
-            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 123812863 },
-            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions:  118199226},
-            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 94416419 },
-            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 63829003 },
-            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 53488084 },
-            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 49961842 },
-            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 61475524 },
-            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 66042212 },
-            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 66886751 },
-            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 48617194 },
-            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 51535428 },
-            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 75031476 }
+            { month: 'Jan', electricity: 44500.10, gas: 38084.95, emissions: 123.81 },
+            { month: 'Feb', electricity: 40254.24, gas: 36753.48, emissions: 118.20 },
+            { month: 'Mar', electricity: 35300.63, gas: 28800.25, emissions: 94.42 },
+            { month: 'Apr', electricity: 33263.89, gas: 17802.60, emissions: 63.83 },
+            { month: 'May', electricity: 34687.23, gas: 13709.89, emissions: 53.49 },
+            { month: 'Jun', electricity: 38687.21, gas: 11690.79, emissions: 49.96 },
+            { month: 'Jul', electricity: 46774.40, gas: 14531.86, emissions: 61.48 },
+            { month: 'Aug', electricity: 51244.34, gas: 15434.78, emissions: 66.04 },
+            { month: 'Sep', electricity: 43042.04, gas: 17203.49, emissions: 66.89 },
+            { month: 'Oct', electricity: 33852.78, gas: 12049.06, emissions: 48.62 },
+            { month: 'Nov', electricity: 34320.21, gas: 13049.86, emissions: 51.54 },
+            { month: 'Dec', electricity: 39331.92, gas: 20886.30, emissions: 75.03 }
         ]
     },
     '삼성2동': {
-        emissions: 873296022,
-        electricity: 475258980,
-        gas: 239997329,
+        emissions: 873.30, // tCO2eq
+        electricity: 475258.98, // kWh
+        gas: 239997.33, // kWh
         monthly: [
-            { month: 'Jan', electricity: 44500102, gas: 38084954, emissions: 123812863 },
-            { month: 'Feb', electricity: 40254244, gas: 36753481, emissions:  118199226},
-            { month: 'Mar', electricity: 35300625, gas: 28800249, emissions: 94416419 },
-            { month: 'Apr', electricity: 33263888, gas: 17802601, emissions: 63829003 },
-            { month: 'May', electricity: 34687230, gas: 13709891, emissions: 53488084 },
-            { month: 'Jun', electricity: 38687209, gas: 11690791, emissions: 49961842 },
-            { month: 'Jul', electricity: 46774395, gas: 14531861, emissions: 61475524 },
-            { month: 'Aug', electricity: 51244343, gas: 15434785, emissions: 66042212 },
-            { month: 'Sep', electricity: 43042040, gas: 17203494, emissions: 66886751 },
-            { month: 'Oct', electricity: 33852784, gas: 12049064, emissions: 48617194 },
-            { month: 'Nov', electricity: 34320205, gas: 13049861, emissions: 51535428 },
-            { month: 'Dec', electricity: 39331915, gas: 20886297, emissions: 75031476 }
+            { month: 'Jan', electricity: 44500.10, gas: 38084.95, emissions: 123.81 },
+            { month: 'Feb', electricity: 40254.24, gas: 36753.48, emissions: 118.20 },
+            { month: 'Mar', electricity: 35300.63, gas: 28800.25, emissions: 94.42 },
+            { month: 'Apr', electricity: 33263.89, gas: 17802.60, emissions: 63.83 },
+            { month: 'May', electricity: 34687.23, gas: 13709.89, emissions: 53.49 },
+            { month: 'Jun', electricity: 38687.21, gas: 11690.79, emissions: 49.96 },
+            { month: 'Jul', electricity: 46774.40, gas: 14531.86, emissions: 61.48 },
+            { month: 'Aug', electricity: 51244.34, gas: 15434.78, emissions: 66.04 },
+            { month: 'Sep', electricity: 43042.04, gas: 17203.49, emissions: 66.89 },
+            { month: 'Oct', electricity: 33852.78, gas: 12049.06, emissions: 48.62 },
+            { month: 'Nov', electricity: 34320.21, gas: 13049.86, emissions: 51.54 },
+            { month: 'Dec', electricity: 39331.92, gas: 20886.30, emissions: 75.03 }
         ]
     },
     '대치1동': {
-        emissions: 665662439,
-        electricity: 465833733,
-        gas: 164562413,
+        emissions: 665.66, // tCO2eq
+        electricity: 465833.73, // kWh
+        gas: 164562.41, // kWh
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
+            { month: 'Jan', electricity: 45638.79, gas: 24603.55, emissions: 88.05 },
+            { month: 'Feb', electricity: 41459.44, gas: 25758.90, emissions: 89.17 },
+            { month: 'Mar', electricity: 35348.02, gas: 17117.46, emissions: 62.98 },
+            { month: 'Apr', electricity: 32160.99, gas: 13889.82, emissions: 52.77 },
+            { month: 'May', electricity: 31883.62, gas: 8184.20, emissions: 37.27 },
+            { month: 'Jun', electricity: 36568.72, gas: 9430.33, emissions: 42.86 },
+            { month: 'Jul', electricity: 44846.08, gas: 8731.48, emissions: 44.94 },
+            { month: 'Aug', electricity: 50432.87, gas: 12236.36, emissions: 57.04 },
+            { month: 'Sep', electricity: 41660.36, gas: 10586.09, emissions: 48.41 },
+            { month: 'Oct', electricity: 33019.72, gas: 9802.30, emissions: 42.17 },
+            { month: 'Nov', electricity: 33844.69, gas: 8008.32, emissions: 37.73 },
+            { month: 'Dec', electricity: 38970.43, gas: 16213.50, emissions: 62.28 }
         ]
     },
     '대치4동': {
-        emissions: 665662439,
-        electricity: 465833733,
-        gas: 164562413,
+        emissions: 665.66, // tCO2eq
+        electricity: 465833.73, // kWh
+        gas: 164562.41, // kWh
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
+            { month: 'Jan', electricity: 45638.79, gas: 24603.55, emissions: 88.05 },
+            { month: 'Feb', electricity: 41459.44, gas: 25758.90, emissions: 89.17 },
+            { month: 'Mar', electricity: 35348.02, gas: 17117.46, emissions: 62.98 },
+            { month: 'Apr', electricity: 32160.99, gas: 13889.82, emissions: 52.77 },
+            { month: 'May', electricity: 31883.62, gas: 8184.20, emissions: 37.27 },
+            { month: 'Jun', electricity: 36568.72, gas: 9430.33, emissions: 42.86 },
+            { month: 'Jul', electricity: 44846.08, gas: 8731.48, emissions: 44.94 },
+            { month: 'Aug', electricity: 50432.87, gas: 12236.36, emissions: 57.04 },
+            { month: 'Sep', electricity: 41660.36, gas: 10586.09, emissions: 48.41 },
+            { month: 'Oct', electricity: 33019.72, gas: 9802.30, emissions: 42.17 },
+            { month: 'Nov', electricity: 33844.69, gas: 8008.32, emissions: 37.73 },
+            { month: 'Dec', electricity: 38970.43, gas: 16213.50, emissions: 62.28 }
         ]
     },
     '역삼1동': {
-        emissions: 1543151654,
-        electricity: 873625861,
-        gas: 418085480,
+        emissions: 1543.15, // tCO2eq
+        electricity: 873625.86, // kWh
+        gas: 418085.48, // kWh
         monthly: [
-            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 224859303 },
-            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 217346566 },
-            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 161387615 },
-            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 112567636 },
-            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 85496064 },
-            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 85541840 },
-            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 102757633 },
-            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 118452604 },
-            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 116739253 },
-            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 84344948 },
-            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 89301936 },
-            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 144356256 }
+            { month: 'Jan', electricity: 84934.26, gas: 68436.65, emissions: 224.86 },
+            { month: 'Feb', electricity: 77834.01, gas: 66906.29, emissions: 217.35 },
+            { month: 'Mar', electricity: 64095.78, gas: 48562.49, emissions: 161.39 },
+            { month: 'Apr', electricity: 58452.03, gas: 31433.86, emissions: 112.57 },
+            { month: 'May', electricity: 58972.23, gas: 21288.26, emissions: 85.50 },
+            { month: 'Jun', electricity: 69296.66, gas: 19473.72, emissions: 85.54 },
+            { month: 'Jul', electricity: 83198.47, gas: 23400.82, emissions: 102.76 },
+            { month: 'Aug', electricity: 94346.84, gas: 27251.60, emissions: 118.45 },
+            { month: 'Sep', electricity: 83006.95, gas: 28627.02, emissions: 116.74 },
+            { month: 'Oct', electricity: 61640.31, gas: 20387.47, emissions: 84.34 },
+            { month: 'Nov', electricity: 63254.48, gas: 21941.95, emissions: 89.30 },
+            { month: 'Dec', electricity: 74593.84, gas: 40375.36, emissions: 144.36 }
         ]
     },
     '역삼2동': {
-        emissions: 1543151654,
-        electricity: 873625861,
-        gas: 418085480,
+        emissions: 1543.15, // tCO2eq
+        electricity: 873625.86, // kWh
+        gas: 418085.48, // kWh
         monthly: [
-            { month: 'Jan', electricity: 84934263, gas: 68436648, emissions: 224859303 },
-            { month: 'Feb', electricity: 77834014, gas: 66906290, emissions: 217346566 },
-            { month: 'Mar', electricity: 64095777, gas: 48562486, emissions: 161387615 },
-            { month: 'Apr', electricity: 58452030, gas: 31433861, emissions: 112567636 },
-            { month: 'May', electricity: 58972226, gas: 21288262, emissions: 85496064 },
-            { month: 'Jun', electricity: 69296661, gas: 19473717, emissions: 85541840 },
-            { month: 'Jul', electricity: 83198467, gas: 23400819, emissions: 102757633 },
-            { month: 'Aug', electricity: 94346844, gas: 27251603, emissions: 118452604 },
-            { month: 'Sep', electricity: 83006953, gas: 28627017, emissions: 116739253 },
-            { month: 'Oct', electricity: 61640311, gas: 20387467, emissions: 84344948 },
-            { month: 'Nov', electricity: 63254478, gas: 21941946, emissions: 89301936 },
-            { month: 'Dec', electricity: 74593837, gas: 40375364, emissions: 144356256 }
+            { month: 'Jan', electricity: 84934.26, gas: 68436.65, emissions: 224.86 },
+            { month: 'Feb', electricity: 77834.01, gas: 66906.29, emissions: 217.35 },
+            { month: 'Mar', electricity: 64095.78, gas: 48562.49, emissions: 161.39 },
+            { month: 'Apr', electricity: 58452.03, gas: 31433.86, emissions: 112.57 },
+            { month: 'May', electricity: 58972.23, gas: 21288.26, emissions: 85.50 },
+            { month: 'Jun', electricity: 69296.66, gas: 19473.72, emissions: 85.54 },
+            { month: 'Jul', electricity: 83198.47, gas: 23400.82, emissions: 102.76 },
+            { month: 'Aug', electricity: 94346.84, gas: 27251.60, emissions: 118.45 },
+            { month: 'Sep', electricity: 83006.95, gas: 28627.02, emissions: 116.74 },
+            { month: 'Oct', electricity: 61640.31, gas: 20387.47, emissions: 84.34 },
+            { month: 'Nov', electricity: 63254.48, gas: 21941.95, emissions: 89.30 },
+            { month: 'Dec', electricity: 74593.84, gas: 40375.36, emissions: 144.36 }
         ]
     },
     '도곡1동': {
-        emissions: 717213166,
-        electricity: 373658919,
-        gas: 200058044,
+        emissions: 717.21, // tCO2eq
+        electricity: 373658.92, // kWh
+        gas: 200058.04, // kWh
         monthly: [
-            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: Math.round((32749553 * 0.4777) + (27637016 * 2.6928)) },
-            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: Math.round((29499611 * 0.4777) + (29261682 * 2.6928)) },
-            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: Math.round((27421358 * 0.4777) + (22391131 * 2.6928)) },
-            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: Math.round((25783510 * 0.4777) + (14568139 * 2.6928)) },
-            { month: 'May', electricity: 27214409, gas: 8859607, emissions: Math.round((27214409 * 0.4777) + (8859607 * 2.6928)) },
-            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: Math.round((31178483 * 0.4777) + (10519061 * 2.6928)) },
-            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: Math.round((38810839 * 0.4777) + (11285969 * 2.6928)) },
-            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: Math.round((42017758 * 0.4777) + (19027817 * 2.6928)) },
-            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: Math.round((33731942 * 0.4777) + (20695123 * 2.6928)) },
-            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: Math.round((26912583 * 0.4777) + (11434192 * 2.6928)) },
-            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: Math.round((27352054 * 0.4777) + (7480824 * 2.6928)) },
-            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: Math.round((30986819 * 0.4777) + (16897483 * 2.6928)) }
+            { month: 'Jan', electricity: 32749.55, gas: 27637.02, emissions: 102.04 },
+            { month: 'Feb', electricity: 29499.61, gas: 29261.68, emissions: 109.67 },
+            { month: 'Mar', electricity: 27421.36, gas: 22391.13, emissions: 91.09 },
+            { month: 'Apr', electricity: 25783.51, gas: 14568.14, emissions: 72.67 },
+            { month: 'May', electricity: 27214.41, gas: 8859.61, emissions: 52.40 },
+            { month: 'Jun', electricity: 31178.48, gas: 10519.06, emissions: 62.78 },
+            { month: 'Jul', electricity: 38810.84, gas: 11285.97, emissions: 78.32 },
+            { month: 'Aug', electricity: 42017.76, gas: 19027.82, emissions: 95.45 },
+            { month: 'Sep', electricity: 33731.94, gas: 20695.12, emissions: 86.66 },
+            { month: 'Oct', electricity: 26912.58, gas: 11434.19, emissions: 60.06 },
+            { month: 'Nov', electricity: 27352.05, gas: 7480.82, emissions: 49.69 },
+            { month: 'Dec', electricity: 30986.82, gas: 16897.48, emissions: 73.82 }
         ]
     },
     '도곡2동': {
-        emissions: 717213166,
-        electricity: 373658919,
-        gas: 200058044,
+        emissions: 717.21, // tCO2eq
+        electricity: 373658.92, // kWh
+        gas: 200058.04, // kWh
         monthly: [
-            { month: 'Jan', electricity: 32749553, gas: 27637016, emissions: Math.round((32749553 * 0.4777) + (27637016 * 2.6928)) },
-            { month: 'Feb', electricity: 29499611, gas: 29261682, emissions: Math.round((29499611 * 0.4777) + (29261682 * 2.6928)) },
-            { month: 'Mar', electricity: 27421358, gas: 22391131, emissions: Math.round((27421358 * 0.4777) + (22391131 * 2.6928)) },
-            { month: 'Apr', electricity: 25783510, gas: 14568139, emissions: Math.round((25783510 * 0.4777) + (14568139 * 2.6928)) },
-            { month: 'May', electricity: 27214409, gas: 8859607, emissions: Math.round((27214409 * 0.4777) + (8859607 * 2.6928)) },
-            { month: 'Jun', electricity: 31178483, gas: 10519061, emissions: Math.round((31178483 * 0.4777) + (10519061 * 2.6928)) },
-            { month: 'Jul', electricity: 38810839, gas: 11285969, emissions: Math.round((38810839 * 0.4777) + (11285969 * 2.6928)) },
-            { month: 'Aug', electricity: 42017758, gas: 19027817, emissions: Math.round((42017758 * 0.4777) + (19027817 * 2.6928)) },
-            { month: 'Sep', electricity: 33731942, gas: 20695123, emissions: Math.round((33731942 * 0.4777) + (20695123 * 2.6928)) },
-            { month: 'Oct', electricity: 26912583, gas: 11434192, emissions: Math.round((26912583 * 0.4777) + (11434192 * 2.6928)) },
-            { month: 'Nov', electricity: 27352054, gas: 7480824, emissions: Math.round((27352054 * 0.4777) + (7480824 * 2.6928)) },
-            { month: 'Dec', electricity: 30986819, gas: 16897483, emissions: Math.round((30986819 * 0.4777) + (16897483 * 2.6928)) }
+            { month: 'Jan', electricity: 32749.55, gas: 27637.02, emissions: 102.04 },
+            { month: 'Feb', electricity: 29499.61, gas: 29261.68, emissions: 109.67 },
+            { month: 'Mar', electricity: 27421.36, gas: 22391.13, emissions: 91.09 },
+            { month: 'Apr', electricity: 25783.51, gas: 14568.14, emissions: 72.67 },
+            { month: 'May', electricity: 27214.41, gas: 8859.61, emissions: 52.40 },
+            { month: 'Jun', electricity: 31178.48, gas: 10519.06, emissions: 62.78 },
+            { month: 'Jul', electricity: 38810.84, gas: 11285.97, emissions: 78.32 },
+            { month: 'Aug', electricity: 42017.76, gas: 19027.82, emissions: 95.45 },
+            { month: 'Sep', electricity: 33731.94, gas: 20695.12, emissions: 86.66 },
+            { month: 'Oct', electricity: 26912.58, gas: 11434.19, emissions: 60.06 },
+            { month: 'Nov', electricity: 27352.05, gas: 7480.82, emissions: 49.69 },
+            { month: 'Dec', electricity: 30986.82, gas: 16897.48, emissions: 73.82 }
         ]
     },
     '개포1동': {
-        emissions: 187783121,
-        electricity: 95809977,
-        gas: 52738672,
+        emissions: 187.78, // tCO2eq
+        electricity: 95809.98, // kWh
+        gas: 52738.67, // kWh
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
+            { month: 'Jan', electricity: 9768.95, gas: 9444.19, emissions: 33.13 },
+            { month: 'Feb', electricity: 8944.19, gas: 9798.35, emissions: 33.96 },
+            { month: 'Mar', electricity: 7224.57, gas: 5961.48, emissions: 23.09 },
+            { month: 'Apr', electricity: 6655.62, gas: 4379.39, emissions: 17.55 },
+            { month: 'May', electricity: 6410.72, gas: 3265.30, emissions: 13.31 },
+            { month: 'Jun', electricity: 7065.57, gas: 2139.26, emissions: 11.39 },
+            { month: 'Jul', electricity: 8852.88, gas: 1586.23, emissions: 13.67 },
+            { month: 'Aug', electricity: 10376.57, gas: 1766.32, emissions: 16.61 },
+            { month: 'Sep', electricity: 8720.29, gas: 1597.36, emissions: 14.58 },
+            { month: 'Oct', electricity: 6701.64, gas: 2019.47, emissions: 11.60 },
+            { month: 'Nov', electricity: 6849.25, gas: 3574.20, emissions: 16.46 },
+            { month: 'Dec', electricity: 8239.73, gas: 7207.14, emissions: 27.54 }
         ]
     },
     '개포2동': {
-        emissions: 187783121,
-        electricity: 95809977,
-        gas: 52738672,
+        emissions: 187.78, // tCO2eq
+        electricity: 95809.98, // kWh
+        gas: 52738.67, // kWh
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
+            { month: 'Jan', electricity: 9768.95, gas: 9444.19, emissions: 33.13 },
+            { month: 'Feb', electricity: 8944.19, gas: 9798.35, emissions: 33.96 },
+            { month: 'Mar', electricity: 7224.57, gas: 5961.48, emissions: 23.09 },
+            { month: 'Apr', electricity: 6655.62, gas: 4379.39, emissions: 17.55 },
+            { month: 'May', electricity: 6410.72, gas: 3265.30, emissions: 13.31 },
+            { month: 'Jun', electricity: 7065.57, gas: 2139.26, emissions: 11.39 },
+            { month: 'Jul', electricity: 8852.88, gas: 1586.23, emissions: 13.67 },
+            { month: 'Aug', electricity: 10376.57, gas: 1766.32, emissions: 16.61 },
+            { month: 'Sep', electricity: 8720.29, gas: 1597.36, emissions: 14.58 },
+            { month: 'Oct', electricity: 6701.64, gas: 2019.47, emissions: 11.60 },
+            { month: 'Nov', electricity: 6849.25, gas: 3574.20, emissions: 16.46 },
+            { month: 'Dec', electricity: 8239.73, gas: 7207.14, emissions: 27.54 }
         ]
     },
     '일원본동': {
-        emissions: 55006689,
-        electricity: 39556329,
-        gas: 13410068,
+        emissions: 55.01, // tCO2eq
+        electricity: 39556.33, // kWh
+        gas: 13410.07, // kWh
         monthly: [
-            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: Math.round((3647780 * 0.4777) + (1996214 * 2.6928)) },
-            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: Math.round((3231426 * 0.4777) + (2001654 * 2.6928)) },
-            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: Math.round((2935919 * 0.4777) + (1519279 * 2.6928)) },
-            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: Math.round((2741247 * 0.4777) + (1072470 * 2.6928)) },
-            { month: 'May', electricity: 2849238, gas: 964818, emissions: Math.round((2849238 * 0.4777) + (964818 * 2.6928)) },
-            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: Math.round((3166833 * 0.4777) + (691875 * 2.6928)) },
-            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: Math.round((4007495 * 0.4777) + (738475 * 2.6928)) },
-            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: Math.round((4417703 * 0.4777) + (604668 * 2.6928)) },
-            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: Math.round((3509845 * 0.4777) + (727755 * 2.6928)) },
-            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: Math.round((2820048 * 0.4777) + (532381 * 2.6928)) },
-            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: Math.round((2909346 * 0.4777) + (1092925 * 2.6928)) },
-            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: Math.round((3319449 * 0.4777) + (1467554 * 2.6928)) }
+            { month: 'Jan', electricity: 3647.78, gas: 1996.21, emissions: 10.60 },
+            { month: 'Feb', electricity: 3231.43, gas: 2001.65, emissions: 10.23 },
+            { month: 'Mar', electricity: 2935.92, gas: 1519.28, emissions: 8.51 },
+            { month: 'Apr', electricity: 2741.25, gas: 1072.47, emissions: 6.56 },
+            { month: 'May', electricity: 2849.24, gas: 964.82, emissions: 5.51 },
+            { month: 'Jun', electricity: 3166.83, gas: 691.88, emissions: 5.16 },
+            { month: 'Jul', electricity: 4007.50, gas: 738.48, emissions: 6.68 },
+            { month: 'Aug', electricity: 4417.70, gas: 604.67, emissions: 7.31 },
+            { month: 'Sep', electricity: 3509.85, gas: 727.76, emissions: 6.50 },
+            { month: 'Oct', electricity: 2820.05, gas: 532.38, emissions: 5.00 },
+            { month: 'Nov', electricity: 2909.35, gas: 1092.93, emissions: 6.63 },
+            { month: 'Dec', electricity: 3319.45, gas: 1467.55, emissions: 8.41 }
         ]
     },
     '일원1동': {
-        emissions: 55006689,
-        electricity: 39556329,
-        gas: 13410068,
+        emissions: 55.01, // tCO2eq
+        electricity: 39556.33, // kWh
+        gas: 13410.07, // kWh
         monthly: [
-            { month: 'Jan', electricity: 3647780, gas: 1996214, emissions: Math.round((3647780 * 0.4777) + (1996214 * 2.6928)) },
-            { month: 'Feb', electricity: 3231426, gas: 2001654, emissions: Math.round((3231426 * 0.4777) + (2001654 * 2.6928)) },
-            { month: 'Mar', electricity: 2935919, gas: 1519279, emissions: Math.round((2935919 * 0.4777) + (1519279 * 2.6928)) },
-            { month: 'Apr', electricity: 2741247, gas: 1072470, emissions: Math.round((2741247 * 0.4777) + (1072470 * 2.6928)) },
-            { month: 'May', electricity: 2849238, gas: 964818, emissions: Math.round((2849238 * 0.4777) + (964818 * 2.6928)) },
-            { month: 'Jun', electricity: 3166833, gas: 691875, emissions: Math.round((3166833 * 0.4777) + (691875 * 2.6928)) },
-            { month: 'Jul', electricity: 4007495, gas: 738475, emissions: Math.round((4007495 * 0.4777) + (738475 * 2.6928)) },
-            { month: 'Aug', electricity: 4417703, gas: 604668, emissions: Math.round((4417703 * 0.4777) + (604668 * 2.6928)) },
-            { month: 'Sep', electricity: 3509845, gas: 727755, emissions: Math.round((3509845 * 0.4777) + (727755 * 2.6928)) },
-            { month: 'Oct', electricity: 2820048, gas: 532381, emissions: Math.round((2820048 * 0.4777) + (532381 * 2.6928)) },
-            { month: 'Nov', electricity: 2909346, gas: 1092925, emissions: Math.round((2909346 * 0.4777) + (1092925 * 2.6928)) },
-            { month: 'Dec', electricity: 3319449, gas: 1467554, emissions: Math.round((3319449 * 0.4777) + (1467554 * 2.6928)) }
+            { month: 'Jan', electricity: 3647.78, gas: 1996.21, emissions: 10.60 },
+            { month: 'Feb', electricity: 3231.43, gas: 2001.65, emissions: 10.23 },
+            { month: 'Mar', electricity: 2935.92, gas: 1519.28, emissions: 8.51 },
+            { month: 'Apr', electricity: 2741.25, gas: 1072.47, emissions: 6.56 },
+            { month: 'May', electricity: 2849.24, gas: 964.82, emissions: 5.51 },
+            { month: 'Jun', electricity: 3166.83, gas: 691.88, emissions: 5.16 },
+            { month: 'Jul', electricity: 4007.50, gas: 738.48, emissions: 6.68 },
+            { month: 'Aug', electricity: 4417.70, gas: 604.67, emissions: 7.31 },
+            { month: 'Sep', electricity: 3509.85, gas: 727.76, emissions: 6.50 },
+            { month: 'Oct', electricity: 2820.05, gas: 532.38, emissions: 5.00 },
+            { month: 'Nov', electricity: 2909.35, gas: 1092.93, emissions: 6.63 },
+            { month: 'Dec', electricity: 3319.45, gas: 1467.55, emissions: 8.41 }
         ]
     },
     '개포3동': {
-        emissions: 187783121,
-        electricity: 95809977,
-        gas: 52738672,
+        emissions: 187.78, // tCO2eq
+        electricity: 95809.98, // kWh
+        gas: 52738.67, // kWh
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
+            { month: 'Jan', electricity: 9768.95, gas: 9444.19, emissions: 33.13 },
+            { month: 'Feb', electricity: 8944.19, gas: 9798.35, emissions: 33.96 },
+            { month: 'Mar', electricity: 7224.57, gas: 5961.48, emissions: 23.09 },
+            { month: 'Apr', electricity: 6655.62, gas: 4379.39, emissions: 17.55 },
+            { month: 'May', electricity: 6410.72, gas: 3265.30, emissions: 13.31 },
+            { month: 'Jun', electricity: 7065.57, gas: 2139.26, emissions: 11.39 },
+            { month: 'Jul', electricity: 8852.88, gas: 1586.23, emissions: 13.67 },
+            { month: 'Aug', electricity: 10376.57, gas: 1766.32, emissions: 16.61 },
+            { month: 'Sep', electricity: 8720.29, gas: 1597.36, emissions: 14.58 },
+            { month: 'Oct', electricity: 6701.64, gas: 2019.47, emissions: 11.60 },
+            { month: 'Nov', electricity: 6849.25, gas: 3574.20, emissions: 16.46 },
+            { month: 'Dec', electricity: 8239.73, gas: 7207.14, emissions: 27.54 }
         ]
     },
     '수서동': {
-        emissions: 15542404,
-        electricity: 7212728,
-        gas: 4492307,
+        emissions: 15.54, // tCO2eq
+        electricity: 7212.73, // kWh
+        gas: 4492.31, // kWh
         monthly: [
-            { month: 'Jan', electricity: 909658, gas: 635784, emissions: Math.round((909658 * 0.4777) + (635784 * 2.6928)) }, // 1935183
-            { month: 'Feb', electricity: 827757, gas: 669363, emissions: Math.round((827757 * 0.4777) + (669363 * 2.6928)) }, // 1966112
-            { month: 'Mar', electricity: 608959, gas: 485655, emissions: Math.round((608959 * 0.4777) + (485655 * 2.6928)) }, // 1433008
-            { month: 'Apr', electricity: 448310, gas: 379680, emissions: Math.round((448310 * 0.4777) + (379680 * 2.6928)) }, // 1113606
-            { month: 'May', electricity: 418840, gas: 317544, emissions: Math.round((418840 * 0.4777) + (317544 * 2.6928)) }, // 934569
-            { month: 'Jun', electricity: 493491, gas: 265776, emissions: Math.round((493491 * 0.4777) + (265776 * 2.6928)) }, // 853448
-            { month: 'Jul', electricity: 617857, gas: 231645, emissions: Math.round((617857 * 0.4777) + (231645 * 2.6928)) }, // 965128
-            { month: 'Aug', electricity: 730586, gas: 230160, emissions: Math.round((730586 * 0.4777) + (230160 * 2.6928)) }, // 1095171
-            { month: 'Sep', electricity: 664888, gas: 240165, emissions: Math.round((664888 * 0.4777) + (240165 * 2.6928)) }, // 1045934
-            { month: 'Oct', electricity: 466729, gas: 195799, emissions: Math.round((466729 * 0.4777) + (195799 * 2.6928)) }, // 803319
-            { month: 'Nov', electricity: 453110, gas: 348816, emissions: Math.round((453110 * 0.4777) + (348816 * 2.6928)) }, // 1252602
-            { month: 'Dec', electricity: 572543, gas: 491920, emissions: Math.round((572543 * 0.4777) + (491920 * 2.6928)) }  // 1842525
+            { month: 'Jan', electricity: 909.66, gas: 635.78, emissions: 1.94 },
+            { month: 'Feb', electricity: 827.76, gas: 669.36, emissions: 1.97 },
+            { month: 'Mar', electricity: 608.96, gas: 485.66, emissions: 1.43 },
+            { month: 'Apr', electricity: 448.31, gas: 379.68, emissions: 1.11 },
+            { month: 'May', electricity: 418.84, gas: 317.54, emissions: 0.93 },
+            { month: 'Jun', electricity: 493.49, gas: 265.78, emissions: 0.85 },
+            { month: 'Jul', electricity: 617.86, gas: 231.65, emissions: 0.97 },
+            { month: 'Aug', electricity: 730.59, gas: 230.16, emissions: 1.10 },
+            { month: 'Sep', electricity: 664.89, gas: 240.17, emissions: 1.05 },
+            { month: 'Oct', electricity: 466.73, gas: 195.80, emissions: 0.80 },
+            { month: 'Nov', electricity: 453.11, gas: 348.82, emissions: 1.25 },
+            { month: 'Dec', electricity: 572.54, gas: 491.92, emissions: 1.84 }
         ]
     },
     '세곡동': {
-        emissions: 5552657,
-        electricity: 2956064,
-        gas: 1537636,
+        emissions: 5.55, // tCO2eq
+        electricity: 2956.06, // kWh
+        gas: 1537.64, // kWh
         monthly: [
-            { month: 'Jan', electricity: 334914, gas: 223663, emissions: Math.round((334914 * 0.4777) + (223663 * 2.6928)) }, // 690720
-            { month: 'Feb', electricity: 314776, gas: 242728, emissions: Math.round((314776 * 0.4777) + (242728 * 2.6928)) }, // 733256
-            { month: 'Mar', electricity: 248784, gas: 162528, emissions: Math.round((248784 * 0.4777) + (162528 * 2.6928)) }, // 498237
-            { month: 'Apr', electricity: 213961, gas: 116783, emissions: Math.round((213961 * 0.4777) + (116783 * 2.6928)) }, // 354683
-            { month: 'May', electricity: 184057, gas: 101689, emissions: Math.round((184057 * 0.4777) + (101689 * 2.6928)) }, // 308051
-            { month: 'Jun', electricity: 198301, gas: 81471, emissions: Math.round((198301 * 0.4777) + (81471 * 2.6928)) }, // 287717
-            { month: 'Jul', electricity: 229214, gas: 87264, emissions: Math.round((229214 * 0.4777) + (87264 * 2.6928)) }, // 331998
-            { month: 'Aug', electricity: 282107, gas: 87892, emissions: Math.round((282107 * 0.4777) + (87892 * 2.6928)) }, // 386237
-            { month: 'Sep', electricity: 274685, gas: 91648, emissions: Math.round((274685 * 0.4777) + (91648 * 2.6928)) }, // 385241
-            { month: 'Oct', electricity: 218207, gas: 64714, emissions: Math.round((218207 * 0.4777) + (64714 * 2.6928)) }, // 263519
-            { month: 'Nov', electricity: 196816, gas: 110736, emissions: Math.round((196816 * 0.4777) + (110736 * 2.6928)) }, // 364078
-            { month: 'Dec', electricity: 260242, gas: 166520, emissions: Math.round((260242 * 0.4777) + (166520 * 2.6928)) }  // 550918
+            { month: 'Jan', electricity: 334.91, gas: 223.66, emissions: 0.69 },
+            { month: 'Feb', electricity: 314.78, gas: 242.73, emissions: 0.73 },
+            { month: 'Mar', electricity: 248.78, gas: 162.53, emissions: 0.50 },
+            { month: 'Apr', electricity: 213.96, gas: 116.78, emissions: 0.35 },
+            { month: 'May', electricity: 184.06, gas: 101.69, emissions: 0.31 },
+            { month: 'Jun', electricity: 198.30, gas: 81.47, emissions: 0.29 },
+            { month: 'Jul', electricity: 229.21, gas: 87.26, emissions: 0.33 },
+            { month: 'Aug', electricity: 282.11, gas: 87.89, emissions: 0.39 },
+            { month: 'Sep', electricity: 274.69, gas: 91.65, emissions: 0.39 },
+            { month: 'Oct', electricity: 218.21, gas: 64.71, emissions: 0.26 },
+            { month: 'Nov', electricity: 196.82, gas: 110.74, emissions: 0.36 },
+            { month: 'Dec', electricity: 260.24, gas: 166.52, emissions: 0.55 }
         ]
     },
     '압구정동': {
-        emissions: 211426077,
-        electricity: 380636506,
-        gas: 10990797,
+        emissions: 211.43, // tCO2eq
+        electricity: 380636.51, // kWh
+        gas: 10990.80, // kWh
         monthly: [
-            { month: 'Jan', electricity: 35552534, gas: 1706542, emissions: Math.round((35552534 * 0.4777) + (1706542 * 2.6928)) }, // 21591399
-            { month: 'Feb', electricity: 29712151, gas: 854696, emissions: Math.round((29712151 * 0.4777) + (854696 * 2.6928)) }, // 18115616
-            { month: 'Mar', electricity: 30180365, gas: 1850828, emissions: Math.round((30180365 * 0.4777) + (1850828 * 2.6928)) }, // 20827285
-            { month: 'Apr', electricity: 26933248, gas: 506502, emissions: Math.round((26933248 * 0.4777) + (506502 * 2.6928)) }, // 13163905
-            { month: 'May', electricity: 26454100, gas: 1409135, emissions: Math.round((26454100 * 0.4777) + (1409135 * 2.6928)) }, // 14868448
-            { month: 'Jun', electricity: 29222236, gas: 461700, emissions: Math.round((29222236 * 0.4777) + (461700 * 2.6928)) }, // 14359571
-            { month: 'Jul', electricity: 39305395, gas: 1120829, emissions: Math.round((39305395 * 0.4777) + (1120829 * 2.6928)) }, // 19960021
-            { month: 'Aug', electricity: 42527129, gas: 155686, emissions: Math.round((42527129 * 0.4777) + (155686 * 2.6928)) }, // 20408263
-            { month: 'Sep', electricity: 31336297, gas: 1067762, emissions: Math.round((31336297 * 0.4777) + (1067762 * 2.6928)) }, // 16237314
-            { month: 'Oct', electricity: 27264234, gas: 137161, emissions: Math.round((27264234 * 0.4777) + (137161 * 2.6928)) }, // 13145760
-            { month: 'Nov', electricity: 29460376, gas: 1272468, emissions: Math.round((29460376 * 0.4777) + (1272468 * 2.6928)) }, // 16834623
-            { month: 'Dec', electricity: 32688441, gas: 447488, emissions: Math.round((32688441 * 0.4777) + (447488 * 2.6928)) }  // 16095972
+            { month: 'Jan', electricity: 35552.53, gas: 1706.54, emissions: 21.59 },
+            { month: 'Feb', electricity: 29712.15, gas: 854.70, emissions: 18.12 },
+            { month: 'Mar', electricity: 30180.37, gas: 1850.83, emissions: 20.83 },
+            { month: 'Apr', electricity: 26933.25, gas: 506.50, emissions: 13.16 },
+            { month: 'May', electricity: 26454.10, gas: 1409.14, emissions: 14.87 },
+            { month: 'Jun', electricity: 29222.24, gas: 461.70, emissions: 14.36 },
+            { month: 'Jul', electricity: 39305.40, gas: 1120.83, emissions: 19.96 },
+            { month: 'Aug', electricity: 42527.13, gas: 155.69, emissions: 20.41 },
+            { month: 'Sep', electricity: 31336.30, gas: 1067.76, emissions: 16.24 },
+            { month: 'Oct', electricity: 27264.23, gas: 137.16, emissions: 13.15 },
+            { month: 'Nov', electricity: 29460.38, gas: 1272.47, emissions: 16.83 },
+            { month: 'Dec', electricity: 32688.44, gas: 447.49, emissions: 16.10 }
         ]
     },
     '청담동': {
-        emissions: 429157857.63,
-        electricity: 209482752,
-        gas: 122210319,
+        emissions: 429.16, // tCO2eq
+        electricity: 209482.75, // kWh
+        gas: 122210.32, // kWh
         monthly: [
-            { month: 'Jan', electricity: 23021771, gas: 19243204, emissions: Math.round((23021771 * 0.4777) + (19243204 * 2.6928)) }, // 63170726
-            { month: 'Feb', electricity: 21152247, gas: 20793474, emissions: Math.round((21152247 * 0.4777) + (20793474 * 2.6928)) }, // 66479365
-            { month: 'Mar', electricity: 15895206, gas: 12998056, emissions: Math.round((15895206 * 0.4777) + (12998056 * 2.6928)) }, // 41947356
-            { month: 'Apr', electricity: 13880555, gas: 9722876, emissions: Math.round((13880555 * 0.4777) + (9722876 * 2.6928)) }, // 32288896
-            { month: 'May', electricity: 13438030, gas: 6582857, emissions: Math.round((13438030 * 0.4777) + (6582857 * 2.6928)) }, // 24647809
-            { month: 'Jun', electricity: 15874921, gas: 6316995, emissions: Math.round((15874921 * 0.4777) + (6316995 * 2.6928)) }, // 26110688
-            { month: 'Jul', electricity: 18703310, gas: 5794831, emissions: Math.round((18703310 * 0.4777) + (5794831 * 2.6928)) }, // 28724069
-            { month: 'Aug', electricity: 21534028, gas: 7035772, emissions: Math.round((21534028 * 0.4777) + (7035772 * 2.6928)) }, // 34502161
-            { month: 'Sep', electricity: 19480918, gas: 6324412, emissions: Math.round((19480918 * 0.4777) + (6324412 * 2.6928)) }, // 28518368
-            { month: 'Oct', electricity: 14259442, gas: 6057306, emissions: Math.round((14259442 * 0.4777) + (6057306 * 2.6928)) }, // 23142300
-            { month: 'Nov', electricity: 14246323, gas: 7767703, emissions: Math.round((14246323 * 0.4777) + (7767703 * 2.6928)) }, // 25826892
-            { month: 'Dec', electricity: 17996001, gas: 13572833, emissions: Math.round((17996001 * 0.4777) + (13572833 * 2.6928)) }  // 47894477
+            { month: 'Jan', electricity: 23021.77, gas: 19243.20, emissions: 63.17 },
+            { month: 'Feb', electricity: 21152.25, gas: 20793.47, emissions: 66.48 },
+            { month: 'Mar', electricity: 15895.21, gas: 12998.06, emissions: 41.95 },
+            { month: 'Apr', electricity: 13880.56, gas: 9722.88, emissions: 32.29 },
+            { month: 'May', electricity: 13438.03, gas: 6582.86, emissions: 24.65 },
+            { month: 'Jun', electricity: 15874.92, gas: 6316.99, emissions: 26.11 },
+            { month: 'Jul', electricity: 18703.31, gas: 5794.83, emissions: 28.72 },
+            { month: 'Aug', electricity: 21534.03, gas: 7035.77, emissions: 34.50 },
+            { month: 'Sep', electricity: 19480.92, gas: 6324.41, emissions: 28.52 },
+            { month: 'Oct', electricity: 14259.44, gas: 6057.31, emissions: 23.14 },
+            { month: 'Nov', electricity: 14246.32, gas: 7767.70, emissions: 25.83 },
+            { month: 'Dec', electricity: 17996.00, gas: 13572.83, emissions: 47.89 }
         ]
     },
     '대치2동': {
-        emissions: 665662439,
-        electricity: 465833733,
-        gas: 164562413,
+        emissions: 665.66, // tCO2eq
+        electricity: 465833.73, // kWh
+        gas: 164562.41, // kWh
         monthly: [
-            { month: 'Jan', electricity: 45638786, gas: 24603554, emissions: 88054098 },
-            { month: 'Feb', electricity: 41459441, gas: 25758998, emissions: 89169005 },
-            { month: 'Mar', electricity: 35348017, gas: 17117459, emissions: 62979641 },
-            { month: 'Apr', electricity: 32160993, gas: 13889824, emissions: 52765824 },
-            { month: 'May', electricity: 31883618, gas: 8184197, emissions: 37269210 },
-            { month: 'Jun', electricity: 36568722, gas: 9430325, emissions: 42862858 },
-            { month: 'Jul', electricity: 44846082, gas: 8731480, emissions: 44935103 },
-            { month: 'Aug', electricity: 50432870, gas: 12236360, emissions: 57041852 },
-            { month: 'Sep', electricity: 41660357, gas: 10586094, emissions: 48407386 },
-            { month: 'Oct', electricity: 33019720, gas: 9802301, emissions: 42169156 },
-            { month: 'Nov', electricity: 33844693, gas: 8008323, emissions: 37732422 },
-            { month: 'Dec', electricity: 38970434, gas: 16213498, emissions: 62275884 }
+            { month: 'Jan', electricity: 45638.79, gas: 24603.55, emissions: 88.05 },
+            { month: 'Feb', electricity: 41459.44, gas: 25758.90, emissions: 89.17 },
+            { month: 'Mar', electricity: 35348.02, gas: 17117.46, emissions: 62.98 },
+            { month: 'Apr', electricity: 32160.99, gas: 13889.82, emissions: 52.77 },
+            { month: 'May', electricity: 31883.62, gas: 8184.20, emissions: 37.27 },
+            { month: 'Jun', electricity: 36568.72, gas: 9430.33, emissions: 42.86 },
+            { month: 'Jul', electricity: 44846.08, gas: 8731.48, emissions: 44.94 },
+            { month: 'Aug', electricity: 50432.87, gas: 12236.36, emissions: 57.04 },
+            { month: 'Sep', electricity: 41660.36, gas: 10586.09, emissions: 48.41 },
+            { month: 'Oct', electricity: 33019.72, gas: 9802.30, emissions: 42.17 },
+            { month: 'Nov', electricity: 33844.69, gas: 8008.32, emissions: 37.73 },
+            { month: 'Dec', electricity: 38970.43, gas: 16213.50, emissions: 62.28 }
         ]
     },
     '개포4동': {
-        emissions: 187783121,
-        electricity: 95809977,
-        gas: 52738672,
+        emissions: 187.78, // tCO2eq
+        electricity: 95809.98, // kWh
+        gas: 52738.67, // kWh
         monthly: [
-            { month: 'Jan', electricity: 9768946, gas: 9444187, emissions: Math.round((9768946 * 0.4777) + (9444187 * 2.6928)) },
-            { month: 'Feb', electricity: 8944185, gas: 9798350, emissions: Math.round((8944185 * 0.4777) + (9798350 * 2.6928)) },
-            { month: 'Mar', electricity: 7224573, gas: 5961484, emissions: Math.round((7224573 * 0.4777) + (5961484 * 2.6928)) },
-            { month: 'Apr', electricity: 6655619, gas: 4379389, emissions: Math.round((6655619 * 0.4777) + (4379389 * 2.6928)) },
-            { month: 'May', electricity: 6410724, gas: 3265295, emissions: Math.round((6410724 * 0.4777) + (3265295 * 2.6928)) },
-            { month: 'Jun', electricity: 7065574, gas: 2139257, emissions: Math.round((7065574 * 0.4777) + (2139257 * 2.6928)) },
-            { month: 'Jul', electricity: 8852882, gas: 1586225, emissions: Math.round((8852882 * 0.4777) + (1586225 * 2.6928)) },
-            { month: 'Aug', electricity: 10376565, gas: 1766319, emissions: Math.round((10376565 * 0.4777) + (1766319 * 2.6928)) },
-            { month: 'Sep', electricity: 8720286, gas: 1597362, emissions: Math.round((8720286 * 0.4777) + (1597362 * 2.6928)) },
-            { month: 'Oct', electricity: 6701640, gas: 2019468, emissions: Math.round((6701640 * 0.4777) + (2019468 * 2.6928)) },
-            { month: 'Nov', electricity: 6849251, gas: 3574195, emissions: Math.round((6849251 * 0.4777) + (3574195 * 2.6928)) },
-            { month: 'Dec', electricity: 8239732, gas: 7207141, emissions: Math.round((8239732 * 0.4777) + (7207141 * 2.6928)) }
+            { month: 'Jan', electricity: 9768.95, gas: 9444.19, emissions: 33.13 },
+            { month: 'Feb', electricity: 8944.19, gas: 9798.35, emissions: 33.96 },
+            { month: 'Mar', electricity: 7224.57, gas: 5961.48, emissions: 23.09 },
+            { month: 'Apr', electricity: 6655.62, gas: 4379.39, emissions: 17.55 },
+            { month: 'May', electricity: 6410.72, gas: 3265.30, emissions: 13.31 },
+            { month: 'Jun', electricity: 7065.57, gas: 2139.26, emissions: 11.39 },
+            { month: 'Jul', electricity: 8852.88, gas: 1586.23, emissions: 13.67 },
+            { month: 'Aug', electricity: 10376.57, gas: 1766.32, emissions: 16.61 },
+            { month: 'Sep', electricity: 8720.29, gas: 1597.36, emissions: 14.58 },
+            { month: 'Oct', electricity: 6701.64, gas: 2019.47, emissions: 11.60 },
+            { month: 'Nov', electricity: 6849.25, gas: 3574.20, emissions: 16.46 },
+            { month: 'Dec', electricity: 8239.73, gas: 7207.14, emissions: 27.54 }
         ]
     }
     // 다른 동들도 같은 형식으로 추가
@@ -728,9 +701,6 @@
             '교육연구시설': {"emissions": 11805233, "monthly": [1642616, 1634404, 1348606, 946502, 760626, 701062, 614626, 673171, 634575, 490884, 818743, 1539418]},
 
             '노유자시설': {"emissions": 1997284, "monthly": [327498, 344156, 306012, 201303, 170203, 83718, 55969, 60578, 51155, 41046, 82374, 273272]},
-
-            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '문화및집회시설': {"emissions": 11040594, "monthly": [1530431, 1650471, 1112780, 384302, 275182, 545768, 864813, 1351395, 1328840, 840022, 408950, 747640]},
 
             '숙박시설': {"emissions": 18453422, "monthly": [2180669, 1965987, 1644271, 1339834, 1191900, 1338749, 1460722, 1788151, 1460472, 990673, 1371079, 1720915]},
@@ -752,9 +722,6 @@
             '제2종근린생활시설': {"emissions": 186778821, "monthly": [23963619, 24334243, 17075000, 13984884, 13037226, 12671196, 12847707, 13849248, 12847114, 10470176, 13453805, 18244603]},
 
             '종교시설': {"emissions": 3812723, "monthly": [1071359, 926478, 387623, 242089, 90329, 69290, 115809, 154088, 171962, 136737, 102043, 344916]},
-
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '판매시설': {"emissions": 3706726, "monthly": [488430, 495268, 360655, 210576, 173340, 234035, 289550, 360682, 326995, 233569, 199642, 333984]},
 
         },
@@ -818,7 +785,7 @@
 
             '업무시설': {"emissions": 379869132, "monthly": [55367623, 54429872, 40314889, 25555438, 18221880, 20427378, 27287829, 33800777, 33847851, 23334704, 17305835, 29975056]},
 
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+        
 
             '위락시설': {"emissions": 1612228, "monthly": [174019, 171485, 128430, 115253, 113043, 126049, 139529, 146542, 125029, 86752, 128932, 157165]},
 
@@ -834,7 +801,7 @@
 
             '종교시설': {"emissions": 501223, "monthly": [95784, 100638, 58410, 44283, 28159, 13972, 16810, 18716, 15544, 12766, 33870, 62271]},
 
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+            
 
             '판매시설': {"emissions": 37619659, "monthly": [4905422, 4431972, 3768873, 2949344, 2754423, 2807858, 2821290, 2866007, 2615687, 2363491, 2502981, 2832311]},
         },
@@ -855,7 +822,6 @@
 
             '업무시설': {"emissions": 379869132, "monthly": [55367623, 54429872, 40314889, 25555438, 18221880, 20427378, 27287829, 33800777, 33847851, 23334704, 17305835, 29975056]},
 
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '위락시설': {"emissions": 1612228, "monthly": [174019, 171485, 128430, 115253, 113043, 126049, 139529, 146542, 125029, 86752, 128932, 157165]},
 
@@ -871,7 +837,6 @@
 
             '종교시설': {"emissions": 501223, "monthly": [95784, 100638, 58410, 44283, 28159, 13972, 16810, 18716, 15544, 12766, 33870, 62271]},
 
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '판매시설': {"emissions": 37619659, "monthly": [4905422, 4431972, 3768873, 2949344, 2754423, 2807858, 2821290, 2866007, 2615687, 2363491, 2502981, 2832311]},
         },
@@ -893,8 +858,6 @@
             '숙박시설': {"emissions": 36411723, "monthly": [4997522, 4919696, 3964615, 3092475, 2467098, 2614424, 2323989, 2335517, 2231274, 2041678, 2192449, 3230986]},
 
             '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
-
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
 
@@ -932,8 +895,6 @@
 
             '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
 
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
 
             '위험물저장및처리시설': {"emissions": 905600, "monthly": [115021, 111073, 74163, 64210, 56496, 60147, 63421, 76445, 73510, 58055, 67419, 85640]},
@@ -970,7 +931,6 @@
 
             '업무시설': {"emissions": 250303786, "monthly": [40243251, 38225508, 26894661, 17144227, 10352108, 12174444, 16471970, 22400134, 21283444, 14289683, 9632636, 21191720]},
 
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '위락시설': {"emissions": 393421, "monthly": [35971, 34966, 29160, 27009, 26451, 33588, 35715, 42832, 38813, 26662, 29574, 32680]},
 
@@ -1101,7 +1061,6 @@
 
             '종교시설': {"emissions": 1212565, "monthly": [295917, 254515, 198718, 113325, 40969, 34515, 31241, 32232, 30944, 24985, 40756, 114448]},
 
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '판매시설': {"emissions": 10803794, "monthly": [900389, 884170, 831047, 790718, 795388, 952115, 1130963, 1250644, 971620, 847547, 656024, 793169]},
 
@@ -1137,7 +1096,6 @@
 
             '종교시설': {"emissions": 1212565, "monthly": [295917, 254515, 198718, 113325, 40969, 34515, 31241, 32232, 30944, 24985, 40756, 114448]},
 
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '판매시설': {"emissions": 10803794, "monthly": [900389, 884170, 831047, 790718, 795388, 952115, 1130963, 1250644, 971620, 847547, 656024, 793169]},
 
@@ -1150,9 +1108,6 @@
             '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
 
             '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
-
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
 
             '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
@@ -1186,8 +1141,6 @@
             '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
 
             '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
-
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
 
@@ -1223,8 +1176,6 @@
 
             '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
 
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
 
             '숙박시설': {"emissions": 2793007, "monthly": [413236, 487888, 286799, 214153, 174151, 140263, 120932, 129262, 122788, 128189, 231579, 343767]},
@@ -1258,8 +1209,6 @@
             '노유자시설': {"emissions": 5058910, "monthly": [842861, 873766, 628676, 492684, 313581, 225106, 206726, 198851, 148613, 179998, 340709, 607339]},
 
             '단독주택': {"emissions": 232151, "monthly": [36406, 39822, 29874, 23517, 18629, 16405, 16612, 16841, 17168, 16877, 0, 0]},
-
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '문화및집회시설': {"emissions": 112359, "monthly": [21621, 16958, 11658, 10780, 5260, 4216, 8159, 5462, 5860, 4729, 6425, 11231]},
 
@@ -1295,21 +1244,16 @@
 
             '단독주택': {"emissions": 331, "monthly": [331, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '분뇨.쓰레기처리시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '업무시설': {"emissions": 762568, "monthly": [102916, 110290, 77615, 67942, 51792, 43439, 40119, 38730, 39209, 33710, 64465, 92341]},
 
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
+           
 
             '위험물저장및처리시설': {"emissions": 8701, "monthly": [1086, 1004, 664, 589, 566, 594, 687, 794, 757, 494, 552, 914]},
 
-            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '자동차관련시설': {"emissions": 15987, "monthly": [1814, 1882, 1458, 1311, 1113, 1156, 1209, 1212, 1106, 1024, 1142, 1560]},
 
-            '자원순환관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '제1종근린생활시설': {"emissions": 12167500, "monthly": [1909107, 1987843, 1341808, 1016023, 787201, 622625, 584305, 602773, 544547, 483309, 853336, 1434623]},
 
@@ -1329,21 +1273,11 @@
 
             '단독주택': {"emissions": 331, "monthly": [331, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '분뇨.쓰레기처리시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '업무시설': {"emissions": 762568, "monthly": [102916, 110290, 77615, 67942, 51792, 43439, 40119, 38730, 39209, 33710, 64465, 92341]},
-
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '위험물저장및처리시설': {"emissions": 8701, "monthly": [1086, 1004, 664, 589, 566, 594, 687, 794, 757, 494, 552, 914]},
 
-            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '자동차관련시설': {"emissions": 15987, "monthly": [1814, 1882, 1458, 1311, 1113, 1156, 1209, 1212, 1106, 1024, 1142, 1560]},
-
-            '자원순환관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '제1종근린생활시설': {"emissions": 12167500, "monthly": [1909107, 1987843, 1341808, 1016023, 787201, 622625, 584305, 602773, 544547, 483309, 853336, 1434623]},
 
@@ -1355,20 +1289,12 @@
 
         },
         '수서동': {
-            '공동주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '교육연구시설': {"emissions": 370336, "monthly": [32304, 31109, 26514, 27163, 26629, 29960, 34087, 39357, 37276, 28733, 27762, 29442]},
 
             '노유자시설': {"emissions": 390320, "monthly": [117507, 109943, 72086, 21540, 11938, 2689, 2747, 3227, 2944, 2761, 12620, 30318]},
 
-            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '문화및집회시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '업무시설': {"emissions": 2857642, "monthly": [413879, 449368, 286486, 217479, 169848, 148533, 163042, 171200, 158034, 125402, 221018, 333353]},
-
-            '운동시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '운수시설': {"emissions": 12955, "monthly": [503, 459, 399, 289, 552, 661, 1512, 1672, 1662, 1344, 1721, 2181]},
 
             '위험물저장및처리시설': {"emissions": 37624, "monthly": [5158, 5251, 4263, 3199, 3193, 2631, 2074, 2134, 2193, 2116, 2235, 3177]},
@@ -1383,63 +1309,25 @@
 
             '종교시설': {"emissions": 622045, "monthly": [156231, 152912, 84308, 42935, 21974, 11838, 13708, 17328, 15538, 11794, 26701, 66778]},
 
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '판매시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
         },
 
         '세곡동': {
-            '공동주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '공장': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '관광휴게시설': {"emissions": 16224, "monthly": [2521, 2522, 1339, 1274, 1257, 931, 787, 904, 862, 910, 1306, 1611]},
-
             '교육연구시설': {"emissions": 59902, "monthly": [5854, 5321, 4576, 4655, 4455, 4633, 5015, 5749, 5455, 4454, 4787, 4948]},
-
-            '교정및군사시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '노유자시설': {"emissions": 1543437, "monthly": [231032, 256564, 161599, 95559, 75685, 82127, 109532, 121938, 128276, 67422, 65446, 148257]},
-
-            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '동물및식물관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '문화및집회시설': {"emissions": 2717, "monthly": [1412, 896, 51, 29, 29, 42, 41, 47, 48, 41, 34, 47]},
-
-            '업무시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '의료시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '자동차관련시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '제1종근린생활시설': {"emissions": 3461790, "monthly": [447981, 465021, 338911, 279994, 254393, 203007, 203820, 211714, 214043, 182017, 293106, 367783]},
-
             '제2종근린생활시설': {"emissions": 468549, "monthly": [73466, 73659, 50021, 35169, 25929, 23370, 25281, 31082, 29320, 23652, 27527, 50073]},
-
-            '종교시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
         },
 
         '압구정동': {
             '공동주택': {"emissions": 144655616, "monthly": [14764146, 11285740, 13274147, 9735936, 11242410, 10401596, 14911660, 14186424, 12208849, 9163484, 11973065, 11508159]},
-
-            '교육연구시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '단독주택': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
-            '업무시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '운동시설': {"emissions": 11127350, "monthly": [1135703, 868133, 1021088, 748918, 864800, 800122, 1147050, 1091263, 939142, 704883, 921005, 885243]},
 
             '제1종근린생활시설': {"emissions": 11127350, "monthly": [1135703, 868133, 1021088, 748918, 864800, 800122, 1147050, 1091263, 939142, 704883, 921005, 885243]},
 
             '제2종근린생활시설': {"emissions": 6314, "monthly": [453, 475, 392, 475, 427, 394, 390, 435, 914, 686, 627, 646]},
-
-            '종교시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
 
             '판매시설': {"emissions": 44509418, "monthly": [4542814, 3472535, 4084353, 2995672, 3459203, 3200491, 4588203, 4365053, 3756569, 2819533, 3684020, 3540972]},
 
@@ -1474,9 +1362,6 @@
             '제2종근린생활시설': {"emissions": 117468809, "monthly": [15185912, 15949123, 10887137, 9230868, 7915803, 7667601, 7568688, 8278130, 7767642, 6516587, 8598061, 11903257]},
 
             '종교시설': {"emissions": 440764, "monthly": [74132, 76579, 49819, 35622, 26050, 14297, 16270, 20573, 19777, 16303, 39169, 52173]},
-
-            '창고시설': {"emissions": 0, "monthly": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]},
-
             '판매시설': {"emissions": 2763288, "monthly": [298180, 284450, 206698, 178695, 170766, 215096, 232290, 293176, 261738, 198067, 220259, 203873]},
 
         },
@@ -1650,21 +1535,36 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
             }
         }
 
-        totalElectricity.textContent = `${totalElectricityValue} kWh`;
-        totalGas.textContent = `${totalGasValue} kWh`;
-        totalEmissions.textContent = `${totalEmissionsValue} tCO2eq.`;
+        const numberFormatter = new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        totalElectricity.textContent = `${numberFormatter.format(totalElectricityValue)} kWh`;
+        totalGas.textContent = `${numberFormatter.format(totalGasValue)} kWh`;
+        totalEmissions.textContent = `${numberFormatter.format(totalEmissionsValue)} tCO2eq.`;
+
     }
-            function renderTablePage(sortedRegions, page) {
-                const rankTableBody = document.querySelector("#rankTable tbody");
-                rankTableBody.innerHTML = '';
-                const start = (page - 1) * itemsPerPage;
-                const end = start + itemsPerPage;
-                sortedRegions.slice(start, end).forEach((data, index) => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity} kWh</td><td>${data.gas} kWh</td><td>${data.emissions} tCO2eq.</td>`;
-                    rankTableBody.appendChild(row);
-                });
-            }
+        const numberFormatter = new Intl.NumberFormat('en-US', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+        function renderTablePage(sortedRegions, page) {
+            const rankTableBody = document.querySelector("#rankTable tbody");
+            rankTableBody.innerHTML = '';
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            sortedRegions.slice(start, end).forEach((data, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${start + index + 1}</td>
+                                <td>${data.region}</td>
+                                <td>${numberFormatter.format(data.electricity)}</td>
+                                <td>${numberFormatter.format(data.gas)} </td>
+                                <td>${numberFormatter.format(data.emissions)}</td>`;
+                rankTableBody.appendChild(row);
+            });
+        }
 
 
             function updateBuildingTypeData(regionId) {
@@ -1736,18 +1636,6 @@ const buildingTypeChartCtx = document.getElementById('buildingTypeChart').getCon
         renderPagination(sortedRegions.length);
     }
 
-
-    function renderTablePage(sortedRegions, page) {
-        const rankTableBody = document.querySelector("#rankTable tbody");
-        rankTableBody.innerHTML = '';
-        const start = (page - 1) * itemsPerPage;
-        const end = start + itemsPerPage;
-        sortedRegions.slice(start, end).forEach((data, index) => {
-            const row = document.createElement("tr");
-            row.innerHTML = `<td>${start + index + 1}</td><td>${data.region}</td><td>${data.electricity}</td><td>${data.gas} </td><td>${data.emissions}</td>`;
-            rankTableBody.appendChild(row);
-        });
-    }
     function renderPagination(totalItems) {
         const pagination = document.getElementById("pagination");
         pagination.innerHTML = '';
@@ -1982,7 +1870,7 @@ const values = Object.values(regions);
             regionElement.addEventListener('mouseover', (event) => {
                 const regionName = event.target.id;
                 const emissionData = regions[regionName];
-                popup.innerHTML = `탄소 배출량: ${emissionData}, 지역명 : ${regionId}`;
+                popup.innerHTML = `지역명 : ${regionId}`;
                 popup.style.display = 'block';
                 popup.style.left = `${event.pageX + 10}px`;
                 popup.style.top = `${event.pageY + 10}px`;
