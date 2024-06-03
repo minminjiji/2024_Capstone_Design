@@ -1,42 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="UTF-8" />
-        <title>나랑데이터할래 건물별 온실가스 배출 지도</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>건축물 온실가스 지도</title>
         <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/stylesmap.css') }}"
         />
-        <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
-        <script src="https://unpkg.com/ol-geocoder"></script>
         <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://unpkg.com/ol-geocoder/dist/ol-geocoder.min.css"
+            href="https://cdn.jsdelivr.net/npm/ol@latest/ol.css"
         />
     </head>
     <body>
-        <h2>나랑데이터할래 건물별 온실가스 배출 지도</h2>
-        <div id="controls">
-            <label
-                ><input type="radio" name="filter" value="building" checked />
-                건물 정보</label
-            >
-            <label
-                ><input type="radio" name="filter" value="electric" />
-                전기에너지 배출량</label
-            >
-            <label
-                ><input type="radio" name="filter" value="gas" /> 가스에너지
-                배출량</label
-            >
-            <input type="text" id="search" placeholder="대지 위치 검색" />
+        <header>
+            <div class="header-container">
+                <div class="logo">
+                    <a href="/"
+                        ><img
+                            src="{{ url_for('static', filename='image/logo.png') }}"
+                            alt="로고"
+                    /></a>
+                </div>
+                <nav class="navbar">
+                    <a href="/">홈</a>
+                    <a href="/introduce">소개</a>
+                    <a href="/map">지도</a>
+                    <a href="/statistics">통계</a>
+                    <a href="/data">자료실</a>
+                </nav>
+            </div>
+        </header>
+        <div class="container">
+            <aside class="sidebar">
+                <h2>건축물 온실가스 지도</h2>
+                <div class="search-container">
+                    <button class="search-button" id="searchBuildingInfo">
+                        건물 정보
+                    </button>
+                    <button class="search-button" id="searchElectricEnergy">
+                        전기 에너지 배출량
+                    </button>
+                    <button class="search-button" id="searchGasEnergy">
+                        가스 에너지 배출량
+                    </button>
+                </div>
+                <div id="buildingInfo" class="building-info">
+                    <p id="infoMessage">
+                        해당 건물을 선택하고 위의 버튼을 클릭하면 해당하는
+                        정보를 볼 수 있습니다.
+                    </p>
+                    <!-- Building info will be dynamically added here -->
+                </div>
+            </aside>
+            <main class="map-container">
+                <div id="map" class="map"></div>
+            </main>
         </div>
-        <div id="map" class="map"></div>
-        <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/ol@latest/dist/ol.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const map = new ol.Map({
+                    target: "map",
+                    layers: [
+                        new ol.layer.Tile({
+                            source: new ol.source.OSM(),
+                        }),
+                        new ol.layer.Tile({
+                            source: new ol.source.TileWMS({
+                                url: "http://localhost:8080/geoserver/capstone/wms",
+                                params: {
+                                    LAYERS: "capstone:realfinalgangnam",
+                                    TILED: true,
+                                    VERSION: "1.1.1",
+                                    FORMAT: "image/png",
+                                    SRS: "EPSG:3857",
+                                },
+                                serverType: "geoserver",
+                            }),
+                        }),
+                    ],
+                    view: new ol.View({
+                        center: ol.proj.fromLonLat([127.0276, 37.4979]), // Gangnam, Seoul coordinates
+                        zoom: 14,
+                    }),
+                });
+
+                let selectedFeature = null;
+                let selectedButton = null;
+
+                // Add click event listener on the map to fetch feature info
+                map.on("singleclick", function (evt) {
+                    const viewResolution = map.getView().getResolution();
+                    const wmsSource = map.getLayers().item(1).getSource();
+                    const url = wmsSource.getFeatureInfoUrl(
+                        evt.coordinate,
+                        viewResolution,
+                        "EPSG:3857",
+                        {
+                            INFO_FORMAT: "application/json",
+                        }
+                    );
+
+                    if (url) {
+                        fetch(url)
+                            .then((response) => response.json())
+                            .then((data) => {
+                                if (data.features.length > 0) {
+                                    selectedFeature =
+                                        data.features[0].properties;
+                                    if (selectedButton) {
+                                        displayInfo(
+                                            selectedFeature,
+                                            selectedButton
+                                        );
+                                    }
+                                }
+                            });
+                    }
+                });
+
+                document
+                    .getElementById("searchBuildingInfo")
+                    .addEventListener("click", function () {
+                        selectedButton = "buildingInfo";
+                        if (selectedFeature) {
+                            displayBuildingInfo(selectedFeature);
+                        }
+                    });
+
+                document
+                    .getElementById("searchElectricEnergy")
+                    .addEventListener("click", function () {
+                        selectedButton = "electricEnergy";
+                        if (selectedFeature) {
+                            displayElectricEnergyInfo(selectedFeature);
+                        }
+                    });
+
+                document
+                    .getElementById("searchGasEnergy")
+                    .addEventListener("click", function () {
+                        selectedButton = "gasEnergy";
+                        if (selectedFeature) {
+                            displayGasEnergyInfo(selectedFeature);
+                        }
+                    });
+
+                function displayInfo(feature, type) {
+                    if (type === "buildingInfo") {
+                        displayBuildingInfo(feature);
+                    } else if (type === "electricEnergy") {
+                        displayElectricEnergyInfo(feature);
+                    } else if (type === "gasEnergy") {
+                        displayGasEnergyInfo(feature);
+                    }
+                }
+
+                function displayBuildingInfo(data) {
+                    const buildingInfoDiv =
+                        document.getElementById("buildingInfo");
+                    buildingInfoDiv.innerHTML = `
+                <div class="building-details">
+                    <p><strong>${data["건물명"]}</strong></p>
+                    <p><strong>연면적:</strong> ${data["연면적(㎡)"] + "㎡"}</p>
+                    <p><strong>사용승인일자:</strong> ${data["사용승인일"]}</p>
+                    <p><strong>용도:</strong> ${data["주용도"]}</p>
+                    <p><strong>주소:</strong> ${data["대지위치"]}</p>
+                    <p><strong>상층수:</strong> ${data["지상층수"] + "층"}</p>
+                    <p><strong>하층수:</strong> ${data["지하층수"] + "층"}</p>
+                    <p><strong>건물높이:</strong> ${data["높이"] + "m"}</p>
+                    <p><strong>구조:</strong> ${data["주구조"]}</p>
+                    <p><strong>용도:</strong> ${data["기타용도"]}</p>
+                </div>
+            `;
+                }
+
+                function displayElectricEnergyInfo(data) {
+                    const buildingInfoDiv =
+                        document.getElementById("buildingInfo");
+                    buildingInfoDiv.innerHTML = `
+                <div class="building-details">
+                    <p><strong>${data["건물명"]}</strong></p>
+                    <p><strong>주소:</strong> ${data["대지위치"]}</p>
+                    <p><strong>사용년월:</strong> ${data["사용_년월"]}</p>
+                    <p><strong>전기사용량:</strong> ${
+                        data["전기사용량"] + " KWh"
+                    }</p>
+                    <p><strong>전기배출량:</strong> ${
+                        data["전기배출량"] + " KWh"
+                    }</p>
+                </div>
+            `;
+                }
+
+                function displayGasEnergyInfo(data) {
+                    const buildingInfoDiv =
+                        document.getElementById("buildingInfo");
+                    buildingInfoDiv.innerHTML = `
+                <div class="building-details">
+                    <p><strong>${data["건물명"]}</strong></p>
+                    <p><strong>주소:</strong> ${data["대지위치"]}</p>
+                    <p><strong>사용년월:</strong> ${data["사용_년월"]}</p>
+                    <p><strong>가스사용량:</strong> ${
+                        data["가스사용량"] + " KWh"
+                    }</p>
+                    <p><strong>가스배출량:</strong> ${
+                        data["가스배출량"] + " KWh"
+                    }</p>
+                </div>
+            `;
+                }
+            });
+        </script>
     </body>
 </html>
+
 

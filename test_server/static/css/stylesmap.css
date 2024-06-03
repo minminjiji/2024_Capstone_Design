@@ -1,74 +1,165 @@
-body {
-    font-family: Arial, sans-serif;
-}
-
-h2 {
-    text-align: center;
-}
-
-#controls {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-#controls label {
-    margin-right: 10px;
-}
-
-#controls input[type="text"] {
-    width: 200px;
-    padding: 5px;
-}
-
-.map {
+body,
+html {
+    margin: 0;
+    padding: 0;
     width: 100%;
-    height: 80vh;
+    height: 100%;
+    font-family: "Jalnan2", Arial, sans-serif;
 }
 
-.ol-popup {
-    position: absolute;
-    background-color: white;
-    padding: 15px;
-    border: 1px solid black;
-    min-width: 200px;
+header {
+    width: 100%; /* ensure header spans the full width */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+    position: fixed;
+    width: 100%;
+    top: 0;
     z-index: 1000;
-    transform: translate(-50%, -50%);
+    box-sizing: border-box; /* include padding and border in the element's total width and height */
 }
 
-.ol-popup:after,
-.ol-popup:before {
-    top: 100%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-}
-
-.ol-popup:after {
-    border-color: rgba(255, 255, 255, 0);
-    border-top-color: white;
-    border-width: 10px;
-    left: 50%;
-    margin-left: -10px;
-}
-
-.ol-popup:before {
-    border-color: rgba(0, 0, 0, 0);
-    border-top-color: black;
-    border-width: 11px;
-    left: 50%;
-    margin-left: -11px;
-}
-
-.ol-popup-closer {
+.header a {
+    color: #333;
     text-decoration: none;
-    position: absolute;
-    top: 2px;
-    right: 8px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
-.ol-popup-closer:after {
-    content: "✖";
+.navbar {
+    display: flex;
+    gap: 15px;
 }
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    background-color: #e0e0e0;
+    text-decoration: underline;
+}
+
+.logo img {
+    height: 60px;
+}
+
+.container {
+    display: flex;
+    margin-top: 80px; /* Adjust depending on the header height */
+    height: calc(100vh - 80px); /* Adjust to fill the remaining height */
+    background-color: transparent; /* Ensure background is transparent */
+}
+
+.sidebar {
+    width: 350px; /* Increase the width of the sidebar */
+    background-color: #f4f4f4;
+    padding: 15px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    flex-shrink: 0; /* Prevent the sidebar from shrinking */
+}
+
+.sidebar h2 {
+    text-align: center; /* Center align the sidebar title */
+}
+
+.map-container {
+    flex-grow: 1; /* Allow the map container to grow and fill the remaining space */
+    height: 100%;
+    background-color: transparent;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.search-button {
+    padding: 10px;
+    background-color: white; /* Set button color to white */
+    color: #333; /* Set text color to match the header */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.search-button:hover,
+.search-button:active {
+    background-color: #e0e0e0; /* Change background color on hover and active */
+    color: #000; /* Optional: Change text color on hover and active */
+}
+
+.building-info {
+    margin-top: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.building-details p {
+    margin: 5px 0;
+}
+
+.building-info {
+    margin-top: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.building-details p {
+    margin: 5px 0;
+}
+
+.building-info {
+    margin-top: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.building-details p {
+    margin: 5px 0;
+}
+
+.date-selectors {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.date-selectors select {
+    padding: 5px;
+    font-size: 16px;
+}
+
